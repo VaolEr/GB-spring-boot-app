@@ -1,0 +1,13 @@
+databaseChangeLog:
+  # DB schema initialization
+  - include:
+      file: db/changelog/shema/2020-12-18-init-db-shema.sql
+  # Populating DB with test data
+  - include:
+      file: db/changelog/data/2020-12-18-populate-db.sql
+  # Add PK (id, integer) to items_storehouses joining table
+  - include:
+      file: db/changelog/shema/2020-12-20-update-items-storehouses-table.sql
+  # Increment created PK id, from 0 to 999
+  - include:
+      file: db/changelog/data/2020-12-20-update-items-storehouses-ids.sql

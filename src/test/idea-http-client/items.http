@@ -1,0 +1,36 @@
+###
+
+GET http://localhost:8080/api/v1/actuator/info
+Accept: application/vnd.spring-boot.actuator.v3+json
+
+###
+
+GET http://localhost:8080/api/v1/items
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/v1/items/1001
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/v1/items/1
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/v1/items?name=pen
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/v1/items?name=
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/v1/items/1000/balance
+Accept: application/json
+
+###
