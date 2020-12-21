@@ -37,7 +37,8 @@ public class ItemsService {
     @Transactional
     public ItemTo getByIdWithBalance(Integer id) {
         Item item = itemsRepository.getItemById(id).orElseThrow(
-            () -> new NotFoundException(String.valueOf(id))
+            () -> new NotFoundException(
+                String.format("Not found '%s' with id '%d'", Item.class.getSimpleName(), id))
         );
         Integer itemId = item.getId();
         ItemTo itemTo = toItemTo(item);
