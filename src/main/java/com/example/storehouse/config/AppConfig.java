@@ -1,8 +1,11 @@
 package com.example.storehouse.config;
 
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
+import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
 public class AppConfig {
