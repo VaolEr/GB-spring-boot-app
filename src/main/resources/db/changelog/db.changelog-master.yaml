@@ -11,3 +11,6 @@ databaseChangeLog:
   # Increment created PK id, from 0 to 999
   - include:
       file: db/changelog/data/2020-12-20-update-items-storehouses-ids.sql
+  # Increment created PK id, from 0 to 999
+  - include:
+      file: db/changelog/data/2020-12-21-add-some-data-to-tables.sql
