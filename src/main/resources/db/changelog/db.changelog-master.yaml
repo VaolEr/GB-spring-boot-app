@@ -11,6 +11,9 @@ databaseChangeLog:
   # Increment created PK id, from 0 to 999
   - include:
       file: db/changelog/data/2020-12-20-update-items-storehouses-ids.sql
-  # Increment created PK id, from 0 to 999
+  # Add new data to tables
   - include:
       file: db/changelog/data/2020-12-21-add-some-data-to-tables.sql
+  # Add indexes to all  fields 'name' in each table and unique index in items table for supplier_id and sku
+  - include:
+      file: db/changelog/shema/2020-12-21-add-indexes-to-some-tables.sql

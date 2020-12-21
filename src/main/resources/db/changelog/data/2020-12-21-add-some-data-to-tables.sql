@@ -96,7 +96,7 @@ VALUES ('Beef', '#beef_ZM', (SELECT id FROM suppliers WHERE name = 'Zelenograd M
 
 
 
--- changeset Valentin:Populate_items_storehouses_table
+-- changeset Valentin:Add_random_items_quantity_to_storehouses
 INSERT INTO items_storehouses (item_id, storehouse_id, qty)
 VALUES ((SELECT id FROM items WHERE name = 'Beef'),
         (SELECT id FROM storehouses WHERE name = 'Nearest storehouse'), 2),
