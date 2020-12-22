@@ -1,13 +1,19 @@
 package com.example.storehouse.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class ItemTo {
 
@@ -30,16 +36,7 @@ public class ItemTo {
     Integer categoryId;
 
     @NotNull
-    Integer storehouseId;
+    @JsonProperty(value = "storehouses_balance")
+    List<ItemStorehouseTo> itemsStorehousesTo;
 
-    @NotNull
-    Integer quantity;
-
-    public ItemTo(Integer id,
-                  @NotNull @NotBlank String name,
-                  @NotNull @NotBlank String sku) {
-        this.id = id;
-        this.name = name;
-        this.sku = sku;
-    }
 }

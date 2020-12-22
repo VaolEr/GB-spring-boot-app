@@ -1,12 +1,19 @@
 package com.example.storehouse.service;
 
-import static com.example.storehouse.util.ItemsUtil.toItemTo;
+import static com.example.storehouse.util.ItemsUtil.fromItemTo;
+import static com.example.storehouse.util.ValidationUtil.addMessageDetails;
+import static com.example.storehouse.util.ValidationUtil.checkNotFound;
 
 import com.example.storehouse.dto.ItemTo;
+import com.example.storehouse.model.Category;
 import com.example.storehouse.model.Item;
+import com.example.storehouse.model.ItemStorehouse;
+import com.example.storehouse.model.Storehouse;
+import com.example.storehouse.model.Supplier;
+import com.example.storehouse.repository.CategoriesRepository;
 import com.example.storehouse.repository.ItemsRepository;
 import com.example.storehouse.repository.StorehousesRepository;
-import com.example.storehouse.util.exception.NotFoundException;
+import com.example.storehouse.repository.SuppliersRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,38 +24,44 @@ import org.springframework.transaction.annotation.Transactional;
 public class ItemsService {
 
     private final ItemsRepository itemsRepository;
+    private final SuppliersRepository suppliersRepository;
+    private final CategoriesRepository categoriesRepository;
     private final StorehousesRepository storehousesRepository;
 
     public List<Item> get(String name) {
         return (name == null) ?
             itemsRepository.findAll() :
-            itemsRepository.findByNameLike(name);
+            itemsRepository.findByNameContaining(name);
     }
 
     public Item getById(Integer id) {
-        return itemsRepository.findById(id).orElseThrow(
-            () -> new NotFoundException(
-                String.format("Not found '%s' with id '%d'", Item.class.getSimpleName(), id)
-            )
-        );
+        return checkNotFound(itemsRepository.findById(id), addMessageDetails(Item.class.getSimpleName(), id));
     }
 
-    // Не очень нравится мне такой вариант, надо поискать, как через ORM сделать покрасивей
-    @Transactional
-    public ItemTo getByIdWithBalance(Integer id) {
-        Item item = itemsRepository.getItemById(id).orElseThrow(
-            () -> new NotFoundException(
-                String.format("Not found '%s' with id '%d'", Item.class.getSimpleName(), id))
-        );
-        Integer itemId = item.getId();
-        ItemTo itemTo = toItemTo(item);
-        itemTo.setCategoryId(item.getCategory().getId());
-        itemTo.setSupplierId(item.getSupplier().getId());
-        itemTo.setStorehouseId(
-            storehousesRepository.getByItemStorehousesItemId(itemId).getId());
-        itemTo.setQuantity(storehousesRepository.getQuantityByItemId(itemId));
+    // убрал getByIdWithBalance, для получений остатка товара на складах - отдельный запрос к контроллеру складов с id товара
 
-        return itemTo;
+    @Transactional
+    public Item create(ItemTo itemTo) {
+        Item newItem = fromItemTo(itemTo);
+        newItem.setSupplier(checkNotFound(suppliersRepository.findById(itemTo.getSupplierId()),
+            addMessageDetails(Supplier.class.getSimpleName(), itemTo.getSupplierId())
+        ));
+        newItem.setCategory(checkNotFound(categoriesRepository.findById(itemTo.getCategoryId()),
+            addMessageDetails(Category.class.getSimpleName(), itemTo.getSupplierId())
+        ));
+
+        // NOTE попробовать это место посимпатичней сделать
+        itemTo.getItemsStorehousesTo().forEach(iSt -> {
+            Storehouse storehouse = checkNotFound(storehousesRepository.findById(iSt.getStorehouseId()),
+                addMessageDetails(Storehouse.class.getSimpleName(), iSt.getStorehouseId())
+            );
+            ItemStorehouse itemStorehouse = new ItemStorehouse();
+            itemStorehouse.setStorehouse(storehouse);
+            itemStorehouse.setQuantity(iSt.getQuantity());
+            newItem.addItemStorehouse(itemStorehouse);
+        });
+
+        return itemsRepository.save(newItem);
     }
 
 }

@@ -19,7 +19,6 @@ import org.springframework.data.domain.Persistable;
 public abstract class AbstractBaseEntity implements Persistable<Integer> {
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;
 
