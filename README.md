@@ -1,8 +1,11 @@
 Storehouse Backend App
 ---
 
+#### v0.0.3
+- POST `/items`
+
 #### v0.0.2
-- GET `/items[/{id}][/balance]`
+- GET `/items[/{id}]`
 - GET `/items[?name=]`
 
 #### v0.0.1

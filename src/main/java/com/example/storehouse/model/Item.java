@@ -1,8 +1,12 @@
 package com.example.storehouse.model;
 
 import com.example.storehouse.model.abstractentity.AbstractNamedEntity;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,6 +50,30 @@ public class Item extends AbstractNamedEntity {
     private Category category;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
-    private Set<ItemStorehouse> itemStorehouses;
+    @JsonIgnoreProperties("item")
+    private Set<ItemStorehouse> itemStorehouses = new HashSet<>();
+
+    public void addItemStorehouse(ItemStorehouse itemStorehouse) {
+//        this.itemStorehouses = getItemStorehousesInstance();
+        itemStorehouse.setItem(this);
+        itemStorehouses.add(itemStorehouse);
+    }
+
+    public void setItemStorehouses(ItemStorehouse... itemsStorehouses) {
+//        this.itemStorehouses = getItemStorehousesInstance();
+        this.setItemStorehouses(Stream.of(itemsStorehouses).collect(Collectors.toSet()));
+    }
+
+    public void setItemStorehouses(Set<ItemStorehouse> itemsStorehouses) {
+//        this.itemStorehouses = getItemStorehousesInstance();
+        itemStorehouses.addAll(itemsStorehouses.stream()
+            .peek(itemStorehouse -> itemStorehouse.setItem(this))
+            .collect(Collectors.toSet())
+        );
+    }
+
+    private Set<ItemStorehouse> getItemStorehousesInstance(){
+        return (itemStorehouses != null) ? itemStorehouses : new HashSet<>();
+    }
 
 }

@@ -13,21 +13,21 @@ public interface ItemsRepository extends JpaRepository<Item, Integer> {
 
     // проверить - вытаскивать только id через граф зависимостей:
     //https://stackoverflow.com/questions/53490655/how-to-use-jpa-entitygraph-to-load-only-a-subset-of-entity-basic-attributes
+    // ?поменять дублирующийся @EntityGraph(attributePaths = {"category", "supplier"} на NamedEntityGraph?
 
     @Override
-    @EntityGraph(attributePaths = {"category"}, type = EntityGraph.EntityGraphType.FETCH)
+    @EntityGraph(attributePaths = {"category", "supplier"}, type = EntityGraph.EntityGraphType.FETCH)
     List<Item> findAll();
 
-    @EntityGraph(attributePaths = {"category"}, type = EntityGraph.EntityGraphType.FETCH)
-    List<Item> findByNameLike(String name);
+    @EntityGraph(attributePaths = {"category", "supplier"}, type = EntityGraph.EntityGraphType.FETCH)
+    List<Item> findByNameContaining(String name);
 
-    @EntityGraph(attributePaths = {"category"}, type = EntityGraph.EntityGraphType.FETCH)
+    @EntityGraph(attributePaths = {"category", "supplier"}, type = EntityGraph.EntityGraphType.FETCH)
     Optional<Item> findById(Integer id);
 
-    // NOTE: поискать, где-то я уже с циклическими зависимостями разбирался
+    // NOTE: поискать, где-то я уже с циклическими зависимостями разбирался : @JsonIgnoreProperty (будет всё TO - можно убрать)
 //    @EntityGraph(attributePaths = {"category", "supplier", "itemStorehouses"},
-    @EntityGraph(attributePaths = {"category", "supplier"},
-        type = EntityGraph.EntityGraphType.FETCH)
+    @EntityGraph(attributePaths = {"category", "supplier"}, type = EntityGraph.EntityGraphType.FETCH)
     Optional<Item> getItemById(Integer id);
 
 }

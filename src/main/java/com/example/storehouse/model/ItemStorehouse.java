@@ -1,12 +1,14 @@
 package com.example.storehouse.model;
 
 import com.example.storehouse.model.abstractentity.AbstractBaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,30 +16,26 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @Entity(name = "ItemStorehouse")
 @Table(name = "items_storehouses")
 public class ItemStorehouse extends AbstractBaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "item_id")
+    @JsonIgnoreProperties("itemStorehouses")
     private Item item;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "storehouse_id")
+    @JsonIgnoreProperties("itemStorehouses")
     private Storehouse storehouse;
 
     @Column(name = "qty")
     private int quantity;
 
-    // На мой взгляд - equals и hashCode нам здесь не нужны, т.к.:
-    // 1. Мы наследуемся от AbstractBaseEntity, в которой есть Lombok-аннотация @Data,
-    // а она включает в себя генерацию этих методов (можно поставить курсор на аннотацию @Data
-    // и в идее нажать Refactor->Delombok->@Data, чтобы посмотреть).
-    // 2. Мы ввели суррогатный ключ для данной сущности и таблицы (id) на уровне БД, и СУБД своими
-    // средствами обеспечивает его уникальность на уровне таблицы БД. Т.е. под одним id у нас не
-    // может быть в таблице записей с разными quantity, item, storehouse. И сравнивать по ним нет
-    // смысла, достаточно сравнить по id (а это уже есть в AbstractBaseEntity).
-    // Предлагаю обдумать и обсудить этот вопрос.
+    // Ошибался. При добавлении нового item для него ещё нет записи в items_storehouses,
+    // след. - у ItemStorehouse нет id и для сравнения нужны поля.
 
 //    @Override
 //    public boolean equals(Object o) {

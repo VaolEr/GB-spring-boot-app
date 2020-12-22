@@ -1,6 +1,7 @@
 package com.example.storehouse.model;
 
 import com.example.storehouse.model.abstractentity.AbstractNamedEntity;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -21,6 +22,7 @@ import lombok.Setter;
 public class Storehouse extends AbstractNamedEntity {
 
     @OneToMany(mappedBy = "storehouse", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("storehouse")
     private Set<ItemStorehouse> itemStorehouses;
 
 }
