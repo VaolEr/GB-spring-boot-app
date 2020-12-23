@@ -23,12 +23,23 @@ public class ItemsUtil {
             .build();
     }
 
+    public static ItemTo toItemToWithBalance(Item item) {
+        ItemTo itemTo = toItemTo(item);
+        itemTo.setItemsStorehousesTo(
+            item.getItemStorehouses().stream()
+                .map(ItemStorehousesUtil::toItemStorehouseTo)
+                .collect(Collectors.toList())
+        );
+        return itemTo;
+    }
+
     public static List<ItemTo> toItemTos(List<Item> items) {
         return items.stream().map(ItemsUtil::toItemTo).collect(Collectors.toList());
     }
 
     public static Item fromItemTo(ItemTo itemTo) {
         Item newItem = new Item();
+        newItem.setId(itemTo.getId());
         newItem.setName(itemTo.getName());
         newItem.setSku(itemTo.getSku());
         return newItem;

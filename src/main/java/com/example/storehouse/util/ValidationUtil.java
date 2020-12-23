@@ -1,5 +1,7 @@
 package com.example.storehouse.util;
 
+import com.example.storehouse.model.abstractentity.AbstractBaseEntity;
+import com.example.storehouse.util.exception.IllegalRequestDataException;
 import com.example.storehouse.util.exception.NotFoundException;
 import java.util.Optional;
 import javax.validation.constraints.NotNull;
@@ -16,6 +18,18 @@ public class ValidationUtil {
 
     public static String addMessageDetails(String entityType, Integer entityId) {
         return String.format("type is '%s' and id is '%d'", entityType, entityId);
+    }
+
+    public static <E extends AbstractBaseEntity> void assureIdConsistent(E entity, Integer id) {
+        // http://stackoverflow.com/a/32728226/548473
+        if (entity.isNew()) {
+            entity.setId(id);
+        } else {
+            assert entity.getId() != null;
+            if (!entity.getId().equals(id)) {
+                throw new IllegalRequestDataException(entity + " must be with id = " + id);
+            }
+        }
     }
 
 }

@@ -2,7 +2,9 @@ package com.example.storehouse.service;
 
 import static com.example.storehouse.util.ItemsUtil.fromItemTo;
 import static com.example.storehouse.util.ValidationUtil.addMessageDetails;
+import static com.example.storehouse.util.ValidationUtil.assureIdConsistent;
 import static com.example.storehouse.util.ValidationUtil.checkNotFound;
+import static org.springframework.util.StringUtils.hasText;
 
 import com.example.storehouse.dto.ItemTo;
 import com.example.storehouse.model.Category;
@@ -29,9 +31,8 @@ public class ItemsService {
     private final StorehousesRepository storehousesRepository;
 
     public List<Item> get(String name) {
-        return (name == null) ?
-            itemsRepository.findAll() :
-            itemsRepository.findByNameContaining(name);
+        return hasText(name) ? itemsRepository.findByNameContaining(name)
+            : itemsRepository.findAll();
     }
 
     public Item getById(Integer id) {
@@ -42,14 +43,7 @@ public class ItemsService {
 
     @Transactional
     public Item create(ItemTo itemTo) {
-        Item newItem = fromItemTo(itemTo);
-        newItem.setSupplier(checkNotFound(suppliersRepository.findById(itemTo.getSupplierId()),
-            addMessageDetails(Supplier.class.getSimpleName(), itemTo.getSupplierId())
-        ));
-        newItem.setCategory(checkNotFound(categoriesRepository.findById(itemTo.getCategoryId()),
-            addMessageDetails(Category.class.getSimpleName(), itemTo.getSupplierId())
-        ));
-
+        Item newItem = prepareToSave(itemTo);
         // NOTE попробовать это место посимпатичней сделать
         itemTo.getItemsStorehousesTo().forEach(iSt -> {
             Storehouse storehouse = checkNotFound(storehousesRepository.findById(iSt.getStorehouseId()),
@@ -60,8 +54,33 @@ public class ItemsService {
             itemStorehouse.setQuantity(iSt.getQuantity());
             newItem.addItemStorehouse(itemStorehouse);
         });
-
         return itemsRepository.save(newItem);
+    }
+
+    // обновление остатков на складах - через запрос к контроллеру складов
+    @Transactional
+    public Item update(ItemTo itemTo, Integer id) {
+        Item updatedItem = prepareToSave(itemTo);
+        // переделать проверку через HasId, проверять до обработки itemTo
+        assureIdConsistent(updatedItem, id);
+        return itemsRepository.save(updatedItem);
+    }
+
+    @Transactional
+    public void delete(Integer id) {
+        itemsRepository.deleteById(id);
+//        return itemsRepository.delete(id) != 0;
+    }
+
+    private Item prepareToSave(ItemTo itemTo) {
+        Item savedItem = fromItemTo(itemTo);
+        savedItem.setSupplier(checkNotFound(suppliersRepository.findById(itemTo.getSupplierId()),
+            addMessageDetails(Supplier.class.getSimpleName(), itemTo.getSupplierId())
+        ));
+        savedItem.setCategory(checkNotFound(categoriesRepository.findById(itemTo.getCategoryId()),
+            addMessageDetails(Category.class.getSimpleName(), itemTo.getSupplierId())
+        ));
+        return savedItem;
     }
 
 }
