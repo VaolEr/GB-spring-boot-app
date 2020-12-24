@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
-@RequestMapping("${app.endpoints.items.base_url}")
+@RequestMapping("${app.endpoints.base_path}" + "${app.endpoints.items.base_url}")
 @RequiredArgsConstructor
 public class ItemsController {
 
