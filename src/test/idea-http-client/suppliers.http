@@ -1,0 +1,62 @@
+### READ all Suppliers
+
+GET http://localhost:8080/api/v1/suppliers
+Accept: application/json
+
+### READ Supplier by id (id exists in table)
+
+GET http://localhost:8080/api/v1/suppliers/1010
+Accept: application/json
+
+### READ Supplier by id (id not exists in table)
+
+GET http://localhost:8080/api/v1/suppliers/1
+Accept: application/json
+
+### READ all suppliers with "b" in name
+
+GET http://localhost:8080/api/v1/suppliers?name=b
+Accept: application/json
+
+### READ all Suppliers
+
+GET http://localhost:8080/api/v1/suppliers?name=
+Accept: application/json
+
+### CREATE supplier with id 1011
+
+PUT http://localhost:8080/api/v1/suppliers/1011
+Content-Type: application/json
+
+{
+  "name": "Test Supplier New Name"
+}
+
+### READ Supplier by id 1011
+
+GET http://localhost:8080/api/v1/suppliers?name=Test Supplier
+Accept: application/json
+
+### UPDATE supplier with id 1011
+
+PUT http://localhost:8080/api/v1/suppliers/1011
+Content-Type: application/json
+
+{
+  "name": "Test Supplier"
+}
+
+### READ Supplier by id 1011
+
+GET http://localhost:8080/api/v1/suppliers/1011
+Accept: application/json
+
+### DELETE Supplier with id 1011
+
+DELETE http://localhost:8080/api/v1/suppliers/1011
+
+### DELETE Supplier with name
+
+DELETE http://localhost:8080/api/v1/suppliers?name=10 sotok ogorod
+
+###
