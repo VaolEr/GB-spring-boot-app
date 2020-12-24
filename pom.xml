@@ -74,7 +74,6 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
 
   <build>
@@ -85,7 +84,6 @@
         <configuration>
           <profiles>
             <profile>dev</profile>
-            <profile>test</profile>
           </profiles>
           <excludes>
             <exclude>
@@ -96,6 +94,19 @@
         </configuration>
       </plugin>
     </plugins>
+    <resources>
+      <resource>
+        <directory>${project.basedir}/src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+      <resource>
+        <directory>${project.basedir}</directory>
+        <includes>
+          <include>README.md</include>
+        </includes>
+        <targetPath>${project.build.outputDirectory}/static</targetPath>
+      </resource>
+    </resources>
   </build>
 
 </project>
