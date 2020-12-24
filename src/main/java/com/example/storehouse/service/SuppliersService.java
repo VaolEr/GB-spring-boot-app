@@ -55,11 +55,13 @@ public class SuppliersService {
         return suppliersRepository.save(updatedSupplier);
     }
 
-    @Transactional
-    public void delete(Integer id) {
-        suppliersRepository.deleteById(id);
-//        return suppliersRepository.delete(id) != 0;
-    }
+// Не используем, так как при удалении поставщика удалятся и все товары, связанные с ним,
+// что недопустимо!
+//    @Transactional
+//    public void delete(Integer id) {
+//        suppliersRepository.deleteById(id);
+////        return suppliersRepository.delete(id) != 0;
+//    }
 
     private Supplier prepareToSave(SupplierTo supplierTo) {
         Supplier savedSupplier = fromSupplierTo(supplierTo);
