@@ -1,8 +1,10 @@
 Storehouse Backend App
 ---
 
+- App base path: https://gb-storehouse.herokuapp.com/api/v1
+- App info: https://gb-storehouse.herokuapp.com/check/info
+
 #### Requests examples
-   - Base path: `https://gb-storehouse.herokuapp.com/api/v1`
    - [Items controller](src/test/idea-http-client/items.http)
 
 #### v0.0.4
