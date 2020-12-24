@@ -67,9 +67,11 @@ public class SuppliersController {
         );
     }
 
-    @DeleteMapping(path = "/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Integer id) {
-        suppliersService.delete(id);
-    }
+// Не используем, так как при удалении поставщика удалятся и все товары, связанные с ним,
+// что недопустимо!
+//    @DeleteMapping(path = "/{id}")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void delete(@PathVariable Integer id) {
+//        suppliersService.delete(id);
+//    }
 }
