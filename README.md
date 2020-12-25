@@ -2,7 +2,7 @@ Storehouse Backend App
 ---
 
 - App home page: https://gb-storehouse.herokuapp.com
-- App API base path: https://gb-storehouse.herokuapp.com/api/v1.0
+- App API base path: https://gb-storehouse.herokuapp.com/api/v1
 - App info: https://gb-storehouse.herokuapp.com/check/info
 
 #### Requests examples
