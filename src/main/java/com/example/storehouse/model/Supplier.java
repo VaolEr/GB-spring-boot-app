@@ -28,7 +28,7 @@ public class Supplier extends AbstractNamedEntity {
     @JsonBackReference
     private Set<Item> items;
 
-    private Set<Item> getSupplierItems(){
+    private Set<Item> getSupplierItems() {
         return (items != null) ? items : new HashSet<>();
     }
 }

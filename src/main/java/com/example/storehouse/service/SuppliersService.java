@@ -18,6 +18,7 @@ import com.example.storehouse.repository.CategoriesRepository;
 import com.example.storehouse.repository.ItemsRepository;
 import com.example.storehouse.repository.StorehousesRepository;
 import com.example.storehouse.repository.SuppliersRepository;
+import com.example.storehouse.util.exception.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -40,10 +41,12 @@ public class SuppliersService {
     }
 
     public Supplier getById(Integer id) {
-        return checkNotFound(suppliersRepository.findById(id), addMessageDetails(Supplier.class.getSimpleName(), id));
+        return checkNotFound(suppliersRepository.findById(id),
+                             addMessageDetails(Supplier.class.getSimpleName(), id));
     }
 
-    public List<Item> getSupplierItems(Integer id){
+    public List<Item> getSupplierItems(Integer id) {
+        //TODO Add check not found supplier with id
         return new ArrayList<>(suppliersRepository.getOneById(id).getItems());
     }
 

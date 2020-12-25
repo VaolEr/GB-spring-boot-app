@@ -4,6 +4,7 @@ import com.example.storehouse.model.abstractentity.AbstractBaseEntity;
 import com.example.storehouse.util.exception.IllegalRequestDataException;
 import com.example.storehouse.util.exception.NotFoundException;
 import java.util.Optional;
+import java.util.Set;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -24,7 +25,8 @@ public class ValidationUtil {
         // http://stackoverflow.com/a/32728226/548473
         if (entity.isNew()) {
             entity.setId(id);
-        } else {
+        }
+        else {
             assert entity.getId() != null;
             if (!entity.getId().equals(id)) {
                 throw new IllegalRequestDataException(entity + " must be with id = " + id);
