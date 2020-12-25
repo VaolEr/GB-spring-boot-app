@@ -1,6 +1,7 @@
 package com.example.storehouse.web;
 
 import static com.example.storehouse.util.ItemsUtil.toItemTo;
+import static com.example.storehouse.util.ItemsUtil.toItemTos;
 import static com.example.storehouse.util.SuppliersUtil.toSupplierTo;
 import static com.example.storehouse.util.SuppliersUtil.toSupplierTos;
 
@@ -46,6 +47,13 @@ public class SuppliersController {
     public RestResponseTo<SupplierTo> getById(@PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toSupplierTo(suppliersService.getById(id))
+        );
+    }
+
+    @GetMapping(path = "/{id}/items")
+    public RestResponseTo<List<ItemTo>> getSuppliersItems(@PathVariable Integer id) {
+        return new RestResponseTo<>(
+            HttpStatus.OK.toString(), null, toItemTos(suppliersService.getSupplierItems(id))
         );
     }
 

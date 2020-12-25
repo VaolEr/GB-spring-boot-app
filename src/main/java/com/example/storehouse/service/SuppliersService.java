@@ -18,7 +18,9 @@ import com.example.storehouse.repository.CategoriesRepository;
 import com.example.storehouse.repository.ItemsRepository;
 import com.example.storehouse.repository.StorehousesRepository;
 import com.example.storehouse.repository.SuppliersRepository;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +41,10 @@ public class SuppliersService {
 
     public Supplier getById(Integer id) {
         return checkNotFound(suppliersRepository.findById(id), addMessageDetails(Supplier.class.getSimpleName(), id));
+    }
+
+    public List<Item> getSupplierItems(Integer id){
+        return new ArrayList<>(suppliersRepository.getOneById(id).getItems());
     }
 
     @Transactional

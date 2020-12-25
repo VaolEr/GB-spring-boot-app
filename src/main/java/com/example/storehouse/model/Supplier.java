@@ -3,6 +3,8 @@ package com.example.storehouse.model;
 import com.example.storehouse.model.abstractentity.AbstractNamedEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,6 +26,9 @@ public class Supplier extends AbstractNamedEntity {
     // этот момент можно будет обдумать, стоит ли реализовывать обработку "вложенных" изменений
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonBackReference
-    private List<Item> items;
+    private Set<Item> items;
 
+    private Set<Item> getSupplierItems(){
+        return (items != null) ? items : new HashSet<>();
+    }
 }
