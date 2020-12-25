@@ -7,6 +7,14 @@ Storehouse Backend App
 
 #### Requests examples
    - [Items controller](src/test/idea-http-client/items.http)
+   - [Suppliers controller](src/test/idea-http-client/suppliers.http)
+
+#### v0.0.5
+- GET `/suppliers[/{id}]`
+- GET `/suppliers[?name=]`
+- GET `/suppliers[/{id}/items]`
+- POST `/suppliers`
+- PUT `/suppliers/{id}`
 
 #### v0.0.4
 - PUT, DELETE `/items/{id}`
