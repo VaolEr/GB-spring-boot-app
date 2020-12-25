@@ -21,8 +21,8 @@ public class SuppliersUtil {
             .build();
     }
 
-    public static List<SupplierTo> toSupplierTos(List<Supplier> items) {
-        return items.stream().map(SuppliersUtil::toSupplierTo).collect(Collectors.toList());
+    public static List<SupplierTo> toSupplierTos(List<Supplier> suppliers) {
+        return suppliers.stream().map(SuppliersUtil::toSupplierTo).collect(Collectors.toList());
     }
 
     public static Supplier fromSupplierTo(SupplierTo supplierTo) {

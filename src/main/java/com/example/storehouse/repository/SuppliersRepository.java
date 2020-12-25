@@ -11,11 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public interface SuppliersRepository extends JpaRepository<Supplier, Integer> {
 
-    List<Supplier> findAll();
+    //List<Supplier> findAll();
 
     List<Supplier> findByNameContaining(String name);
 
-    Optional<Supplier> findById(Integer id);
-
-    Optional<Supplier> getSupplierById(Integer id);
+    //Optional<Supplier> findById(Integer id);
+    //Optional<Supplier> getSupplierById(Integer id);
 }

@@ -43,13 +43,15 @@ public class SuppliersService {
 
     @Transactional
     public Supplier create(SupplierTo supplierTo) {
-        Supplier newSupplier = prepareToSave(supplierTo);
+        //Supplier newSupplier = prepareToSave(supplierTo);
+        Supplier newSupplier = fromSupplierTo(supplierTo);
         return suppliersRepository.save(newSupplier);
     }
 
     @Transactional
     public Supplier update(SupplierTo supplierTo, Integer id) {
-        Supplier updatedSupplier = prepareToSave(supplierTo);
+        //Supplier updatedSupplier = prepareToSave(supplierTo);
+        Supplier updatedSupplier = fromSupplierTo(supplierTo);
         // переделать проверку через HasId, проверять до обработки itemTo
         assureIdConsistent(updatedSupplier, id);
         return suppliersRepository.save(updatedSupplier);
