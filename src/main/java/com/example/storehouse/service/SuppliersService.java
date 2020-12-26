@@ -47,7 +47,7 @@ public class SuppliersService {
 
     public List<Item> getSupplierItems(Integer id) {
         //TODO Add check not found supplier with id
-        return new ArrayList<>(suppliersRepository.getOneById(id).getItems());
+        return suppliersRepository.getOneById(id).getItems();
     }
 
     @Transactional
