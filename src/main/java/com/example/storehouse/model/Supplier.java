@@ -3,6 +3,7 @@ package com.example.storehouse.model;
 import com.example.storehouse.model.abstractentity.AbstractNamedEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,4 +27,7 @@ public class Supplier extends AbstractNamedEntity {
     @JsonBackReference
     private List<Item> items;
 
+    private List<Item> getSupplierItems() {
+        return (items != null) ? items : new ArrayList<>();
+    }
 }
