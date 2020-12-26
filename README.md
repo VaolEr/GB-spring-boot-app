@@ -8,6 +8,14 @@ Storehouse Backend App
 #### Requests examples
    - [Items controller](src/test/idea-http-client/items.http)
    - [Suppliers controller](src/test/idea-http-client/suppliers.http)
+   - [Categories controller](src/test/idea-http-client/categories.http)
+
+#### v0.0.6
+- GET `/categories[/{id}]`
+- GET `/categories[?name=]`
+- GET `/categories[/{id}/items]`
+- POST `/categories`
+- PUT `/categories/{id}`
 
 #### v0.0.5
 - GET `/suppliers[/{id}]`
