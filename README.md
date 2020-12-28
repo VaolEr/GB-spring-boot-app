@@ -15,6 +15,9 @@ Storehouse Backend App
 #### v0.0.8
 - GET/POST/PUT `/items`: changed items request/response format (supplier, categories - now are JSON sub-objects)
 
+#### v0.0.7
+- GET/POST/PUT /items: changed items request/response format (supplier, categories - now are JSON sub-objects)
+
 #### v0.0.6
 - GET `/categories[/{id}]`
 - GET `/categories[?name=]`
