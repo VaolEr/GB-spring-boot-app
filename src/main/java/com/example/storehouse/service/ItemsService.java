@@ -39,8 +39,6 @@ public class ItemsService {
         return checkNotFound(itemsRepository.findById(id), addMessageDetails(Item.class.getSimpleName(), id));
     }
 
-    // убрал getByIdWithBalance, для получений остатка товара на складах - отдельный запрос к контроллеру складов с id товара
-
     @Transactional
     public Item create(ItemTo itemTo) {
         Item newItem = prepareToSave(itemTo);
@@ -61,7 +59,7 @@ public class ItemsService {
     @Transactional
     public Item update(ItemTo itemTo, Integer id) {
         Item updatedItem = prepareToSave(itemTo);
-        // переделать проверку через HasId, проверять до обработки itemTo
+        //TODO переделать проверку через HasId, проверять до обработки itemTo
         assureIdConsistent(updatedItem, id);
         return itemsRepository.save(updatedItem);
     }
@@ -69,7 +67,6 @@ public class ItemsService {
     @Transactional
     public void delete(Integer id) {
         itemsRepository.deleteById(id);
-//        return itemsRepository.delete(id) != 0;
     }
 
     private Item prepareToSave(ItemTo itemTo) {
