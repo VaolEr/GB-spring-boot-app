@@ -10,6 +10,11 @@ Storehouse Backend App
    - [Suppliers controller](src/test/idea-http-client/suppliers.http)
    - [Categories controller](src/test/idea-http-client/categories.http)
 
+#### v0.0.X
+-	User `admin@mail.com`	password	`admin`	status `ACTIVE`
+-	User `user@mail.com`	password 	`user`	status `ACTIVE` 
+-	User `root@mail.com`	password 	`root`	status `BANNED`
+
 #### v0.0.7
 - GET/POST/PUT `/items`: changed items request/response format (supplier, categories - now are JSON sub-objects)
 
