@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +34,7 @@ public class CategoriesController {
     private final CategoriesService categoriesService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('db:users:read')")
     public RestResponseTo<List<CategoryTo>> getAllOrByName(
         @RequestParam(required = false) String name) {
         return new RestResponseTo<>(
@@ -41,6 +43,7 @@ public class CategoriesController {
     }
 
     @GetMapping(path = "/{id}")
+    @PreAuthorize("hasAuthority('db:users:read')")
     public RestResponseTo<CategoryTo> getById(@PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toCategoryTo(categoriesService.getById(id))
@@ -48,6 +51,7 @@ public class CategoriesController {
     }
 
     @GetMapping(path = "/{id}/items")
+    @PreAuthorize("hasAuthority('db:users:read')")
     public RestResponseTo<List<ItemTo>> getCategoriesItems(@PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toItemTos(categoriesService.getCategoryItems(id))
@@ -56,6 +60,7 @@ public class CategoriesController {
 
     // TODO: Возвращать ТО после создания
     @PostMapping
+    @PreAuthorize("hasAuthority('db:users:write')")
     public ResponseEntity<?> create(@Valid @RequestBody CategoryTo categoryTo) {
         Category created = categoriesService.create(categoryTo);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentRequest().
@@ -66,6 +71,7 @@ public class CategoriesController {
     }
 
     @PutMapping(path = "/{id}")
+    @PreAuthorize("hasAuthority('db:users:write')")
     public RestResponseTo<CategoryTo> update(@RequestBody CategoryTo categoryTo,
                                              @PathVariable Integer id) {
         return new RestResponseTo<>(

@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,6 +38,7 @@ public class SuppliersController {
     private final SuppliersService suppliersService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('db:users:read')")
     public RestResponseTo<List<SupplierTo>> getAllOrByName(@RequestParam(required = false) String name) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toSupplierTos(suppliersService.get(name))
@@ -44,6 +46,7 @@ public class SuppliersController {
     }
 
     @GetMapping(path = "/{id}")
+    @PreAuthorize("hasAuthority('db:users:read')")
     public RestResponseTo<SupplierTo> getById(@PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toSupplierTo(suppliersService.getById(id))
@@ -51,6 +54,7 @@ public class SuppliersController {
     }
 
     @GetMapping(path = "/{id}/items")
+    @PreAuthorize("hasAuthority('db:users:read')")
     public RestResponseTo<List<ItemTo>> getSuppliersItems(@PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toItemTos(suppliersService.getSupplierItems(id))
@@ -59,6 +63,7 @@ public class SuppliersController {
 
     // TODO: Возвращать ТО после создания
     @PostMapping
+    @PreAuthorize("hasAuthority('db:users:write')")
     public ResponseEntity<?> create(@Valid @RequestBody SupplierTo supplierTo) {
         Supplier created = suppliersService.create(supplierTo);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentRequest().
@@ -69,6 +74,7 @@ public class SuppliersController {
     }
 
     @PutMapping(path = "/{id}")
+    @PreAuthorize("hasAuthority('db:users:write')")
     public RestResponseTo<SupplierTo> update(@RequestBody SupplierTo supplierTo, @PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toSupplierTo(suppliersService.update(supplierTo, id))

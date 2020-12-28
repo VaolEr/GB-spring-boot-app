@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,7 @@ public class ItemsController {
     private final ItemsService itemsService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('db:users:read')")
     public RestResponseTo<List<ItemTo>> getAllOrByName(@RequestParam(required = false) String name) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toItemTos(itemsService.get(name))
@@ -41,6 +43,7 @@ public class ItemsController {
     }
 
     @GetMapping(path = "/{id}")
+    @PreAuthorize("hasAuthority('db:users:read')")
     public RestResponseTo<ItemTo> getById(@PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toItemTo(itemsService.getById(id))
@@ -48,6 +51,7 @@ public class ItemsController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('db:users:write')")
     public ResponseEntity<?> create(@Valid @RequestBody ItemTo itemTo) {
         Item created = itemsService.create(itemTo);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentRequest().
@@ -59,6 +63,7 @@ public class ItemsController {
 
     // Валидацию попр. реализовать через @Validated для разделения проверок ItemTo и ItemStorehouseTo
     @PutMapping(path = "/{id}")
+    @PreAuthorize("hasAuthority('db:users:write')")
     public RestResponseTo<ItemTo> update(@RequestBody ItemTo itemTo, @PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toItemTo(itemsService.update(itemTo, id))
@@ -66,6 +71,7 @@ public class ItemsController {
     }
 
     @DeleteMapping(path = "/{id}")
+    @PreAuthorize("hasAuthority('db:users:write')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id) {
         itemsService.delete(id);
