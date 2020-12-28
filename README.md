@@ -14,6 +14,9 @@ Storehouse Backend App
 -	User `admin@mail.com`	password	`admin`	status `ACTIVE`
 -	User `user@mail.com`	password 	`user`	status `ACTIVE` 
 -	User `root@mail.com`	password 	`root`	status `BANNED`
+-	Database communications:
+- 	`Admin` have `READ` and `WRITE` permissions; 
+- 	`User` have only `READ` permissions.
 
 #### v0.0.7
 - GET/POST/PUT `/items`: changed items request/response format (supplier, categories - now are JSON sub-objects)
