@@ -13,7 +13,10 @@ Storehouse Backend App
    - [Categories controller](src/test/idea-http-client/categories.http)
 
 #### v0.0.8
-- GET/POST/PUT `/items`: changed items request/response format (supplier, categories - now are JSON sub-objects)
+- Added swagger docs for API
+
+#### v0.0.7
+- GET/POST/PUT `/items`: changed items request/response format (`supplier`, `categories` - now are JSON sub-objects)
 
 #### v0.0.6
 - GET `/categories[/{id}]`
