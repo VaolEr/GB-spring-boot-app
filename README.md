@@ -1,16 +1,18 @@
 Storehouse Backend App
 ---
 
-- App home page: https://gb-storehouse.herokuapp.com
-- App API base path: https://gb-storehouse.herokuapp.com/api/v1
-- App info: https://gb-storehouse.herokuapp.com/check/info
+- [App home page](https://gb-storehouse.herokuapp.com)
+- [Swagger docs](https://gb-storehouse.herokuapp.com/swagger-ui/)
+- [App API base path](https://gb-storehouse.herokuapp.com/api/v1)
+- [App info](https://gb-storehouse.herokuapp.com/check/info)
+- [App sources](https://github.com/VaolEr/GB-spring-boot-app)
 
-#### Requests examples
+#### Requests examples (dev)
    - [Items controller](src/test/idea-http-client/items.http)
    - [Suppliers controller](src/test/idea-http-client/suppliers.http)
    - [Categories controller](src/test/idea-http-client/categories.http)
 
-#### v0.0.7
+#### v0.0.8
 - GET/POST/PUT `/items`: changed items request/response format (supplier, categories - now are JSON sub-objects)
 
 #### v0.0.6
