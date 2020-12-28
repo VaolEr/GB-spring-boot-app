@@ -1,0 +1,74 @@
+PUT http://localhost:8080/api/v1/items/1003
+Content-Type: application/json
+
+{
+  "name": "Moloko Вкусное?",
+  "sku": "#moloko555",
+  "supplier": {
+    "id": 1000
+  },
+  "categories": [
+    {
+      "id": 1000
+    }
+  ]
+}
+
+###
+
+DELETE http://localhost:8080/api/v1/items/1041
+
+###
+
+POST http://localhost:8080/api/v1/items
+Content-Type: application/json
+
+{
+  "name": "Moloko Burenka2",
+  "sku": "#moloko784",
+  "supplier": {
+    "id": 1001
+  },
+  "categories": [
+    {
+      "id": 1001
+    }
+  ],
+  "storehouses_balance": [
+    {
+      "storehouse_id": 1001,
+      "quantity": 14
+    },
+    {
+      "storehouse_id": 1000,
+      "quantity": 18
+    }
+  ]
+}
+
+###
+
+GET http://localhost:8080/api/v1/items
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/v1/items/1003
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/v1/items/1
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/v1/items?name=p
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/v1/items?name=
+Accept: application/json
+
+###
