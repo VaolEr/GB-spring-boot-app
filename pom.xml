@@ -11,9 +11,9 @@
   </parent>
   <groupId>com.example</groupId>
   <artifactId>storehouse-back</artifactId>
-  <version>0.0.7-SNAPSHOT</version>
+  <version>0.0.8-SNAPSHOT</version>
   <name>Storehouse API</name>
-  <description>Demo: Storehouse backend API on Spring Boot</description>
+  <description>Storehouse backend API on Spring Boot</description>
 
   <properties>
     <java.version>11</java.version>
@@ -61,6 +61,18 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
       <version>2.4.1</version>
+    </dependency>
+
+    <!--Swagger-->
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-boot-starter</artifactId>
+      <version>3.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger-ui</artifactId>
+      <version>3.0.0</version>
     </dependency>
 
     <!-- Testing -->

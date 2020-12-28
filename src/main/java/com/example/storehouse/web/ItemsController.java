@@ -13,6 +13,7 @@ import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
-@RequestMapping("${app.endpoints.base_path}" + "${app.endpoints.items.base_url}")
+@RequestMapping(value = "${app.endpoints.base_path}" + "${app.endpoints.items.base_url}",
+    produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class ItemsController {
 
@@ -47,7 +49,7 @@ public class ItemsController {
         );
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> create(@Valid @RequestBody ItemTo itemTo) {
         Item created = itemsService.create(itemTo);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentRequest().
@@ -58,7 +60,7 @@ public class ItemsController {
     }
 
     // Валидацию попр. реализовать через @Validated для разделения проверок ItemTo и ItemStorehouseTo
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public RestResponseTo<ItemTo> update(@RequestBody ItemTo itemTo, @PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toItemTo(itemsService.update(itemTo, id))
