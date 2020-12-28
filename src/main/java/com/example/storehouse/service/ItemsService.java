@@ -59,7 +59,7 @@ public class ItemsService {
     @Transactional
     public Item update(ItemTo itemTo, Integer id) {
         Item updatedItem = prepareToSave(itemTo);
-        //TODO переделать проверку через HasId, проверять до обработки itemTo
+        // TODO переделать проверку через HasId, проверять до обработки itemTo
         assureIdConsistent(updatedItem, id);
         return itemsRepository.save(updatedItem);
     }
@@ -71,12 +71,14 @@ public class ItemsService {
 
     private Item prepareToSave(ItemTo itemTo) {
         Item savedItem = fromItemTo(itemTo);
-        savedItem.setSupplier(checkNotFound(suppliersRepository.findById(itemTo.getSupplierId()),
-            addMessageDetails(Supplier.class.getSimpleName(), itemTo.getSupplierId())
-        ));
-        savedItem.setCategory(checkNotFound(categoriesRepository.findById(itemTo.getCategoryId()),
-            addMessageDetails(Category.class.getSimpleName(), itemTo.getSupplierId())
-        ));
+        savedItem.setSupplier(
+            checkNotFound(suppliersRepository.findById(itemTo.getSupplier().getId()),
+                addMessageDetails(Supplier.class.getSimpleName(), itemTo.getSupplier().getId())
+            ));
+        itemTo.getCategories()
+            .forEach(categoryTo -> savedItem.setCategory(checkNotFound(categoriesRepository.findById(categoryTo.getId()),
+                addMessageDetails(Category.class.getSimpleName(), categoryTo.getId())))
+            );
         return savedItem;
     }
 

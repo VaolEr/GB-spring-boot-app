@@ -1,16 +1,22 @@
-PUT http://localhost:8080/api/v1/items/1001
+PUT http://localhost:8080/api/v1/items/1003
 Content-Type: application/json
 
 {
-  "name": "Moloko Вкусное!!!",
+  "name": "Moloko Вкусное?",
   "sku": "#moloko555",
-  "supplier_id": 1001,
-  "category_id": 1001
+  "supplier": {
+    "id": 1000
+  },
+  "categories": [
+    {
+      "id": 1000
+    }
+  ]
 }
 
 ###
 
-DELETE http://localhost:8080/api/v1/items/1054
+DELETE http://localhost:8080/api/v1/items/1041
 
 ###
 
@@ -18,10 +24,16 @@ POST http://localhost:8080/api/v1/items
 Content-Type: application/json
 
 {
-  "name": "Moloko Burenka1",
-  "sku": "#moloko783",
-  "supplier_id": 1001,
-  "category_id": 1001,
+  "name": "Moloko Burenka2",
+  "sku": "#moloko784",
+  "supplier": {
+    "id": 1001
+  },
+  "categories": [
+    {
+      "id": 1001
+    }
+  ],
   "storehouses_balance": [
     {
       "storehouse_id": 1001,
@@ -41,7 +53,7 @@ Accept: application/json
 
 ###
 
-GET http://localhost:8080/api/v1/items/1001
+GET http://localhost:8080/api/v1/items/1003
 Accept: application/json
 
 ###

@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CategoryTo {
 
-    // Этот ТО нам пригодится при создании/обновлении Category
-
     Integer id;
 
     @NotNull

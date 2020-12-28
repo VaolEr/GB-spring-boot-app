@@ -1,5 +1,8 @@
 package com.example.storehouse.util;
 
+import static com.example.storehouse.util.CategoriesUtil.toCategoryTo;
+import static com.example.storehouse.util.SuppliersUtil.toSupplierTo;
+
 import com.example.storehouse.dto.ItemTo;
 import com.example.storehouse.model.Item;
 import java.util.List;
@@ -16,8 +19,12 @@ public final class ItemsUtil {
             .id(item.getId())
             .name(item.getName())
             .sku(item.getSku())
-            .categoryId(item.getCategory().getId())
-            .supplierId(item.getSupplier().getId())
+            .supplier(toSupplierTo(item.getSupplier()))
+            .categories(
+                // Сделано для возможности дальнейшего расширения ответа без изменения формата,
+                // в данный момент каждый Item может иметь только одну Category
+                List.of(toCategoryTo(item.getCategory()))
+            )
             .build();
     }
 
