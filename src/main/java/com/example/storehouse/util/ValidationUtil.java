@@ -9,9 +9,10 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ValidationUtil {
+public final class ValidationUtil {
 
     // https://stackoverflow.com/questions/36166658/how-to-disable-the-optional-used-as-field-or-parameter-type-warning-in-intelli
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     public static <T> T checkNotFound(@NotNull Optional<T> optional, String msg) {
         return optional.orElseThrow(() -> new NotFoundException("Not found entity with " + msg));
     }
@@ -24,8 +25,7 @@ public class ValidationUtil {
         // http://stackoverflow.com/a/32728226/548473
         if (entity.isNew()) {
             entity.setId(id);
-        }
-        else {
+        } else {
             assert entity.getId() != null;
             if (!entity.getId().equals(id)) {
                 throw new IllegalRequestDataException(entity + " must be with id = " + id);

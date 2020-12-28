@@ -17,8 +17,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ItemTo {
 
-    // Этот ТО нам пригодится при создании/обновлении Item
-
     Integer id;
 
     @NotNull
@@ -30,10 +28,10 @@ public class ItemTo {
     String sku;
 
     @NotNull
-    Integer supplierId;
+    SupplierTo supplier;
 
     @NotNull
-    Integer categoryId;
+    List<CategoryTo> categories;
 
     @NotNull
     @JsonProperty(value = "storehouses_balance")

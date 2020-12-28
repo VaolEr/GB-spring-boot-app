@@ -25,7 +25,4 @@ public interface ItemsRepository extends JpaRepository<Item, Integer> {
     @EntityGraph(attributePaths = {"category", "supplier"}, type = EntityGraphType.LOAD)
     Optional<Item> findById(Integer id);
 
-    @EntityGraph(attributePaths = {"category", "supplier", "itemStorehouses"}, type = EntityGraphType.FETCH)
-    Optional<Item> getItemById(Integer id);
-
 }

@@ -47,7 +47,6 @@ public class ItemsController {
         );
     }
 
-    // TODO: Возвращать ТО после создания
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody ItemTo itemTo) {
         Item created = itemsService.create(itemTo);
