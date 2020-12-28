@@ -1,7 +1,6 @@
 package com.example.storehouse.util;
 
 
-
 import com.example.storehouse.dto.SupplierTo;
 import com.example.storehouse.model.Supplier;
 import java.util.List;
@@ -10,9 +9,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class SuppliersUtil {
+public final class SuppliersUtil {
 
-    // NOTE: не забыть проверить необходимость этого метода, если будет исп. EntityGraph
     public static SupplierTo toSupplierTo(Supplier supplier) {
         return SupplierTo
             .builder()

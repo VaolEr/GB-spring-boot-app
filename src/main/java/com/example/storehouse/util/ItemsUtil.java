@@ -7,11 +7,9 @@ import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-//@UtilityClass
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ItemsUtil {
+public final class ItemsUtil {
 
-    // NOTE: не забыть проверить необходимость этого метода, если будет исп. EntityGraph
     public static ItemTo toItemTo(Item item) {
         return ItemTo
             .builder()
