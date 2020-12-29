@@ -34,17 +34,4 @@ public class Storehouse extends AbstractNamedEntity {
         itemStorehouses.add(itemStorehouse);
     }
 
-
-    public void setItemStorehouses(Set<ItemStorehouse> itemsStorehouses) {
-//        this.itemStorehouses = getItemStorehousesInstance();
-        itemStorehouses.addAll(itemsStorehouses.stream()
-                .peek(itemStorehouse -> itemStorehouse.setStorehouse(this))
-                .collect(Collectors.toSet())
-        );
-    }
-
-    private Set<ItemStorehouse> getItemStorehousesInstance(){
-        return (itemStorehouses != null) ? itemStorehouses : new HashSet<>();
-    }
-
 }
