@@ -1,6 +1,5 @@
 package com.example.storehouse.web;
 
-import static com.example.storehouse.util.ItemsUtil.toItemTo;
 import static com.example.storehouse.util.ItemsUtil.toItemTos;
 import static com.example.storehouse.util.SuppliersUtil.toSupplierTo;
 import static com.example.storehouse.util.SuppliersUtil.toSupplierTos;
@@ -8,7 +7,6 @@ import static com.example.storehouse.util.SuppliersUtil.toSupplierTos;
 import com.example.storehouse.dto.ItemTo;
 import com.example.storehouse.dto.RestResponseTo;
 import com.example.storehouse.dto.SupplierTo;
-import com.example.storehouse.model.Item;
 import com.example.storehouse.model.Supplier;
 import com.example.storehouse.service.SuppliersService;
 import java.net.URI;
@@ -16,6 +14,7 @@ import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,12 +25,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
-@RequestMapping("${app.endpoints.base_path}" + "${app.endpoints.suppliers.base_url}")
+@RequestMapping(value = "${app.endpoints.base_path}" + "${app.endpoints.suppliers.base_url}",
+    produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class SuppliersController {
 
@@ -61,8 +60,7 @@ public class SuppliersController {
         );
     }
 
-    // TODO: Возвращать ТО после создания
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('db:users:write')")
     public ResponseEntity<?> create(@Valid @RequestBody SupplierTo supplierTo) {
         Supplier created = suppliersService.create(supplierTo);
@@ -73,7 +71,7 @@ public class SuppliersController {
         );
     }
 
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('db:users:write')")
     public RestResponseTo<SupplierTo> update(@RequestBody SupplierTo supplierTo, @PathVariable Integer id) {
         return new RestResponseTo<>(

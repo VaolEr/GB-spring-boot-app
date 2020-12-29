@@ -14,6 +14,7 @@ import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
-@RequestMapping("${app.endpoints.base_path}" + "${app.endpoints.categories.base_url}")
+@RequestMapping(value = "${app.endpoints.base_path}" + "${app.endpoints.categories.base_url}",
+    produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class CategoriesController {
 
@@ -58,8 +60,7 @@ public class CategoriesController {
         );
     }
 
-    // TODO: Возвращать ТО после создания
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('db:users:write')")
     public ResponseEntity<?> create(@Valid @RequestBody CategoryTo categoryTo) {
         Category created = categoriesService.create(categoryTo);
@@ -70,10 +71,10 @@ public class CategoriesController {
         );
     }
 
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('db:users:write')")
     public RestResponseTo<CategoryTo> update(@RequestBody CategoryTo categoryTo,
-                                             @PathVariable Integer id) {
+        @PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toCategoryTo(categoriesService.update(categoryTo, id))
         );
