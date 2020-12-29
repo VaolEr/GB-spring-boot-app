@@ -11,9 +11,9 @@
   </parent>
   <groupId>com.example</groupId>
   <artifactId>storehouse-back</artifactId>
-  <version>0.0.3-SNAPSHOT</version>
+  <version>0.0.8-SNAPSHOT</version>
   <name>Storehouse API</name>
-  <description>Demo: Storehouse backend API on Spring Boot</description>
+  <description>Storehouse backend API on Spring Boot</description>
 
   <properties>
     <java.version>11</java.version>
@@ -63,6 +63,18 @@
       <version>2.4.1</version>
     </dependency>
 
+    <!--Swagger-->
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-boot-starter</artifactId>
+      <version>3.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger-ui</artifactId>
+      <version>3.0.0</version>
+    </dependency>
+
     <!-- Testing -->
     <dependency>
       <groupId>com.h2database</groupId>
@@ -74,7 +86,6 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
 
   <build>
@@ -85,7 +96,6 @@
         <configuration>
           <profiles>
             <profile>dev</profile>
-            <profile>test</profile>
           </profiles>
           <excludes>
             <exclude>
@@ -96,6 +106,19 @@
         </configuration>
       </plugin>
     </plugins>
+    <resources>
+      <resource>
+        <directory>${project.basedir}/src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+      <resource>
+        <directory>${project.basedir}</directory>
+        <includes>
+          <include>README.md</include>
+        </includes>
+        <targetPath>${project.build.outputDirectory}/static</targetPath>
+      </resource>
+    </resources>
   </build>
 
 </project>

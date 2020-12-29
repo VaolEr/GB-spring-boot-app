@@ -1,21 +1,22 @@
 package com.example.storehouse.dto;
 
-import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemStorehouseTo {
+public class SupplierTo {
+
+    Integer id;
 
     @NotNull
-    Integer storehouseId;
-
-    @NotNull
-    @Min(value = 1)
-    Integer quantity;
+    @NotBlank
+    String name;
 
 }

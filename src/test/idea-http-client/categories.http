@@ -1,0 +1,66 @@
+### READ all Categories
+
+GET http://localhost:8080/api/v1/categories
+Accept: application/json
+
+### READ Category by id (id exists in table)
+
+GET http://localhost:8080/api/v1/categories/1010
+Accept: application/json
+
+### READ Category by id (id not exists in table)
+
+GET http://localhost:8080/api/v1/categories/1
+Accept: application/json
+
+### READ all Categories with "b" in name
+
+GET http://localhost:8080/api/v1/categories?name=b
+Accept: application/json
+
+### READ all Categories
+
+GET http://localhost:8080/api/v1/categories?name=
+Accept: application/json
+
+### CREATE Category with id 1011
+
+POST http://localhost:8080/api/v1/categories
+Content-Type: application/json
+
+{
+  "name": "Test Category New Name"
+}
+
+### READ Category by id 1011
+
+GET http://localhost:8080/api/v1/categories?name=Test Category
+Accept: application/json
+
+### UPDATE Category with id 1011
+
+PUT http://localhost:8080/api/v1/categories/1011
+Content-Type: application/json
+
+{
+  "name": "Test Category"
+}
+
+### READ Category by id 1011
+
+GET http://localhost:8080/api/v1/categories/1011
+Accept: application/json
+
+### DELETE Category with id 1011
+
+DELETE http://localhost:8080/api/v1/categories/1011
+
+### GET All Items for Category with id 1010
+
+GET http://localhost:8080/api/v1/categories/1010/items
+
+### GET All Items for Category with id 9999
+
+GET http://localhost:8080/api/v1/categories/9999/items
+
+###
