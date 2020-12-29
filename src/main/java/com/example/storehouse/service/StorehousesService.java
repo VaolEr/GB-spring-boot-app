@@ -11,8 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
-import static com.example.storehouse.util.ValidationUtil.addMessageDetails;
-import static com.example.storehouse.util.ValidationUtil.checkNotFound;
+import static com.example.storehouse.util.ValidationUtil.*;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +24,7 @@ public class StorehousesService {
     }
 
     public Storehouse getStorehouseById(Integer id) {
-        return checkNotFound(storehousesRepository.getStorehouseById(id),
+        return checkNotFound(storehousesRepository.findById(id),
                 addMessageDetails(Storehouse.class.getSimpleName(), id));
     }
 
@@ -33,7 +32,7 @@ public class StorehousesService {
     public Storehouse create(StorehouseTo storehouseTo){
         Storehouse newStorehouse = StorehousesUtils.fromStorehouseTo(storehouseTo);
         storehouseTo.getItemsStorehousesTo().forEach(iSt -> {
-            Storehouse storehouse = checkNotFound(storehousesRepository.getStorehouseById(iSt.getStorehouseId()),
+            Storehouse storehouse = checkNotFound(storehousesRepository.findById(iSt.getStorehouseId()),
                     addMessageDetails(Storehouse.class.getSimpleName(), iSt.getStorehouseId())
             );
             ItemStorehouse itemStorehouse = new ItemStorehouse();
@@ -46,6 +45,19 @@ public class StorehousesService {
         return storehousesRepository.save(newStorehouse);
     }
 
+    public Storehouse update(StorehouseTo storehouseTo, Integer id){
+        Storehouse updatedStorehouse = StorehousesUtils.fromStorehouseTo(storehouseTo);
+        assureIdConsistent(updatedStorehouse, id);
+        return storehousesRepository.save(updatedStorehouse);
+    }
+
+    public void delete (Integer id){
+        storehousesRepository.deleteById(id);
+    }
+
+    public Integer getQuantityByItemId(Integer id){
+        return storehousesRepository.getQuantityByItemId(id);
+    }
 
 
 }

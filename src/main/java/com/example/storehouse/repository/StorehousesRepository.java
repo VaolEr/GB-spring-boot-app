@@ -11,13 +11,8 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public interface StorehousesRepository extends JpaRepository<Storehouse, Integer> {
 
-    Storehouse getByItemStorehousesItemId(Integer itemId);
 
     @Query("select i_s.quantity from ItemStorehouse i_s where i_s.item.id = :itemId")
     Integer getQuantityByItemId(Integer itemId);
-
-    Optional<Storehouse> getStorehouseById(Integer storehouseId);
-
-    List<Storehouse> findAll();
 
 }
