@@ -54,4 +54,28 @@ public class User extends AbstractBaseEntity {
     public Status getStatus() {
         return status;
     }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 }

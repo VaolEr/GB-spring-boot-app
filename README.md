@@ -11,8 +11,17 @@ Storehouse Backend App
    - [Items controller](src/test/idea-http-client/items.http)
    - [Suppliers controller](src/test/idea-http-client/suppliers.http)
    - [Categories controller](src/test/idea-http-client/categories.http)
+   - [Users controller](src/test/idea-http-client/users.http)
 
-#### v0.0.X
+#### v0.0.X.2
+	All methods below availiable only for ADMIN
+- GET `/users[/{id}]`
+- GET `/users[?name=]`
+- POST `/users`
+- PUT `/users/{id}`
+- DELETE `/users/{id}`
+
+#### v0.0.X.1
 -	User `admin@mail.com`	password	`admin`	status `ACTIVE`
 -	User `user@mail.com`	password 	`user`	status `ACTIVE`
 -	User `root@mail.com`	password 	`root`	status `BANNED`
