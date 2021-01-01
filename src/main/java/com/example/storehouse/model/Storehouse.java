@@ -1,11 +1,15 @@
 package com.example.storehouse.model;
 
 import com.example.storehouse.model.abstractentity.AbstractNamedEntity;
+import com.example.storehouse.util.StorehousesUtil;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,14 +29,17 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Storehouse extends AbstractNamedEntity {
-// Корректно, наверно вытаскивать items из itemsStorehouse?
-//    @OneToMany(mappedBy = "storehouse", cascade = CascadeType.ALL)
-//    @JsonIgnoreProperties("storehouse")
-//    private Set<ItemStorehouse> itemStorehouses;
 
-//    public Set<ItemStorehouse> getItemStorehouses() {
-//        return itemStorehouses;
-//    }
+    // Корректно, наверно вытаскивать items из itemsStorehouse?
+    @OneToMany(mappedBy = "storehouse", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("storehouse")
+    private Set<ItemStorehouse> itemStorehouses = new HashSet<>();
+
+    public Set<ItemStorehouse> getItemStorehouses() {
+        return itemStorehouses;
+    }
+
+
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "itemStorehouses")
     // этот момент можно будет обдумать, стоит ли реализовывать обработку "вложенных" изменений
