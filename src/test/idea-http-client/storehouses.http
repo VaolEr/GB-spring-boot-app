@@ -43,7 +43,7 @@ PUT http://localhost:8080/api/v1/storehouses/1002
 Content-Type: application/json
 
 {
-  "name": "Test Supplier"
+  "name": "Test Storehouse"
 }
 
 ### READ Supplier by id 1002
@@ -62,5 +62,13 @@ GET http://localhost:8080/api/v1/storehouses/1000/items
 ### GET All Items for Storehouse with id 9999
 
 GET http://localhost:8080/api/v1/storehouses/9999/items
+
+### GET Item with id 1000 from Storehouse with id 1000
+
+GET http://localhost:8080/api/v1/storehouses/1000/1000
+
+### GET Item with id 1000 from Storehouse with id 1000
+
+GET http://localhost:8080/api/v1/storehouses/1000/9999
 
 ###

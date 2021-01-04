@@ -1,5 +1,6 @@
 package com.example.storehouse.web;
 
+import static com.example.storehouse.util.ItemsUtil.toItemToWithBalance;
 import static com.example.storehouse.util.ItemsUtil.toItemTos;
 import static com.example.storehouse.util.StorehousesUtil.toStorehouseTo;
 import static com.example.storehouse.util.StorehousesUtil.toStorehouseTos;
@@ -59,6 +60,23 @@ public class StorehousesController {
             HttpStatus.OK.toString(), null, toItemTos(storehousesService.getStorehouseItems(id))
         );
     }
+
+    @GetMapping(path = "/{storehouseId}/{itemId}")
+    public RestResponseTo<ItemTo> getStorehouseItemById(@PathVariable Integer storehouseId, @PathVariable Integer itemId) {
+        //TODO add check for item with id not found
+        return new RestResponseTo<>(
+            HttpStatus.OK.toString(), null, toItemToWithBalance(storehousesService.getStorehouseItem(storehouseId, itemId))
+        );
+    }
+
+// Prototype func. Realise if need it
+//    @GetMapping(path = "/{storehouseId}/{name}")
+//    public RestResponseTo<ItemTo> getStorehouseItemByName(@PathVariable Integer storehouseId, @PathVariable String itemName) {
+//        //TODO add check for item with id not found
+//        return new RestResponseTo<>(
+//            HttpStatus.OK.toString(), null, toItemToWithBalance(storehousesService.getStorehouseItem(storehouseId, itemName))
+//        );
+//    }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> create(@Valid @RequestBody StorehouseTo storehouseTo) {

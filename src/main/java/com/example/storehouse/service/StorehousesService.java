@@ -12,6 +12,7 @@ import com.example.storehouse.dto.StorehouseTo;
 import com.example.storehouse.model.Item;
 import com.example.storehouse.model.Storehouse;
 
+import com.example.storehouse.repository.ItemsRepository;
 import com.example.storehouse.repository.StorehousesRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class StorehousesService {
 
     private final StorehousesRepository storehousesRepository;
+    private final ItemsRepository itemsRepository;
 
     public List<Storehouse> get(String name) {
         return hasText(name) ? storehousesRepository.findByNameContaining(name)
@@ -34,10 +36,27 @@ public class StorehousesService {
                              addMessageDetails(Storehouse.class.getSimpleName(), id));
     }
 
+    @Transactional(readOnly = true)
     public List<Item> getStorehouseItems(Integer id) {
         //TODO Add check not found supplier with id
-        return storehousesRepository.getOneById(id).getItems();
+
+        return itemsRepository.getByItemStorehousesStorehouseId(id); // work correct
+//        return itemsRepository.getStorehouseItemsByStorehouseId(id);
+
     }
+
+    @Transactional(readOnly = true)
+    public Item getStorehouseItem(Integer storehouseId, Integer itemId) {
+        //TODO Add check not found supplier with id
+        return itemsRepository.getStorehouseItemByStorehouseIdAndItemId(storehouseId, itemId);
+    }
+
+// Prototype func. Realise if need it
+//    @Transactional(readOnly = true)
+//    public Item getStorehouseItem(Integer storehouseId, String itemName) {
+//        //TODO Add check not found supplier with id
+//        return itemsRepository.getStorehouseItemByStorehouseIdAndItemId(storehouseId, itemName);
+//    }
 
     @Transactional
     public Storehouse create(StorehouseTo storehouseTo) {
@@ -52,5 +71,6 @@ public class StorehousesService {
         assureIdConsistent(updatedStorehouse, id);
         return storehousesRepository.save(updatedStorehouse);
     }
+
 
 }

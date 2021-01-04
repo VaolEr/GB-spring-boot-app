@@ -15,7 +15,8 @@ Storehouse Backend App
 #### v0.0.9
 - GET `/storehouses[/{id}]`
 - GET `/storehouses[?name=]`
-- GET `/storehouses[/{id}/items]` - not work
+- GET `/storehouses[/{id}/items]`
+- GET `/storehouses[/{storehouseId}/{itemId}]` - returns the item data with item's quantity stored in storehouse
 - POST `/storehouses`
 - PUT `/storehouses/{id}`
 
