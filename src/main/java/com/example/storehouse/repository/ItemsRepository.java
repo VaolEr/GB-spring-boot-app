@@ -35,9 +35,9 @@ public interface ItemsRepository extends JpaRepository<Item, Integer> {
 
     @Query(value = "SELECT items.id, items.name, items.category_id, items.sku, items.supplier_id FROM items, items_storehouses WHERE items.id = :itemId and storehouse_id = :storehouseId", nativeQuery = true)
     @Transactional(readOnly = true)
-    Item getStorehouseItemByStorehouseIdAndItemId(@Param("storehouseId") Integer storehouseId, @Param("itemId")Integer itemId);
+    Optional<Item> getStorehouseItemByStorehouseIdAndItemId(@Param("storehouseId") Integer storehouseId, @Param("itemId")Integer itemId);
 
-    //Prototype func
+//      //Prototype func
 //    @Query(value = "SELECT items.id, items.name, items.category_id, items.sku, items.supplier_id FROM items, items_storehouses WHERE items.name = :itemName and storehouse_id = :storehouseId", nativeQuery = true)
 //    @Transactional(readOnly = true)
 //    Item getStorehouseItemByStorehouseIdAndItemName(@Param("storehouseId") Integer storehouseId, @Param("itemName")String itemName);
