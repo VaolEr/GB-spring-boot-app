@@ -30,16 +30,13 @@ public interface ItemsRepository extends JpaRepository<Item, Integer> {
     List<Item> getByItemStorehousesStorehouseId(Integer storehouseId); // Work correct. Need to set fetch type to eager in Item class. Return list of items, where category and supplier are objects with id and name
 
 //    @Query(value = "SELECT items.id, items.name, items.category_id, items.sku, items.supplier_id FROM items, items_storehouses WHERE items.id = items_storehouses.item_id and storehouse_id = :storehouseId", nativeQuery = true)
-//    @Transactional(readOnly = true)
 //    List<Item> getStorehouseItemsByStorehouseId(@Param("storehouseId") Integer storehouseId); // Same as getByItemStorehousesStorehouseId(Integer storehouseId)
 
     @Query(value = "SELECT items.id, items.name, items.category_id, items.sku, items.supplier_id FROM items, items_storehouses WHERE items.id = :itemId and storehouse_id = :storehouseId", nativeQuery = true)
-    @Transactional(readOnly = true)
     Optional<Item> getStorehouseItemByStorehouseIdAndItemId(@Param("storehouseId") Integer storehouseId, @Param("itemId")Integer itemId);
 
 //      //Prototype func
 //    @Query(value = "SELECT items.id, items.name, items.category_id, items.sku, items.supplier_id FROM items, items_storehouses WHERE items.name = :itemName and storehouse_id = :storehouseId", nativeQuery = true)
-//    @Transactional(readOnly = true)
 //    Item getStorehouseItemByStorehouseIdAndItemName(@Param("storehouseId") Integer storehouseId, @Param("itemName")String itemName);
 
 }

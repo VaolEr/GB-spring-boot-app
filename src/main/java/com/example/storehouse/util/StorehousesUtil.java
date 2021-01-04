@@ -10,7 +10,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class StorehousesUtil {
+public final class StorehousesUtil {
 
     public static StorehouseTo toStorehouseTo(Storehouse storehouse) {
         return StorehouseTo
