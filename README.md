@@ -12,6 +12,14 @@ Storehouse Backend App
    - [Suppliers controller](src/test/idea-http-client/suppliers.http)
    - [Categories controller](src/test/idea-http-client/categories.http)
 
+#### v0.0.9
+- GET `/storehouses[/{id}]`
+- GET `/storehouses[?name=]`
+- GET `/storehouses[/{id}/items]`
+- GET `/storehouses[/{storehouseId}/{itemId}]` - returns the item data with item's quantity stored in storehouse
+- POST `/storehouses`
+- PUT `/storehouses/{id}`
+
 #### v0.0.8
 - Added swagger docs for API
 

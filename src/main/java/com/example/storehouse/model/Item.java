@@ -36,20 +36,20 @@ public class Item extends AbstractNamedEntity {
     private String sku;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER) // was lazy, but for storehouse service we need to eager
     @JoinColumn(name = "supplier_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE) // тоже можно будет обсудить, пока пусть так
     @JsonManagedReference
     private Supplier supplier;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER) // was lazy, but for storehouse service we need to eager
     @JoinColumn(name = "category_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE) // тоже можно будет обсудить, пока пусть так
     @JsonManagedReference
     private Category category;
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnoreProperties("item")
     private Set<ItemStorehouse> itemStorehouses = new HashSet<>();
 
@@ -67,12 +67,12 @@ public class Item extends AbstractNamedEntity {
     public void setItemStorehouses(Set<ItemStorehouse> itemsStorehouses) {
 //        this.itemStorehouses = getItemStorehousesInstance();
         itemStorehouses.addAll(itemsStorehouses.stream()
-            .peek(itemStorehouse -> itemStorehouse.setItem(this))
-            .collect(Collectors.toSet())
+                                               .peek(itemStorehouse -> itemStorehouse.setItem(this))
+                                               .collect(Collectors.toSet())
         );
     }
 
-    private Set<ItemStorehouse> getItemStorehousesInstance(){
+    private Set<ItemStorehouse> getItemStorehousesInstance() {
         return (itemStorehouses != null) ? itemStorehouses : new HashSet<>();
     }
 
