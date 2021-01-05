@@ -11,12 +11,12 @@ Storehouse Backend App
    - [Items controller](src/test/idea-http-client/items.http)
    - [Suppliers controller](src/test/idea-http-client/suppliers.http)
    - [Categories controller](src/test/idea-http-client/categories.http)
+   - [Storehouses controller](src/test/idea-http-client/storehouses.http)
 
 #### v0.0.9
 - GET `/storehouses[/{id}]`
 - GET `/storehouses[?name=]`
 - GET `/storehouses[/{id}/items]`
-- GET `/storehouses[/{storehouseId}/{itemId}]` - returns the item data with item's quantity stored in storehouse
 - POST `/storehouses`
 - PUT `/storehouses/{id}`
 
