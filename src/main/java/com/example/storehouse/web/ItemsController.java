@@ -46,7 +46,7 @@ public class ItemsController {
     @GetMapping(path = "/{id}")
     public RestResponseTo<ItemTo> getById(@PathVariable Integer id) {
         return new RestResponseTo<>(
-            HttpStatus.OK.toString(), null, toItemTo(itemsService.getById(id))
+            HttpStatus.OK.toString(), null, toItemToWithBalance(itemsService.getById(id))
         );
     }
 

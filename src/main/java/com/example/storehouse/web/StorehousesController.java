@@ -61,13 +61,14 @@ public class StorehousesController {
         );
     }
 
-    @GetMapping(path = "/{storehouseId}/{itemId}")
-    public RestResponseTo<ItemTo> getStorehouseItemById(@PathVariable Integer storehouseId, @PathVariable Integer itemId) {
-        //TODO add check for item with id not found
-        return new RestResponseTo<>(
-            HttpStatus.OK.toString(), null, toItemToWithBalance(storehousesService.getStorehouseItem(storehouseId, itemId))
-        );
-    }
+    //  Not correct work. Updated getById method in Items controller
+//    @GetMapping(path = "/{storehouseId}/{itemId}")
+//    public RestResponseTo<ItemTo> getStorehouseItemById(@PathVariable Integer storehouseId, @PathVariable Integer itemId) {
+//        //TODO add check for item with id not found
+//        return new RestResponseTo<>(
+//            HttpStatus.OK.toString(), null, toItemToWithBalance(storehousesService.getStorehouseItem(storehouseId, itemId))
+//        );
+//    }
 
 // Prototype func. Realise if need it
 //    @GetMapping(path = "/{storehouseId}/{name}")
