@@ -13,6 +13,9 @@ Storehouse Backend App
    - [Categories controller](src/test/idea-http-client/categories.http)
    - [Storehouses controller](src/test/idea-http-client/storehouses.http)
 
+#### v0.0.10
+- GET `/items[?name=][&size=][&page=][&sort=]`
+
 #### v0.0.9
 - GET `/storehouses[/{id}]`
 - GET `/storehouses[?name=]`

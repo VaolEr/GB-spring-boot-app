@@ -16,8 +16,10 @@ import com.example.storehouse.repository.CategoriesRepository;
 import com.example.storehouse.repository.ItemsRepository;
 import com.example.storehouse.repository.StorehousesRepository;
 import com.example.storehouse.repository.SuppliersRepository;
-import java.util.List;
+import com.example.storehouse.util.ItemsUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,9 +32,10 @@ public class ItemsService {
     private final CategoriesRepository categoriesRepository;
     private final StorehousesRepository storehousesRepository;
 
-    public List<Item> get(String name) {
-        return hasText(name) ? itemsRepository.findByNameContaining(name)
-            : itemsRepository.findAll();
+    public Page<ItemTo> get(Pageable pageable, String name) {
+        Page<Item> itemToPage = hasText(name) ? itemsRepository.findByNameContaining(name, pageable)
+            : itemsRepository.findAll(pageable);
+        return itemToPage.map(ItemsUtil::toItemTo);
     }
 
     public Item getById(Integer id) {
