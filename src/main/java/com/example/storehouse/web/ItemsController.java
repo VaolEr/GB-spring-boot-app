@@ -2,17 +2,17 @@ package com.example.storehouse.web;
 
 import static com.example.storehouse.util.ItemsUtil.toItemTo;
 import static com.example.storehouse.util.ItemsUtil.toItemToWithBalance;
-import static com.example.storehouse.util.ItemsUtil.toItemTos;
 
 import com.example.storehouse.dto.ItemTo;
 import com.example.storehouse.dto.RestResponseTo;
 import com.example.storehouse.model.Item;
-
 import com.example.storehouse.service.ItemsService;
 import java.net.URI;
-import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,9 +37,11 @@ public class ItemsController {
     private final ItemsService itemsService;
 
     @GetMapping
-    public RestResponseTo<List<ItemTo>> getAllOrByName(@RequestParam(required = false) String name) {
+    public RestResponseTo<Page<ItemTo>> getAllOrByName(
+        @RequestParam(required = false) String name,
+        @PageableDefault Pageable pageable) {
         return new RestResponseTo<>(
-            HttpStatus.OK.toString(), null, toItemTos(itemsService.get(name))
+            HttpStatus.OK.toString(), null, itemsService.get(pageable, name)
         );
     }
 
