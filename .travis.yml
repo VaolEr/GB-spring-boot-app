@@ -5,6 +5,6 @@ jdk:
   install:
   - mvn -N io.takari:maven:wrapper
    - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-#script:
+script:
   #- ./mvnw clean install
   #- ./mvnw heroku:deploy jib:build -P deploy-heroku
