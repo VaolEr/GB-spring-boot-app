@@ -3,4 +3,4 @@ jdk:
   - openjdk11
 script:
   - ./mvnw clean install
-  - ./mvnw heroku:deploy jib:build -P deploy-heroku
+  #- ./mvnw heroku:deploy jib:build -P deploy-heroku
