@@ -1,4 +1,4 @@
-package com.example.storehouse;
+package com.example.storehouse.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
