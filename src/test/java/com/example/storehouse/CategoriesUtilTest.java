@@ -13,12 +13,16 @@ import org.junit.jupiter.api.Test;
 //TODO add @JsonTest?
 public class CategoriesUtilTest {
 
+    static final int ID = 21;
+    static final String NAME = "TestCategory";
+    static List<Item> ITEMS = new ArrayList<>();
+    static {
+        ITEMS.add(new Item());
+    }
+
     @Test
     public void testToCategoryTo() {
-        final int ID = 21;
-        final String NAME = "TestCategory";
-        List<Item> ITEMS = new ArrayList<>();
-        ITEMS.add(new Item());
+
 
         CategoryTo categoryTo = CategoriesUtil.toCategoryTo(new Category(ID,NAME,ITEMS));
         assertEquals(ID, categoryTo.getId());
