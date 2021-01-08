@@ -1,7 +1,7 @@
 package com.example.storehouse;
 
 import lombok.SneakyThrows;
-import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,13 +29,13 @@ class StorehouseApplicationTests {
     @Autowired
     private MockMvc mvc;
 
-    @Ignore
+    @Disabled
     @Test
     void contextLoads() {
         assertThat(applicationContext).isNotNull();
     }
 
-    @Ignore
+    @Disabled
     @Test
     @SneakyThrows
     void shouldHaveHealthCheckHandlerAndCheckIsUP() {
