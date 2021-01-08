@@ -22,8 +22,6 @@ public class CategoriesUtilTest {
 
     @Test
     public void testToCategoryTo() {
-
-
         CategoryTo categoryTo = CategoriesUtil.toCategoryTo(new Category(ID,NAME,ITEMS));
         assertEquals(ID, categoryTo.getId());
         assertEquals(NAME, categoryTo.getName());
@@ -32,11 +30,6 @@ public class CategoriesUtilTest {
 
     @Test
     public void testToCategoryTos() {
-        final int ID = 21;
-        final String NAME = "TestCategory";
-        List<Item> ITEMS = new ArrayList<>();
-        ITEMS.add(new Item());
-
         List<Category> categories = new ArrayList<>();
 
         categories.add(new Category(ID,NAME,ITEMS));
@@ -50,10 +43,6 @@ public class CategoriesUtilTest {
 
     @Test
     public void testFromCategoryTo() {
-        final int ID = 21;
-        final String NAME = "TestCategory";
-        List<Item> ITEMS = new ArrayList<>();
-        ITEMS.add(new Item());
 
         CategoryTo categoryTo = CategoriesUtil.toCategoryTo(new Category(ID,NAME,ITEMS));
         Category category = CategoriesUtil.fromCategoryTo(categoryTo);
