@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.example.storehouse.dto.CategoryTo;
 import com.example.storehouse.model.Category;
 import com.example.storehouse.model.Item;
-import com.example.storehouse.util.CategoriesUtil;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
