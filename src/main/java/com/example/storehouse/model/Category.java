@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import javax.persistence.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,4 +25,11 @@ public class Category extends AbstractNamedEntity {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonBackReference
     private List<Item> items;
+
+    public Category(Integer id,
+                    @NotNull @NotBlank String name,
+                    List<Item> items) {
+        super(id, name);
+        this.items = items;
+    }
 }
