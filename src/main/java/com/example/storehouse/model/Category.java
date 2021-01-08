@@ -23,4 +23,5 @@ public class Category extends AbstractNamedEntity {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonBackReference
     private List<Item> items;
+
 }
