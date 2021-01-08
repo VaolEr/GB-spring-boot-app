@@ -7,8 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import javax.persistence.*;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
