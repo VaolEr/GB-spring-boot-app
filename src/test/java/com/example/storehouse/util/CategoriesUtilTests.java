@@ -13,28 +13,27 @@ import org.junit.jupiter.api.Test;
 //TODO add @JsonTest?
 public class CategoriesUtilTests {
 
-    static final int ID = 21;
-    static final String NAME = "TestCategory";
-    static List<Item> ITEMS = new ArrayList<>();
+    static final int TEST_CATEGORY_ID = 21;
+    static final String TEST_CATEGORY_NAME = "TestCategory";
+
     Category testCategory;
     CategoryTo categoryTo;
 
     @BeforeEach
     public void setUpTests(){
-        ITEMS.add(new Item());
 
         testCategory = new Category();
-        testCategory.setId(ID);
-        testCategory.setName(NAME);
-        testCategory.setItems(ITEMS);
+        testCategory.setId(TEST_CATEGORY_ID);
+        testCategory.setName(TEST_CATEGORY_NAME);
+        testCategory.setItems(List.of(new Item()));
 
         categoryTo = CategoriesUtil.toCategoryTo(testCategory);
     }
 
     @Test
     public void testToCategoryTo() {
-        assertEquals(ID, categoryTo.getId());
-        assertEquals(NAME, categoryTo.getName());
+        assertEquals(TEST_CATEGORY_ID, categoryTo.getId());
+        assertEquals(TEST_CATEGORY_NAME, categoryTo.getName());
         //assertEquals(ITEMS,categoryTo.getItems()); //we don't have items list in categoryTo object
     }
 
@@ -55,7 +54,7 @@ public class CategoriesUtilTests {
     public void testFromCategoryTo() {
         Category category = CategoriesUtil.fromCategoryTo(categoryTo);
         //assertEquals(ID, category.getId());
-        assertEquals(NAME, category.getName()); // because we use only name parameter in function
+        assertEquals(TEST_CATEGORY_NAME, category.getName()); // because we use only name parameter in function
         //assertEquals(ITEMS,category.getItems());
     }
 
