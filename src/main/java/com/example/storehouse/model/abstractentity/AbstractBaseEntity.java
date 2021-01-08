@@ -27,7 +27,4 @@ public abstract class AbstractBaseEntity implements Persistable<Integer> {
         return null == getId();
     }
 
-    public AbstractBaseEntity(Integer id) {
-        this.id = id;
-    }
 }

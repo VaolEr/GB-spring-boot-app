@@ -26,10 +26,4 @@ public class Category extends AbstractNamedEntity {
     @JsonBackReference
     private List<Item> items;
 
-    public Category(Integer id,
-                    @NotNull @NotBlank String name,
-                    List<Item> items) {
-        super(id, name);
-        this.items = items;
-    }
 }

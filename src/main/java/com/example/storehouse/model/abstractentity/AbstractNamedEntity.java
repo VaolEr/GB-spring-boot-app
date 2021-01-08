@@ -22,9 +22,4 @@ public abstract class AbstractNamedEntity extends AbstractBaseEntity {
     @Column(name = "name", nullable = false) //для наглядности
     public String name; // раз положили в отдельный пакет - модификатор доступа меняем
 
-    public AbstractNamedEntity(Integer id,
-                               @NotNull @NotBlank String name) {
-        super(id);
-        this.name = name;
-    }
 }
