@@ -2,7 +2,7 @@ Storehouse Backend App
 ---
 
 - [App home page](https://gb-storehouse.herokuapp.com)
-- [Swagger docs](https://gb-storehouse.herokuapp.com/swagger-ui/index.html)
+- [Swagger docs](https://gb-storehouse.herokuapp.com/swagger-ui.html)
 - [App API base path](https://gb-storehouse.herokuapp.com/api/v1)
 - [App info](https://gb-storehouse.herokuapp.com/check/info)
 - [App sources](https://github.com/VaolEr/GB-spring-boot-app)
