@@ -7,12 +7,15 @@ import com.example.storehouse.dto.ItemTo;
 import com.example.storehouse.dto.RestResponseTo;
 import com.example.storehouse.model.Item;
 import com.example.storehouse.service.ItemsService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.net.URI;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,27 +35,31 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping(value = "${app.endpoints.base_path}" + "${app.endpoints.items.base_url}",
     produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
+@Tag(name = "Items", description = "Items REST API controller")
 public class ItemsController {
 
     private final ItemsService itemsService;
 
     @GetMapping
+    @Operation(summary = "Get all items or list of items where item name contains [name]")
     public RestResponseTo<Page<ItemTo>> getAllOrByName(
         @RequestParam(required = false) String name,
-        @PageableDefault Pageable pageable) {
+        @ParameterObject Pageable pageable) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, itemsService.get(pageable, name)
         );
     }
 
     @GetMapping(path = "/{id}")
-    public RestResponseTo<ItemTo> getById(@PathVariable Integer id) {
+    @Operation(summary = "Get a item by id")
+    public RestResponseTo<ItemTo> getById(@Parameter(description = "id of item to be searched") @PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toItemToWithBalance(itemsService.getById(id))
         );
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Create new item")
     public ResponseEntity<?> create(@Valid @RequestBody ItemTo itemTo) {
         Item created = itemsService.create(itemTo);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentRequest().
@@ -64,15 +71,18 @@ public class ItemsController {
 
     // Валидацию попр. реализовать через @Validated для разделения проверок ItemTo и ItemStorehouseTo
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public RestResponseTo<ItemTo> update(@RequestBody ItemTo itemTo, @PathVariable Integer id) {
+    @Operation(summary = "Update a item by id")
+    public RestResponseTo<ItemTo> update(@RequestBody ItemTo itemTo,
+        @Parameter(description = "id of item to be updated") @PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toItemTo(itemsService.update(itemTo, id))
         );
     }
 
     @DeleteMapping(path = "/{id}")
+    @Operation(summary = "Delete a item by id")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Integer id) {
+    public void delete(@Parameter(description = "id of item to be deleted") @PathVariable Integer id) {
         itemsService.delete(id);
     }
 
