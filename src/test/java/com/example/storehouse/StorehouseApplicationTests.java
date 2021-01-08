@@ -16,6 +16,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@Disabled
 @SpringBootTest(classes = StorehouseApplication.class)
 @AutoConfigureMockMvc
 class StorehouseApplicationTests {
@@ -29,13 +30,11 @@ class StorehouseApplicationTests {
     @Autowired
     private MockMvc mvc;
 
-    @Disabled
     @Test
     void contextLoads() {
         assertThat(applicationContext).isNotNull();
     }
 
-    @Disabled
     @Test
     @SneakyThrows
     void shouldHaveHealthCheckHandlerAndCheckIsUP() {
