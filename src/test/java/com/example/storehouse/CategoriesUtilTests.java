@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 //TODO add @JsonTest?
-public class CategoriesUtilTest {
+public class CategoriesUtilTests {
 
     static final int ID = 21;
     static final String NAME = "TestCategory";
