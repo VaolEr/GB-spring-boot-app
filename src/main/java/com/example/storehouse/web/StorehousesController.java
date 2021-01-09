@@ -15,6 +15,8 @@ import com.example.storehouse.model.Storehouse;
 import com.example.storehouse.model.Supplier;
 import com.example.storehouse.service.StorehousesService;
 import com.example.storehouse.service.SuppliersService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.net.URI;
 import java.util.List;
 import javax.validation.Valid;
@@ -36,11 +38,13 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping(value = "${app.endpoints.base_path}" + "${app.endpoints.storehouses.base_url}",
     produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
+@Tag(name = "Storehouses", description = "Storehouses REST API controller")
 public class StorehousesController {
 
     private final StorehousesService storehousesService;
 
     @GetMapping
+    @Operation(summary = "Get all storehouses or list of storehouses where storehouse name contains [name]")
     public RestResponseTo<List<StorehouseTo>> getAllOrByName(@RequestParam(required = false) String name) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toStorehouseTos(storehousesService.get(name))
@@ -48,6 +52,7 @@ public class StorehousesController {
     }
 
     @GetMapping(path = "/{id}")
+    @Operation(summary = "Get a storehouse by id")
     public RestResponseTo<StorehouseTo> getById(@PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toStorehouseTo(storehousesService.getById(id))
@@ -55,6 +60,7 @@ public class StorehousesController {
     }
 
     @GetMapping(path = "/{id}/items")
+    @Operation(summary = "Get a list of storehouse items by storehouse id")
     public RestResponseTo<List<ItemTo>> getStorehousesItems(@PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toItemTos(storehousesService.getStorehouseItems(id))
@@ -80,6 +86,7 @@ public class StorehousesController {
 //    }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Create new storehouse")
     public ResponseEntity<?> create(@Valid @RequestBody StorehouseTo storehouseTo) {
         Storehouse created = storehousesService.create(storehouseTo);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentRequest().
@@ -90,6 +97,7 @@ public class StorehousesController {
     }
 
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Update a storehouse by id")
     public RestResponseTo<StorehouseTo> update(@RequestBody StorehouseTo storehouseTo, @PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toStorehouseTo(storehousesService.update(storehouseTo, id))
