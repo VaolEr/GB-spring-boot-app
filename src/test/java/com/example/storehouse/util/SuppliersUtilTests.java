@@ -31,13 +31,13 @@ public class SuppliersUtilTests {
     }
 
     @Test
-    public void testToCategoryTo() {
+    public void testToSupplierTo() {
         assertEquals(TEST_SUPPLIER_ID, supplierTo.getId());
         assertEquals(TEST_SUPPLIER_NAME, supplierTo.getName());
     }
 
     @Test
-    public void testToCategoryTos() {
+    public void testToSupplierTos() {
         List<Supplier> suppliers = new ArrayList<>();
 
         suppliers.add(testSupplier);
@@ -49,7 +49,7 @@ public class SuppliersUtilTests {
     }
 
     @Test
-    public void testFromCategoryTo() {
+    public void testFromSupplierTo() {
         Supplier supplier = SuppliersUtil.fromSupplierTo(supplierTo);
         assertEquals(TEST_SUPPLIER_NAME, supplier.getName()); // because we use only name parameter in function
     }
