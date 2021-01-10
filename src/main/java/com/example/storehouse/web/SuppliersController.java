@@ -9,6 +9,8 @@ import com.example.storehouse.dto.RestResponseTo;
 import com.example.storehouse.dto.SupplierTo;
 import com.example.storehouse.model.Supplier;
 import com.example.storehouse.service.SuppliersService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.net.URI;
 import java.util.List;
 import javax.validation.Valid;
@@ -30,11 +32,13 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping(value = "${app.endpoints.base_path}" + "${app.endpoints.suppliers.base_url}",
     produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
+@Tag(name = "Suppliers", description = "Suppliers REST API controller")
 public class SuppliersController {
 
     private final SuppliersService suppliersService;
 
     @GetMapping
+    @Operation(summary = "Get all suppliers or list of suppliers where supplier name contains [name]")
     public RestResponseTo<List<SupplierTo>> getAllOrByName(@RequestParam(required = false) String name) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toSupplierTos(suppliersService.get(name))
@@ -42,6 +46,7 @@ public class SuppliersController {
     }
 
     @GetMapping(path = "/{id}")
+    @Operation(summary = "Get a supplier by id")
     public RestResponseTo<SupplierTo> getById(@PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toSupplierTo(suppliersService.getById(id))
@@ -49,6 +54,7 @@ public class SuppliersController {
     }
 
     @GetMapping(path = "/{id}/items")
+    @Operation(summary = "Get a list of supplier items by supplier id")
     public RestResponseTo<List<ItemTo>> getSuppliersItems(@PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toItemTos(suppliersService.getSupplierItems(id))
@@ -56,6 +62,7 @@ public class SuppliersController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Create new supplier")
     public ResponseEntity<?> create(@Valid @RequestBody SupplierTo supplierTo) {
         Supplier created = suppliersService.create(supplierTo);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentRequest().
@@ -66,6 +73,7 @@ public class SuppliersController {
     }
 
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Update a supplier by id")
     public RestResponseTo<SupplierTo> update(@RequestBody SupplierTo supplierTo, @PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toSupplierTo(suppliersService.update(supplierTo, id))

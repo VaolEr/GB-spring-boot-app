@@ -51,7 +51,7 @@ public class ItemsController {
     }
 
     @GetMapping(path = "/{id}")
-    @Operation(summary = "Get a item by id")
+    @Operation(summary = "Get an item by id")
     public RestResponseTo<ItemTo> getById(@Parameter(description = "id of item to be searched") @PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toItemToWithBalance(itemsService.getById(id))
@@ -71,7 +71,7 @@ public class ItemsController {
 
     // Валидацию попр. реализовать через @Validated для разделения проверок ItemTo и ItemStorehouseTo
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Update a item by id")
+    @Operation(summary = "Update an item by id")
     public RestResponseTo<ItemTo> update(@RequestBody ItemTo itemTo,
         @Parameter(description = "id of item to be updated") @PathVariable Integer id) {
         return new RestResponseTo<>(
@@ -80,7 +80,7 @@ public class ItemsController {
     }
 
     @DeleteMapping(path = "/{id}")
-    @Operation(summary = "Delete a item by id")
+    @Operation(summary = "Delete an item by id")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@Parameter(description = "id of item to be deleted") @PathVariable Integer id) {
         itemsService.delete(id);
