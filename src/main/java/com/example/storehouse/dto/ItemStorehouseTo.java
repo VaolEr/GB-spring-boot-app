@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(description = "Entity: ItemStorehouse")
 public class ItemStorehouseTo {
 
     @NotNull
@@ -20,6 +21,7 @@ public class ItemStorehouseTo {
 
     @NotNull
     @Min(value = 1)
+    @Schema(description = "Quantity of Items stored in storehouseId Storehouse")
     Integer quantity;
 
 }
