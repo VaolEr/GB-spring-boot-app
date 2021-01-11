@@ -20,7 +20,7 @@ public class SupplierTo {
 
     @NotNull
     @NotBlank
-    @Schema(description = "Supplier name")
+    @Schema(description = "Supplier name", example = "TheBestSupplier")
     String name;
 
 }

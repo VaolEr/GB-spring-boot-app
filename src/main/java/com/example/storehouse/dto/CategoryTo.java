@@ -15,12 +15,12 @@ import lombok.NoArgsConstructor;
 @Schema(description = "Entity: Category")
 public class CategoryTo {
 
-    @Schema(description = "Identifier")
+    @Schema(description = "Identifier", example = "1")
     Integer id;
 
     @NotNull
     @NotBlank
-    @Schema(description = "Category name")
+    @Schema(description = "Category name", example = "TheBestCategory")
     String name;
 
 }

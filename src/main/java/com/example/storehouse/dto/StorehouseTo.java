@@ -20,7 +20,7 @@ public class StorehouseTo {
 
     @NotNull
     @NotBlank
-    @Schema(description = "Storehouse name")
+    @Schema(description = "Storehouse name", example = "TheBestStorehouse")
     String name;
 
 }
