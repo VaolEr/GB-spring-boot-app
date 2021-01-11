@@ -38,7 +38,7 @@ public class CategoriesControllerTests {
         returnedCategory.setName("stationery");
         returnedCategory.setItems(List.of(new Item()));
         //TODO нужно корректнее проверку делать, судя по всему.
-        //Не понимаю немного почему неважно какой объект в сравнении, всё равно корректный тест.
+        //Не понимаю немного почему неважно какой объект в сравнении (id + name), всё равно корректный тест.
         given(categoriesService.getById(any())).willReturn(returnedCategory);
         mockMvc.perform(get("/api/v1/categories/1000"))
                .andExpect(status().isOk())
