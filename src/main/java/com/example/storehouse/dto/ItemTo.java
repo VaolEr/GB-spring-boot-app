@@ -33,17 +33,17 @@ public class ItemTo {
     String sku;
 
     @NotNull
-    @Schema(description = "Item supplier data: supplier id and supplier name", example = "{id:1; name = TheBestSupplier}")
+    @Schema(description = "Item supplier data: supplier id and supplier name", example = "{id = 1; name = TheBestSupplier}")
     SupplierTo supplier;
 
     @NotNull
-    @Schema(description = "Item categories data: category id and category name" , example = "{id:1; name = TheBestCategory}")
+    @Schema(description = "Item categories data: category id and category name" , example = "{id = 1; name = TheBestCategory}")
         //TODO only one category or several categories for one item???
     List<CategoryTo> categories;
 
     @NotNull
     @JsonProperty(value = "storehouses_balance")
-    @Schema(description = "ItemStorehouse data: storehouse and quantity of item in this storehouse", example = "{storehouse_id = 1; qty = 25;}")
+    @Schema(description = "ItemStorehouse data: storehouse and quantity of item in this storehouse", example = "{id = 1; qty = 25;}")
     List<ItemStorehouseTo> itemsStorehousesTo;
 
 }

@@ -16,7 +16,7 @@ public class ItemStorehouseTo {
 
     @NotNull
     @JsonProperty(value = "id")
-    @Schema(description = "Storehouse id", example = "1")
+    @Schema(description = "id", example = "1")
     Integer storehouseId;
 
     @NotNull
