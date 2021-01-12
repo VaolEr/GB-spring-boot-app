@@ -1,16 +1,21 @@
 package com.example.storehouse.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
+@Schema(description = "Entity: RestResponse")
 public class RestResponseTo<T> {
 
+    @Schema(description = "Response status", example = "404 NOT_FOUND")
     private String responseStatus;
 
+    @Schema(description = "Response error message", example = "Item was not found.")
     private String errorMessage;
 
+    @Schema(description = "Response data")
     private T data;
 
 }

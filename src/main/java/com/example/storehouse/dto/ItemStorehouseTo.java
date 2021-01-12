@@ -11,15 +11,17 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(description = "Entity: ItemStorehouse")
 public class ItemStorehouseTo {
 
     @NotNull
     @JsonProperty(value = "id")
-    @Schema(description = "Storehouse id")
+    @Schema(description = "id", example = "1")
     Integer storehouseId;
 
     @NotNull
     @Min(value = 1)
+    @Schema(description = "Quantity of Items stored in storehouseId Storehouse", example = "25")
     Integer quantity;
 
 }
