@@ -16,12 +16,12 @@ public class ItemStorehouseTo {
 
     @NotNull
     @JsonProperty(value = "id")
-    @Schema(description = "id", example = "1")
+    @Schema(name = "id", description = "Storehouse id", example = "1000")
     Integer storehouseId;
 
     @NotNull
     @Min(value = 1)
-    @Schema(description = "Quantity of Items stored in storehouseId Storehouse", example = "25")
+    @Schema(description = "Quantity of Items stored in Storehouse with specified id", example = "25")
     Integer quantity;
 
 }
