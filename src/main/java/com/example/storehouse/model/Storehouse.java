@@ -39,12 +39,10 @@ public class Storehouse extends AbstractNamedEntity {
         return itemStorehouses;
     }
 
-
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "itemStorehouses")
-    // этот момент можно будет обдумать, стоит ли реализовывать обработку "вложенных" изменений
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @JsonBackReference
-    private List<Item> items;
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "itemStorehouses")
+//    // этот момент можно будет обдумать, стоит ли реализовывать обработку "вложенных" изменений
+//    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+//    @JsonBackReference
+//    private List<Item> items;
 
 }

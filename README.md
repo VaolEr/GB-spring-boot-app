@@ -2,7 +2,7 @@ Storehouse Backend App
 ---
 
 - [App home page](https://gb-storehouse.herokuapp.com)
-- [Swagger docs](https://gb-storehouse.herokuapp.com/swagger-ui/)
+- [Swagger docs](https://gb-storehouse.herokuapp.com/swagger-ui.html)
 - [App API base path](https://gb-storehouse.herokuapp.com/api/v1)
 - [App info](https://gb-storehouse.herokuapp.com/check/info)
 - [App sources](https://github.com/VaolEr/GB-spring-boot-app)
@@ -28,12 +28,15 @@ Storehouse Backend App
 -	Database communications:
 - 	`Admin` have `READ` and `WRITE` permissions;
 - 	`User` have only `READ` permissions.
+   - [Storehouses controller](src/test/idea-http-client/storehouses.http)
+
+#### v0.0.10
+- GET `/items[?name=][&size=][&page=][&sort=]`
 
 #### v0.0.9
 - GET `/storehouses[/{id}]`
 - GET `/storehouses[?name=]`
 - GET `/storehouses[/{id}/items]`
-- GET `/storehouses[/{storehouseId}/{itemId}]` - returns the item data with item's quantity stored in storehouse
 - POST `/storehouses`
 - PUT `/storehouses/{id}`
 

@@ -2,17 +2,20 @@ package com.example.storehouse.web;
 
 import static com.example.storehouse.util.ItemsUtil.toItemTo;
 import static com.example.storehouse.util.ItemsUtil.toItemToWithBalance;
-import static com.example.storehouse.util.ItemsUtil.toItemTos;
 
 import com.example.storehouse.dto.ItemTo;
 import com.example.storehouse.dto.RestResponseTo;
 import com.example.storehouse.model.Item;
-
 import com.example.storehouse.service.ItemsService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.net.URI;
-import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,27 +36,35 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping(value = "${app.endpoints.base_path}" + "${app.endpoints.items.base_url}",
     produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
+@Tag(name = "Items", description = "Items REST API controller")
 public class ItemsController {
 
     private final ItemsService itemsService;
 
     @GetMapping
+    @Operation(summary = "Get all items or list of items where item name contains [name]")
+    public RestResponseTo<Page<ItemTo>> getAllOrByName(
+        @RequestParam(required = false) String name,
+        @ParameterObject Pageable pageable) {
     @PreAuthorize("hasAuthority('db:users:read')")
     public RestResponseTo<List<ItemTo>> getAllOrByName(@RequestParam(required = false) String name) {
         return new RestResponseTo<>(
-            HttpStatus.OK.toString(), null, toItemTos(itemsService.get(name))
+            HttpStatus.OK.toString(), null, itemsService.get(pageable, name)
         );
     }
 
     @GetMapping(path = "/{id}")
+    @Operation(summary = "Get an item by id")
+    public RestResponseTo<ItemTo> getById(@Parameter(description = "id of item to be searched") @PathVariable Integer id) {
     @PreAuthorize("hasAuthority('db:users:read')")
     public RestResponseTo<ItemTo> getById(@PathVariable Integer id) {
         return new RestResponseTo<>(
-            HttpStatus.OK.toString(), null, toItemTo(itemsService.getById(id))
+            HttpStatus.OK.toString(), null, toItemToWithBalance(itemsService.getById(id))
         );
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Create new item")
     @PreAuthorize("hasAuthority('db:users:write')")
     public ResponseEntity<?> create(@Valid @RequestBody ItemTo itemTo) {
         Item created = itemsService.create(itemTo);
@@ -66,6 +77,9 @@ public class ItemsController {
 
     // Валидацию попр. реализовать через @Validated для разделения проверок ItemTo и ItemStorehouseTo
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Update an item by id")
+    public RestResponseTo<ItemTo> update(@RequestBody ItemTo itemTo,
+        @Parameter(description = "id of item to be updated") @PathVariable Integer id) {
     @PreAuthorize("hasAuthority('db:users:write')")
     public RestResponseTo<ItemTo> update(@RequestBody ItemTo itemTo, @PathVariable Integer id) {
         return new RestResponseTo<>(
@@ -74,9 +88,10 @@ public class ItemsController {
     }
 
     @DeleteMapping(path = "/{id}")
+    @Operation(summary = "Delete an item by id")
     @PreAuthorize("hasAuthority('db:users:write')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Integer id) {
+    public void delete(@Parameter(description = "id of item to be deleted") @PathVariable Integer id) {
         itemsService.delete(id);
     }
 

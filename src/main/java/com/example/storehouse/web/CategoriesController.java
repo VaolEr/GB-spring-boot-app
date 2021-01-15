@@ -9,6 +9,8 @@ import com.example.storehouse.dto.ItemTo;
 import com.example.storehouse.dto.RestResponseTo;
 import com.example.storehouse.model.Category;
 import com.example.storehouse.service.CategoriesService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.net.URI;
 import java.util.List;
 import javax.validation.Valid;
@@ -31,11 +33,13 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping(value = "${app.endpoints.base_path}" + "${app.endpoints.categories.base_url}",
     produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
+@Tag(name = "Categories", description = "Categories REST API controller")
 public class CategoriesController {
 
     private final CategoriesService categoriesService;
 
     @GetMapping
+    @Operation(summary = "Get all categories or list of categories where category name contains [name]")
     @PreAuthorize("hasAuthority('db:users:read')")
     public RestResponseTo<List<CategoryTo>> getAllOrByName(
         @RequestParam(required = false) String name) {
@@ -45,6 +49,7 @@ public class CategoriesController {
     }
 
     @GetMapping(path = "/{id}")
+    @Operation(summary = "Get a category by id")
     @PreAuthorize("hasAuthority('db:users:read')")
     public RestResponseTo<CategoryTo> getById(@PathVariable Integer id) {
         return new RestResponseTo<>(
@@ -53,6 +58,7 @@ public class CategoriesController {
     }
 
     @GetMapping(path = "/{id}/items")
+    @Operation(summary = "Get a list of items in a category by category id")
     @PreAuthorize("hasAuthority('db:users:read')")
     public RestResponseTo<List<ItemTo>> getCategoriesItems(@PathVariable Integer id) {
         return new RestResponseTo<>(
@@ -61,6 +67,7 @@ public class CategoriesController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Create new category")
     @PreAuthorize("hasAuthority('db:users:write')")
     public ResponseEntity<?> create(@Valid @RequestBody CategoryTo categoryTo) {
         Category created = categoriesService.create(categoryTo);
@@ -72,6 +79,7 @@ public class CategoriesController {
     }
 
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Update a category by id")
     @PreAuthorize("hasAuthority('db:users:write')")
     public RestResponseTo<CategoryTo> update(@RequestBody CategoryTo categoryTo,
         @PathVariable Integer id) {

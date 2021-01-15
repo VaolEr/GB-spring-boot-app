@@ -1,29 +1,29 @@
-### READ all Suppliers
+### READ all Storehouses
 
 GET http://localhost:8080/api/v1/storehouses
 Accept: application/json
 
-### READ Supplier by id (id exists in table)
+### READ  Storehouse by id (id exists in table)
 
 GET http://localhost:8080/api/v1/storehouses/1000
 Accept: application/json
 
-### READ Supplier by id (id not exists in table)
+### READ Storehouse by id (id not exists in table)
 
 GET http://localhost:8080/api/v1/storehouses/1
 Accept: application/json
 
-### READ all suppliers with "b" in name
+### READ all storehouses with "w" in name
 
 GET http://localhost:8080/api/v1/storehouses?name=w
 Accept: application/json
 
-### READ all Suppliers
+### READ all storehouses
 
 GET http://localhost:8080/api/v1/storehouses?name=
 Accept: application/json
 
-### CREATE supplier with id 1002
+### CREATE storehouses with id 1002
 
 POST http://localhost:8080/api/v1/storehouses
 Content-Type: application/json
@@ -32,12 +32,12 @@ Content-Type: application/json
   "name": "Test new storehouse"
 }
 
-### READ Supplier by id 1002
+### READ Storehouse by id 1002
 
 GET http://localhost:8080/api/v1/storehouses?name=Test
 Accept: application/json
 
-### UPDATE supplier with id 1011
+### UPDATE Storehouse with id 1002
 
 PUT http://localhost:8080/api/v1/storehouses/1002
 Content-Type: application/json
@@ -46,12 +46,12 @@ Content-Type: application/json
   "name": "Test Storehouse"
 }
 
-### READ Supplier by id 1002
+### READ Storehouse by id 1002
 
 GET http://localhost:8080/api/v1/storehouses/1002
 Accept: application/json
 
-### DELETE Supplier with id 1002 - 405 answer
+### DELETE Storehouse with id 1002 - 405 answer
 
 DELETE http://localhost:8080/api/v1/storehouses/1002
 
@@ -62,13 +62,5 @@ GET http://localhost:8080/api/v1/storehouses/1000/items
 ### GET All Items for Storehouse with id 9999
 
 GET http://localhost:8080/api/v1/storehouses/9999/items
-
-### GET Item with id 1000 from Storehouse with id 1000
-
-GET http://localhost:8080/api/v1/storehouses/1000/1000
-
-### GET Item with id 1000 from Storehouse with id 1000
-
-GET http://localhost:8080/api/v1/storehouses/1000/9999
 
 ###
