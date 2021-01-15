@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -32,7 +31,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //super.configure(http);
         // разграничиваем права доступа к элементам сервера.
         // пока тестовый вариант, потом всегда можно подправить
         http
@@ -42,26 +40,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers("/").permitAll()
             .antMatchers(authenticationUrl).permitAll()
-// Если убрать @EnableGlobalMethodSecurity(prePostEnabled = true),
-// то настройка выглядит так, как показано ниже
-//            .antMatchers(HttpMethod.GET,"/api/v1/**").
-//                hasAuthority( Permission.DB_USERS_READ.getPermission())
-//            .antMatchers(HttpMethod.POST,"/api/v1/**").
-//                hasAuthority(Permission.DB_USERS_WRITE.getPermission())
-//            .antMatchers(HttpMethod.PUT, "/api/v1/**").
-//                hasAuthority(Permission.DB_USERS_WRITE.getPermission())
-//            .antMatchers(HttpMethod.PUT, "/api/v1/**").
-//                hasAuthority(Permission.DB_USERS_WRITE.getPermission())
             .anyRequest()
             .authenticated()
             .and()
             .apply(jwtConfigurer);
-//            .formLogin()
-//            .defaultSuccessUrl("/api/v1/items");
     }
 
 // Не используем, так как подгружаем пользователей из базы.
-// Данный вариант был ознокомительным.
+// Данный вариант был ознакомительным.
 //    @Bean
 //    @Override
 //    protected UserDetailsService userDetailsService() {

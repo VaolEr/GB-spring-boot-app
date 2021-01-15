@@ -4,6 +4,8 @@ import com.example.storehouse.dto.AuthenticationRequestTo;
 import com.example.storehouse.model.User;
 import com.example.storehouse.repository.UsersRepository;
 import com.example.storehouse.security.JwtTokenProvider;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.ManyToOne;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "${app.endpoints.base_path}" + "${app.endpoints.authentication.base_url}")
+@Tag(name = "Authentication", description = "JWT Authentication REST API controller")
 public class AuthenticationRestController {
 
     private final AuthenticationManager authenticationManager;
@@ -39,6 +42,7 @@ public class AuthenticationRestController {
     }
 
     @PostMapping("/login")
+    @Operation(summary = "Authentication method. Authenticate client by email and password.")
     public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequestTo authRequest) {
         try {
             authenticationManager.authenticate(
@@ -60,6 +64,7 @@ public class AuthenticationRestController {
     }
 
     @PostMapping("/logout")
+    @Operation(summary = "Logout method.")
     public void logout(HttpServletRequest request, HttpServletResponse response) {
         SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
         securityContextLogoutHandler.logout(request, response, null);
