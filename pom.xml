@@ -11,7 +11,7 @@
   </parent>
   <groupId>com.example</groupId>
   <artifactId>storehouse-back</artifactId>
-  <version>0.0.10-SNAPSHOT</version>
+  <version>0.0.11-SNAPSHOT</version>
   <name>Storehouse API</name>
   <description>Storehouse backend API on Spring Boot</description>
 
