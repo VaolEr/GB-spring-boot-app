@@ -1,25 +1,16 @@
 package com.example.storehouse.web;
 
-
-import static com.example.storehouse.util.ValidationUtil.addMessageDetails;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.example.storehouse.dto.CategoryTo;
 import com.example.storehouse.model.Category;
 import com.example.storehouse.model.Item;
 import com.example.storehouse.service.CategoriesService;
-import com.example.storehouse.util.ValidationUtil;
-import com.example.storehouse.util.exception.NotFoundException;
-import com.sun.xml.bind.v2.TODO;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
