@@ -20,7 +20,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Value("${app.endpoints.base_path}" + "${app.endpoints.authentication.base_url}" + "/login")
-    String authenticationUrl;
+    private String authenticationUrl;
+
+    @Value("${management.endpoints.web.base-path}")
+    private String appHealthCheckUrl;
 
     private static final String[] AUTH_WHITELIST = {
         // -- swagger ui
@@ -32,7 +35,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //"/swagger-ui.html/**",
         //"/swagger-ui/index.html?configUrl=/api/v1/docs/swagger-config",
         //"/webjars/**",
-        "/check/info"
         // other public endpoints of your API may be appended to this array
     };
 
@@ -52,31 +54,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .authorizeRequests()
             .antMatchers(AUTH_WHITELIST).permitAll()  // whitelist Swagger UI resources
-            .antMatchers(authenticationUrl).permitAll()
+            .antMatchers(authenticationUrl, appHealthCheckUrl + "/**").permitAll()
             .anyRequest()
             .authenticated()
             .and()
             .apply(jwtConfigurer);
     }
-
-// Не используем, так как подгружаем пользователей из базы.
-// Данный вариант был ознакомительным.
-//    @Bean
-//    @Override
-//    protected UserDetailsService userDetailsService() {
-//        return new InMemoryUserDetailsManager(
-//            User.builder()
-//                .username("admin")
-//                .password(passwordEncoder().encode("admin"))
-//                .authorities(Role.ADMIN.getAuthorities())
-//                .build(),
-//            User.builder()
-//                .username("user")
-//                .password(passwordEncoder().encode("user"))
-//                .authorities(Role.USER.getAuthorities())
-//                .build()
-//        );
-//    }
 
     @Bean
     @Override

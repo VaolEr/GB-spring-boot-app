@@ -19,4 +19,4 @@ CREATE INDEX supplier_name_index
 
 -- changeset Valentin:Add_uniqueness_constrained_index_sku-supplier
 CREATE UNIQUE INDEX items_unique_supplier_sku_index
-    ON items (supplier_id, sku)
+    ON items (supplier_id, sku);
