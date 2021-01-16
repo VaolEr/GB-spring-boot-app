@@ -4,7 +4,6 @@ package com.example.storehouse.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,6 +22,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${app.endpoints.base_path}" + "${app.endpoints.authentication.base_url}" + "/login")
     String authenticationUrl;
 
+    private static final String[] AUTH_WHITELIST = {
+        // -- swagger ui
+        "/**",
+        //"/api/v1/docs/**",
+        //"/swagger-resources",
+        //"/swagger-resources/**",
+        //"/configuration/ui",
+        //"/swagger-ui.html/**",
+        //"/swagger-ui/index.html?configUrl=/api/v1/docs/swagger-config",
+        //"/webjars/**",
+        "/check/info"
+        // other public endpoints of your API may be appended to this array
+    };
+
     private final JwtConfigurer jwtConfigurer;
 
     public SecurityConfig(JwtConfigurer jwtConfigurer) {
@@ -38,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-            .antMatchers("/").permitAll()
+            .antMatchers(AUTH_WHITELIST).permitAll()  // whitelist Swagger UI resources
             .antMatchers(authenticationUrl).permitAll()
             .anyRequest()
             .authenticated()
