@@ -25,7 +25,7 @@ Content-Type: application/json
 
 {
   "name": "Moloko Burenka2",
-  "sku": "#moloko784",
+  "sku": "#moloko785",
   "supplier": {
     "id": 1001
   },
@@ -36,11 +36,11 @@ Content-Type: application/json
   ],
   "storehouses_balance": [
     {
-      "storehouse_id": 1001,
+      "id": 1001,
       "quantity": 14
     },
     {
-      "storehouse_id": 1000,
+      "id": 1000,
       "quantity": 18
     }
   ]

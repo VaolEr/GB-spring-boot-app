@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Schema(description = "Entity: Supplier")
 public class SupplierTo {
 
-    @Schema(description = "Identifier")
+    @Schema(description = "Identifier", example = "1001")
     Integer id;
 
     @NotNull

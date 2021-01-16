@@ -9,10 +9,10 @@ import lombok.Data;
 @Schema(description = "Entity: RestResponse")
 public class RestResponseTo<T> {
 
-    @Schema(description = "Response status", example = "404 NOT_FOUND")
+    @Schema(description = "Response status")
     private String responseStatus;
 
-    @Schema(description = "Response error message", example = "Item was not found.")
+    @Schema(description = "Response error message")
     private String errorMessage;
 
     @Schema(description = "Response data")
