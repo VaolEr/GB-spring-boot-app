@@ -17,3 +17,9 @@ databaseChangeLog:
   # Add indexes to all  fields 'name' in each table and unique index in items table for supplier_id and sku
   - include:
       file: db/changelog/shema/2020-12-21-add-indexes-to-some-tables.sql
+  # Add users table for store users data and enable spring security. Nickname for each user is email.
+  - include:
+      file: db/changelog/shema/2020-12-28-add-users-table-for-security.sql
+  # Add 3 users entities to users table: admin, user and root. Admin and user are ACTIVE, root is BANNED.
+  - include:
+      file: db/changelog/data/2020-12-28-add-three-users-to-table-users.sql

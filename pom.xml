@@ -11,12 +11,13 @@
   </parent>
   <groupId>com.example</groupId>
   <artifactId>storehouse-back</artifactId>
-  <version>0.0.10-SNAPSHOT</version>
+  <version>0.0.11-SNAPSHOT</version>
   <name>Storehouse API</name>
   <description>Storehouse backend API on Spring Boot</description>
 
   <properties>
     <java.version>11</java.version>
+    <jjwt.version>0.9.1</jjwt.version>
   </properties>
 
   <dependencies>
@@ -32,6 +33,17 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <!-- Security -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt</artifactId>
+      <version>${jjwt.version}</version>
     </dependency>
 
     <!-- DB -->

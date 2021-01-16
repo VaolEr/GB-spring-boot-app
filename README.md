@@ -12,6 +12,32 @@ Storehouse Backend App
    - [Suppliers controller](src/test/idea-http-client/suppliers.http)
    - [Categories controller](src/test/idea-http-client/categories.http)
    - [Storehouses controller](src/test/idea-http-client/storehouses.http)
+   - [Users controller](src/test/idea-http-client/users.http)
+   - [Authentication](src/test/idea-http-client/authentication.http)
+
+#### v0.0.11
+    JWT authorization url
+- POST `/auth/login`
+  
+
+    Users available for tests:
+-	User `admin@mail.com`	password	`admin`	status `ACTIVE`
+-	User `user@mail.com`	password 	`user`	status `ACTIVE`
+-	User `root@mail.com`	password 	`root`	status `BANNED`
+
+    Database communications:
+- 	`Admin` have `READ` and `WRITE` permissions;
+- 	`User` have only `READ` permissions.
+
+    ADMIN/USER
+- GET `/users[/{id}]`   
+- GET `/users[?name=]`
+  
+
+    ADMIN only
+- POST `/users`         
+- PUT `/users/{id}`     
+- DELETE `/users/{id}`  
 
 #### v0.0.10
 - GET `/items[?name=][&size=][&page=][&sort=]`
