@@ -1,15 +1,22 @@
 package com.example.storehouse.config;
 
 
+import static com.example.storehouse.util.UsersUtil.PASSWORD_ENCODER;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -17,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Value("${app.endpoints.base_path}" + "${app.endpoints.authentication.base_url}" + "/login")
@@ -38,11 +46,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // other public endpoints of your API may be appended to this array
     };
 
-    private final JwtConfigurer jwtConfigurer;
+    @Qualifier("UserDetailsServiceImplementation")
+    private final UserDetailsService userDetailsService;
 
-    public SecurityConfig(JwtConfigurer jwtConfigurer) {
-        this.jwtConfigurer = jwtConfigurer;
-    }
+    private final JwtConfig jwtConfigurer;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -54,16 +61,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .authorizeRequests()
             .antMatchers(AUTH_WHITELIST).permitAll()  // whitelist Swagger UI resources
-            .antMatchers(authenticationUrl, appHealthCheckUrl + "/**").permitAll()
+            .antMatchers(appHealthCheckUrl + "/**").permitAll()
+            .antMatchers(authenticationUrl).anonymous()
             .anyRequest()
             .authenticated()
             .and()
             .apply(jwtConfigurer);
     }
 
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(PASSWORD_ENCODER);
+    }
+
     @Bean
     @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception{
+    public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
@@ -71,6 +84,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);
     }
-
 
 }

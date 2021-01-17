@@ -2,8 +2,11 @@ package com.example.storehouse.dto;
 
 import com.example.storehouse.model.Role;
 import com.example.storehouse.model.Status;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -19,6 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Schema(description = "Entity: User")
 public class UserTo {
+
     Integer id;
 
     @NotNull
@@ -28,10 +32,11 @@ public class UserTo {
     String email;
 
     @NotNull
-    @NotEmpty
     @NotBlank
     @Schema(description = "User password", example = "userP@ssw0rd")
     @Min(value = 7, message = "Password should not be less than 7 symbols")
+    @Max(value = 100, message = "Password should not be more than 100 symbols")
+    @JsonProperty(access = Access.WRITE_ONLY)
     String password;
 
     @NotNull

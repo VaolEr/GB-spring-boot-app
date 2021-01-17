@@ -1,15 +1,20 @@
 package com.example.storehouse.util;
 
-import com.example.storehouse.dto.SupplierTo;
+import static org.springframework.util.StringUtils.hasText;
+
 import com.example.storehouse.dto.UserTo;
-import com.example.storehouse.model.Supplier;
 import com.example.storehouse.model.User;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-@NoArgsConstructor
-public class UsersUtil {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class UsersUtil {
+
+    public static final PasswordEncoder PASSWORD_ENCODER = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
     public static UserTo toUserTo(User user) {
         return UserTo
@@ -38,4 +43,12 @@ public class UsersUtil {
         newUser.setStatus(userTo.getStatus());
         return newUser;
     }
+
+    public static User prepareToSave(User user) {
+        String password = user.getPassword();
+        user.setPassword(hasText(password) ? PASSWORD_ENCODER.encode(password) : password);
+        user.setEmail(user.getEmail().toLowerCase());
+        return user;
+    }
+
 }

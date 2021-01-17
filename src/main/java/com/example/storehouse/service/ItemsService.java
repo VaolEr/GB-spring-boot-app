@@ -46,7 +46,7 @@ public class ItemsService {
     public Item create(ItemTo itemTo) {
         Item newItem = prepareToSave(itemTo);
         // NOTE попробовать это место посимпатичней сделать
-        itemTo.getItemsStorehousesTo().forEach(iSt -> {
+        itemTo.getItemsStorehouses().forEach(iSt -> {
             Storehouse storehouse = checkNotFound(storehousesRepository.findById(iSt.getStorehouseId()),
                 addMessageDetails(Storehouse.class.getSimpleName(), iSt.getStorehouseId())
             );

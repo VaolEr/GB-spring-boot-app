@@ -56,7 +56,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 @SpringJUnitConfig(ItemsService.class)
-//@MockBean({CategoriesRepository.class, StorehousesRepository.class})
 class ItemsServiceTest {
 
     @Autowired
@@ -221,7 +220,7 @@ class ItemsServiceTest {
 
         // Then
         verify(itemsRepository).findById(1);
-        assertEquals(notFoundException.getMessage(), "Not found entity with type is 'Item' and id is '1'");
+        assertEquals(notFoundException.getMessage(), "Not found entity with type is 'Item' and identifier is '1'");
     }
 
     @DisplayName("Should create new Item from ItemTo and return it")
@@ -234,7 +233,7 @@ class ItemsServiceTest {
             .categories(toCategoryTos(List.of(testCategory)))
             .supplier(toSupplierTo(testSupplier))
             .build();
-        newItemTo.setItemsStorehousesTo(createItemStorehouseTos());
+        newItemTo.setItemsStorehouses(createItemStorehouseTos());
         Item newItem = fromItemTo(newItemTo);
         when(itemsRepository.save(newItem)).thenReturn(newItem);
 
@@ -258,7 +257,7 @@ class ItemsServiceTest {
 
             // Then
             .isInstanceOfSatisfying(NotFoundException.class, e -> assertEquals(
-                String.format("Not found entity with type is '%s' and id is '%d'", testSupplier.getClass().getSimpleName(),
+                String.format("Not found entity with type is '%s' and identifier is '%d'", testSupplier.getClass().getSimpleName(),
                     testSupplier.getId()), e.getMessage())
             );
     }
@@ -276,7 +275,7 @@ class ItemsServiceTest {
             .categories(toCategoryTos(List.of(testCategory)))
             .supplier(toSupplierTo(testSupplier))
             .build();
-        updatedItemTo.setItemsStorehousesTo(createItemStorehouseTos());
+        updatedItemTo.setItemsStorehouses(createItemStorehouseTos());
         Item updatedItem = fromItemTo(updatedItemTo);
         when(itemsRepository.save(updatedItem)).thenReturn(updatedItem);
 
