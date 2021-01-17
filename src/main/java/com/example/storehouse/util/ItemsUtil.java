@@ -30,7 +30,7 @@ public final class ItemsUtil {
 
     public static ItemTo toItemToWithBalance(Item item) {
         ItemTo itemTo = toItemTo(item);
-        itemTo.setItemsStorehousesTo(
+        itemTo.setItemsStorehouses(
             item.getItemStorehouses().stream()
                 .map(ItemStorehousesUtil::toItemStorehouseTo)
                 .collect(Collectors.toList())

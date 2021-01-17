@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,6 +40,7 @@ public class CategoriesController {
 
     @GetMapping
     @Operation(summary = "Get all categories or list of categories where category name contains [name]")
+    @PreAuthorize("hasAuthority('db:users:read')")
     public RestResponseTo<List<CategoryTo>> getAllOrByName(
         @RequestParam(required = false) String name) {
         return new RestResponseTo<>(
@@ -48,6 +50,7 @@ public class CategoriesController {
 
     @GetMapping(path = "/{id}")
     @Operation(summary = "Get a category by id")
+    @PreAuthorize("hasAuthority('db:users:read')")
     public RestResponseTo<CategoryTo> getById(@PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toCategoryTo(categoriesService.getById(id))
@@ -56,6 +59,7 @@ public class CategoriesController {
 
     @GetMapping(path = "/{id}/items")
     @Operation(summary = "Get a list of items in a category by category id")
+    @PreAuthorize("hasAuthority('db:users:read')")
     public RestResponseTo<List<ItemTo>> getCategoriesItems(@PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toItemTos(categoriesService.getCategoryItems(id))
@@ -64,6 +68,7 @@ public class CategoriesController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Create new category")
+    @PreAuthorize("hasAuthority('db:users:write')")
     public ResponseEntity<?> create(@Valid @RequestBody CategoryTo categoryTo) {
         Category created = categoriesService.create(categoryTo);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentRequest().
@@ -75,6 +80,7 @@ public class CategoriesController {
 
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Update a category by id")
+    @PreAuthorize("hasAuthority('db:users:write')")
     public RestResponseTo<CategoryTo> update(@RequestBody CategoryTo categoryTo,
         @PathVariable Integer id) {
         return new RestResponseTo<>(
