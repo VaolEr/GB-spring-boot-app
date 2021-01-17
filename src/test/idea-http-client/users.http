@@ -1,6 +1,7 @@
 ### READ all users
 GET http://localhost:8080/api/v1/users
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTYxMDg2NDIwNywiZXhwIjoxNjExNDY5MDA3fQ.jVVry1HAtyRdR3dVq5o_zw_VHpw7x4rPxllGQ6hPTf4
 
 ### READ all users
 GET http://localhost:8080/api/v1/users?name=
@@ -17,23 +18,25 @@ Accept: application/json
 ### CREATE new user
 POST http://localhost:8080/api/v1/users
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTYxMDg2NzY3MywiZXhwIjoxNjEwODY4Mjc3fQ.l2qmQ4heMp0ZsegJugQ-7JCCMN3SL1Bft6qZ-i3xnZA
 
 {
-  "email": "test@mail.ru",
-  "password": "$2y$12$CKQ0LULpWt/9gxfiLpI5VuZx0O7P3aKFZn8DUfzNymoqdhhXMCUl.",
+  "email": "test1@mail.ru",
+  "password": "passWord",
   "first_name": "TEST",
   "last_name": "TESTER",
   "role": "USER",
   "status": "ACTIVE"
 }
 
-### UPDATE user with id 4
-PUT http://localhost:8080/api/v1/users/4
+### UPDATE user with id 1002
+PUT http://localhost:8080/api/v1/users/1002
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTYxMDg3MDA2NCwiZXhwIjoxNjEwODcwNjY5fQ.5pZSCP-C0cR_WgIjadbVrR9-j8cZ97nsSC6GeGJsR_w
 
 {
   "email": "test@mail.ru",
-  "password": "$2y$12$CKQ0LULpWt/9gxfiLpI5VuZx0O7P3aKFZn8DUfzNymoqdhhXMCUl.",
+  "password": "newPassWord",
   "first_name": "TEST_UPDATED",
   "last_name": "TESTER_UPDATED",
   "role": "USER",
@@ -41,5 +44,5 @@ Content-Type: application/json
 }
 
 ### DELETE user with id 4
-GET http://localhost:8080/api/v1/users/4
+DELETE http://localhost:8080/api/v1/users/4
 Accept: application/json

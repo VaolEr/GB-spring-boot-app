@@ -18,7 +18,11 @@ public final class ValidationUtil {
     }
 
     public static String addMessageDetails(String entityType, Integer entityId) {
-        return String.format("type is '%s' and id is '%d'", entityType, entityId);
+        return addMessageDetails(entityType, entityId.toString());
+    }
+
+    public static String addMessageDetails(String entityType, String identifier) {
+        return String.format("type is '%s' and identifier is '%s'", entityType, identifier);
     }
 
     public static <E extends AbstractBaseEntity> void assureIdConsistent(E entity, Integer id) {

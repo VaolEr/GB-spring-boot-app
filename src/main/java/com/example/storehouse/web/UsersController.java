@@ -1,17 +1,13 @@
 package com.example.storehouse.web;
 
-import static com.example.storehouse.util.ItemsUtil.toItemTos;
-import static com.example.storehouse.util.SuppliersUtil.toSupplierTo;
 import static com.example.storehouse.util.UsersUtil.toUserTo;
 import static com.example.storehouse.util.UsersUtil.toUserTos;
 
-import com.example.storehouse.dto.ItemTo;
 import com.example.storehouse.dto.RestResponseTo;
-import com.example.storehouse.dto.SupplierTo;
 import com.example.storehouse.dto.UserTo;
-import com.example.storehouse.model.Supplier;
 import com.example.storehouse.model.User;
 import com.example.storehouse.service.UsersService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.net.URI;
 import java.util.List;
 import javax.validation.Valid;
@@ -36,6 +32,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping(value = "${app.endpoints.base_path}" + "${app.endpoints.users.base_url}",
     produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
+@Tag(name = "Users", description = "User profiles REST API controller")
 public class UsersController {
 
     private final UsersService usersService;

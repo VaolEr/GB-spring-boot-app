@@ -221,7 +221,7 @@ class ItemsServiceTest {
 
         // Then
         verify(itemsRepository).findById(1);
-        assertEquals(notFoundException.getMessage(), "Not found entity with type is 'Item' and id is '1'");
+        assertEquals(notFoundException.getMessage(), "Not found entity with type is 'Item' and identifier is '1'");
     }
 
     @DisplayName("Should create new Item from ItemTo and return it")
@@ -258,7 +258,7 @@ class ItemsServiceTest {
 
             // Then
             .isInstanceOfSatisfying(NotFoundException.class, e -> assertEquals(
-                String.format("Not found entity with type is '%s' and id is '%d'", testSupplier.getClass().getSimpleName(),
+                String.format("Not found entity with type is '%s' and identifier is '%d'", testSupplier.getClass().getSimpleName(),
                     testSupplier.getId()), e.getMessage())
             );
     }

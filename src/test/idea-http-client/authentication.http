@@ -7,11 +7,20 @@ POST http://localhost:8080/api/v1/auth/login
 Content-Type: application/json
 
 {
-  "email": "user@mail.com",
-  "password": "user"
+  "email": "admin@mail.com",
+  "password": "admin-password"
+}
+
+### Try to authenticate after password is changed
+POST http://localhost:8080/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@mail.ru",
+  "password": "newPassWord"
 }
 
 ### Try to get data after success authentiucation
-GET http://localhost:8080/api/v1/items
+GET http://localhost:8080/api/v1/users
 Accept: application/json
-Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQG1haWwuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE2MTA3Mzk4NjYsImV4cCI6MTYxMTM0NDY2Nn0.3ToMFikriKbZf3zctphFj3RIsqMf6v16uk4uVh8kfE8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTYxMDg2NzQ3NCwiZXhwIjoxNjEwODY4MDc4fQ.WddyOYd4pMLqrdN0VLMZ-EWYkWKuGvr8vHaAFiKO6Uo

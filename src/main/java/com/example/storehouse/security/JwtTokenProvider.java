@@ -6,6 +6,8 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 import java.util.Date;
 import javax.annotation.PostConstruct;
@@ -44,15 +46,17 @@ public class JwtTokenProvider {
     public String createToken(String username, String role) {
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("role", role);
+
         Date now = new Date();
-        Date validity = new Date(now.getTime() + validityMilliseconds * 1000);
+        Instant expirationTime = Instant.now().plus(validityMilliseconds, ChronoUnit.MILLIS);
+        Date validity = Date.from(expirationTime);
 
         return Jwts.builder()
-                   .setClaims(claims)
-                   .setIssuedAt(now)
-                   .setExpiration(validity)
-                   .signWith(SignatureAlgorithm.HS256, secretKey)
-                   .compact();
+            .setClaims(claims)
+            .setIssuedAt(now)
+            .setExpiration(validity)
+            .signWith(SignatureAlgorithm.HS256, secretKey)
+            .compact();
     }
 
     public boolean validateToken(String token) {

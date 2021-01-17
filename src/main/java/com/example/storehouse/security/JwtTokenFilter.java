@@ -1,5 +1,7 @@
 package com.example.storehouse.security;
 
+import static java.util.Objects.nonNull;
+
 import com.example.storehouse.security.exception.JwtAuthenticationException;
 import java.io.IOException;
 import javax.servlet.FilterChain;
@@ -25,20 +27,28 @@ public class JwtTokenFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
-        String token = jwtTokenProvider.resolveToken((HttpServletRequest) servletRequest);
+        String authHeader = jwtTokenProvider.resolveToken((HttpServletRequest) servletRequest);
         try {
-            if (token != null && jwtTokenProvider.validateToken(token)) {
-                Authentication authentication = jwtTokenProvider.getAuthentication(token);
-                if (authentication != null) {
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
+            if (authHeaderIsValid(authHeader)) {
+                String token = authHeader.replace("Bearer ", "");
+                if (jwtTokenProvider.validateToken(token)) {
+                    Authentication authentication = jwtTokenProvider.getAuthentication(token);
+                    if (authentication != null) {
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                    }
                 }
             }
-        }
-        catch (JwtAuthenticationException e) {
+        } catch (JwtAuthenticationException e) {
             SecurityContextHolder.clearContext();
             ((HttpServletResponse) servletResponse).sendError(e.getHttpStatus().value());
             throw new JwtAuthenticationException("JWT token is expired or invalid");
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }
+
+    private boolean authHeaderIsValid(String authorizationHeader) {
+        // TODO надо поискать штатный способ валидации схемы авторизации вместо этого костыля
+        return nonNull(authorizationHeader) && authorizationHeader.startsWith("Bearer ");
+    }
+
 }

@@ -14,3 +14,5 @@ CREATE TABLE users
     status      VARCHAR(20) default 'ACTIVE'    NOT NULL,
     CONSTRAINT users_pk PRIMARY KEY (id)
 );
+ALTER TABLE users
+    AUTO_INCREMENT = 1000;
