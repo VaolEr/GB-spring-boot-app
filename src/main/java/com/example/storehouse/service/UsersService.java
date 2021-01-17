@@ -21,11 +21,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class UsersService {
 
     private final UsersRepository usersRepository;
-    private final PasswordEncoder passwordEncoder;
 
     public List<User> get(String email) {
-        return hasText(email) ?
-            List.of(checkNotFound(usersRepository.findByEmail(email),
+        return hasText(email)
+            ? List.of(checkNotFound(usersRepository.findByEmail(email),
                 addMessageDetails(User.class.getSimpleName(), email)))
             : usersRepository.findAll();
     }

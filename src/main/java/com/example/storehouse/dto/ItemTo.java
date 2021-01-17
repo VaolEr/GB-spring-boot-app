@@ -43,6 +43,6 @@ public class ItemTo {
     @JsonProperty(value = "storehouses_balance")
     @Schema(description = "ItemStorehouse data: storehouse and quantity of item in this storehouse",
         example = "[{\"id\": 1000, \"quantity\": 25}, {\"id\": 1001, \"quantity\": 15}]")
-    List<ItemStorehouseTo> itemsStorehousesTo;
+    List<ItemStorehouseTo> itemsStorehouses;
 
 }

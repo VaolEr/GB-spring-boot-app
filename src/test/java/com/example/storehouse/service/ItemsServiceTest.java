@@ -56,7 +56,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 @SpringJUnitConfig(ItemsService.class)
-//@MockBean({CategoriesRepository.class, StorehousesRepository.class})
 class ItemsServiceTest {
 
     @Autowired
@@ -234,7 +233,7 @@ class ItemsServiceTest {
             .categories(toCategoryTos(List.of(testCategory)))
             .supplier(toSupplierTo(testSupplier))
             .build();
-        newItemTo.setItemsStorehousesTo(createItemStorehouseTos());
+        newItemTo.setItemsStorehouses(createItemStorehouseTos());
         Item newItem = fromItemTo(newItemTo);
         when(itemsRepository.save(newItem)).thenReturn(newItem);
 
@@ -276,7 +275,7 @@ class ItemsServiceTest {
             .categories(toCategoryTos(List.of(testCategory)))
             .supplier(toSupplierTo(testSupplier))
             .build();
-        updatedItemTo.setItemsStorehousesTo(createItemStorehouseTos());
+        updatedItemTo.setItemsStorehouses(createItemStorehouseTos());
         Item updatedItem = fromItemTo(updatedItemTo);
         when(itemsRepository.save(updatedItem)).thenReturn(updatedItem);
 
