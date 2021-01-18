@@ -40,7 +40,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 @SpringJUnitConfig(StorehousesService.class)
-public class StorehouseServiceTests {
+public class StorehousesServiceTests {
 
     @Autowired
     private StorehousesService service;
