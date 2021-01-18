@@ -85,23 +85,22 @@ public class CategoriesServiceTests {
                             item.setSupplier(testSupplier);
                         })
                         .collect(Collectors.toList());
-
+        testCategory.setItems(testItems);
     }
 
     @DisplayName("Should return categories where name contains TEST_CATEGORY_NAME")
     @Test
     void getByNameAndNamePresent() {
         // Given
-        List<Category> listCategories = new ArrayList<>(List.of(testCategory)); // default Pageable is Pageable.unpaged()
-        when(categoriesRepository.findByNameContaining(
-            testCategory.getName())).thenReturn(listCategories);
+        List<Category> listCategories = List.of(testCategory);
+        when(categoriesRepository.findByNameContaining(testCategory.getName())).thenReturn(listCategories);
 
         // When
         List<Category> returnedCategories = service.get(testCategory.getName());
 
         // Then
         verify(categoriesRepository).findByNameContaining(testCategory.getName());
-        assertThat(returnedCategories.stream()).containsExactly(testCategory);
+        assertThat(returnedCategories).containsExactly(testCategory);
     }
 
     @DisplayName("Should return empty content")
@@ -109,7 +108,7 @@ public class CategoriesServiceTests {
     void getByNameAndNameAbsent() {
         // Given
         String categoryName = "name is absent";
-        List<Category> listCategories = new ArrayList<>(List.of()); // Collections.emptyList()
+        List<Category> listCategories = List.of(); // Collections.emptyList()
         when(categoriesRepository.findByNameContaining(categoryName)).thenReturn(listCategories);
 
         // When
@@ -147,22 +146,6 @@ public class CategoriesServiceTests {
         verify(categoriesRepository).findById(1);
         assertEquals(notFoundException.getMessage(), "Not found entity with type is 'Category' and identifier is '1'");
     }
-
-//    @DisplayName("Should return category items by specified Category id")
-//    @Test
-//    void getCategoryItemsByIdWithPresentId() {
-//        // Given
-//
-//        // падает в NullPointerException !!!
-//        when(categoriesRepository.getOneById(TEST_CATEGORY_ID).getItems()).thenReturn(testItems);
-//
-//        // When
-//        List<Item> returnedListOfItems = service.getCategoryItems(TEST_CATEGORY_ID);
-//
-//        // Then
-//        verify(categoriesRepository.getOneById(TEST_CATEGORY_ID)).getItems();
-//        assertThat(returnedListOfItems.stream()).containsAll(testItems);
-//    }
 
     @DisplayName("Should create new Category from CategoryTo and return it")
     @Test
