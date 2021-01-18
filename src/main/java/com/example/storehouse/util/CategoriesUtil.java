@@ -25,6 +25,7 @@ public final class CategoriesUtil {
 
     public static Category fromCategoryTo(CategoryTo categoryTo) {
         Category newCategory = new Category();
+        newCategory.setId(categoryTo.getId());
         newCategory.setName(categoryTo.getName());
         return newCategory;
     }

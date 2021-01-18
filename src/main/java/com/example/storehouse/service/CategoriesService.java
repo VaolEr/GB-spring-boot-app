@@ -49,4 +49,8 @@ public class CategoriesService {
         return categoriesRepository.save(updatedCategory);
     }
 
+    @Transactional
+    public void delete(Integer id) {
+        categoriesRepository.deleteById(id);
+    }
 }
