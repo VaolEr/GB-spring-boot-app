@@ -9,26 +9,22 @@ import static com.example.storehouse.service.ServiceTestData.TEST_ITEM_2_ID;
 import static com.example.storehouse.service.ServiceTestData.TEST_ITEM_3_ID;
 import static com.example.storehouse.service.ServiceTestData.TEST_SUPPLIER_ID;
 import static com.example.storehouse.service.ServiceTestData.TEST_SUPPLIER_NAME;
-import static com.example.storehouse.util.CategoriesUtil.toCategoryTo;
 import static com.example.storehouse.util.CategoriesUtil.fromCategoryTo;
-
+import static com.example.storehouse.util.CategoriesUtil.toCategoryTo;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.example.storehouse.dto.CategoryTo;
-
 import com.example.storehouse.model.Category;
 import com.example.storehouse.model.Item;
 import com.example.storehouse.model.Supplier;
 import com.example.storehouse.repository.CategoriesRepository;
 import com.example.storehouse.util.exception.IllegalRequestDataException;
 import com.example.storehouse.util.exception.NotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
