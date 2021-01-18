@@ -12,7 +12,6 @@ import static com.example.storehouse.util.UsersUtil.toUserTo;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -115,35 +114,7 @@ public class UsersServiceTests {
                                     e -> assertEquals("Not found entity with type is 'User' and identifier is '0'", e.getMessage())
             );
     }
-//
-//    @DisplayName("Should return one category by specified Category id")
-//    @Test
-//    void getByIdWithPresentId() {
-//        // Given
-//        when(usersRepository.findById(TEST_CATEGORY_ID)).thenReturn(Optional.of(testCategory));
-//
-//        // When
-//        Category returnedCategory = service.getById(TEST_CATEGORY_ID);
-//
-//        // Then
-//        verify(usersRepository).findById(TEST_CATEGORY_ID);
-//        assertEquals(returnedCategory, testCategory);
-//    }
-//
-//    @DisplayName("Have non-existent Category id, must thrown NotFoundException")
-//    @Test
-//    void getByIdWithAbsentId() {
-//        // Given
-//        when(usersRepository.findById(1)).thenReturn(Optional.empty());
-//
-//        // When
-//        NotFoundException notFoundException = assertThrows(NotFoundException.class, () -> service.getById(1));
-//
-//        // Then
-//        verify(usersRepository).findById(1);
-//        assertEquals(notFoundException.getMessage(), "Not found entity with type is 'Category' and identifier is '1'");
-//    }
-//
+
     @DisplayName("Should create new User from UserTo and return it")
     @Test
     void createIsOk() {
