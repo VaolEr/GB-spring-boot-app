@@ -25,6 +25,7 @@ public final class SuppliersUtil {
 
     public static Supplier fromSupplierTo(SupplierTo supplierTo) {
         Supplier newSupplier = new Supplier();
+        newSupplier.setId(supplierTo.getId());
         newSupplier.setName(supplierTo.getName());
         return newSupplier;
     }
