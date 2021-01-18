@@ -50,4 +50,8 @@ public class SuppliersService {
         return suppliersRepository.save(updatedSupplier);
     }
 
+    @Transactional
+    public void delete(Integer id) {
+        suppliersRepository.deleteById(id);
+    }
 }
