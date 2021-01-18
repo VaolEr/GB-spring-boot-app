@@ -40,6 +40,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 @SpringJUnitConfig(StorehousesService.class)
+@MockBean(ItemsRepository.class)
 public class StorehousesServiceTests {
 
     @Autowired
@@ -47,9 +48,6 @@ public class StorehousesServiceTests {
 
     @MockBean
     private StorehousesRepository storehousesRepository;
-
-    @MockBean
-    private ItemsRepository itemsRepository; // without this bean tests will not start
 
     Item testItemOne,
         testItemTwo,
