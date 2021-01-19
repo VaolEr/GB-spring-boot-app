@@ -7,6 +7,7 @@ import com.example.storehouse.security.JwtTokenProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -46,7 +47,9 @@ public class AuthenticationController {
             User user = usersRepository.findByEmail(authRequest.getEmail()).orElseThrow(
                 () -> new UsernameNotFoundException("User does not exists."));
             Map<String, String> authResponse = new HashMap<>();
-            authResponse.put("email", authRequest.getEmail());
+            //authResponse.put("email", authRequest.getEmail());
+            //authResponse.put("role", Base64.getEncoder().encodeToString(user.getRole().name().getBytes()));
+            authResponse.put("role", user.getRole().name());
             authResponse.put("token", jwtTokenProvider.createToken(authRequest.getEmail(), user.getRole().name()));
 
             return ResponseEntity.ok(authResponse);
