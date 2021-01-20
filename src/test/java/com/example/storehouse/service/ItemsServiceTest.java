@@ -13,6 +13,8 @@ import static com.example.storehouse.service.ServiceTestData.TEST_STOREHOUSE_2_I
 import static com.example.storehouse.service.ServiceTestData.TEST_STOREHOUSE_2_NAME;
 import static com.example.storehouse.service.ServiceTestData.TEST_SUPPLIER_ID;
 import static com.example.storehouse.service.ServiceTestData.TEST_SUPPLIER_NAME;
+import static com.example.storehouse.service.ServiceTestData.TEST_UNIT_ID;
+import static com.example.storehouse.service.ServiceTestData.TEST_UNIT_NAME;
 import static com.example.storehouse.util.CategoriesUtil.toCategoryTos;
 import static com.example.storehouse.util.ItemsUtil.fromItemTo;
 import static com.example.storehouse.util.ItemsUtil.toItemTo;
@@ -33,6 +35,7 @@ import com.example.storehouse.model.Item;
 import com.example.storehouse.model.ItemStorehouse;
 import com.example.storehouse.model.Storehouse;
 import com.example.storehouse.model.Supplier;
+import com.example.storehouse.model.Unit;
 import com.example.storehouse.repository.CategoriesRepository;
 import com.example.storehouse.repository.ItemsRepository;
 import com.example.storehouse.repository.StorehousesRepository;
@@ -79,6 +82,7 @@ class ItemsServiceTest {
     List<Item> testItems;
     Category testCategory;
     Supplier testSupplier;
+    Unit testUnit;
     Storehouse testStorehouseOne,
         testStorehouseTwo;
     Pageable pageableUnpaged;
@@ -92,6 +96,10 @@ class ItemsServiceTest {
         testSupplier = new Supplier();
         testSupplier.setId(TEST_SUPPLIER_ID);
         testSupplier.setName(TEST_SUPPLIER_NAME);
+
+        testUnit = new Unit();
+        testUnit.setId(TEST_UNIT_ID);
+        testUnit.setName(TEST_UNIT_NAME);
 
         testStorehouseOne = new Storehouse();
         testStorehouseOne.setId(TEST_STOREHOUSE_1_ID);
@@ -116,6 +124,7 @@ class ItemsServiceTest {
                 item.setSku(TEST_ITEMS_SKU);
                 item.setCategory(testCategory);
                 item.setSupplier(testSupplier);
+                item.setUnit(testUnit);
             })
             .collect(Collectors.toList());
         // testItems = List.of(testItemOne, testItemTwo, testItemThree);
