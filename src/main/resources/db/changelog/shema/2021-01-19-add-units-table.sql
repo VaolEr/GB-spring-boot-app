@@ -15,3 +15,7 @@ ALTER TABLE units
 -- changeset Valentin:Add_index_to_name_field_in_units_table
 CREATE INDEX unit_name_index
     ON units (name);
+
+-- changeset Valentin:Add units_id field to items
+ALTER TABLE items
+    ADD unit_id integer UNSIGNED default 1000 NOT NULL;
