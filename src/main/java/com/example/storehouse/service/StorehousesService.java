@@ -72,4 +72,8 @@ public class StorehousesService {
     }
 
 
+    @Transactional
+    public void delete(Integer id) {
+        storehousesRepository.deleteById(id);
+    }
 }
