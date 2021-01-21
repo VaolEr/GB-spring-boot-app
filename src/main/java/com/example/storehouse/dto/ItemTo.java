@@ -40,6 +40,11 @@ public class ItemTo {
     List<CategoryTo> categories;
 
     @NotNull
+    @NotBlank
+    @Schema(description = "Item unit", example = "pcs|шт")
+    UnitTo unit;
+
+    @NotNull
     @JsonProperty(value = "storehouses_balance")
     @Schema(description = "ItemStorehouse data: storehouse and quantity of item in this storehouse",
         example = "[{\"id\": 1000, \"quantity\": 25}, {\"id\": 1001, \"quantity\": 15}]")
