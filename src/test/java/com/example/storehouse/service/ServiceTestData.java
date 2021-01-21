@@ -26,11 +26,11 @@ public class ServiceTestData {
     static final int TEST_UNIT_ID = 81;
     static final String TEST_UNIT_NAME = "шт";
 
-    static final int TEST_USER_ID = 91;
-    static final String TEST_USER_EMAIL = "testEmail.test.com";
-    static final String TEST_USER_PASSWORD = "testPassword";
-    static final String TEST_USER_FIRST_NAME = "TestUserName";
-    static final String TEST_USER_LAST_NAME = "TestUserLastName";
+    static final int TEST_USER_ID = 1000;
+    static final String TEST_USER_EMAIL = "admin@mail.com";
+    static final String TEST_USER_PASSWORD = "admin-password";
+    static final String TEST_USER_FIRST_NAME = "Administrator";
+    static final String TEST_USER_LAST_NAME = "ADMINISTRATOR";
     static final Role TEST_USER_ROLE = Role.ADMIN;
     static final Status TEST_USER_STATUS = Status.ACTIVE;
 
