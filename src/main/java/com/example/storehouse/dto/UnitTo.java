@@ -15,12 +15,12 @@ import lombok.NoArgsConstructor;
 @Schema(description = "Entity: Unit")
 public class UnitTo {
 
-    @Schema(description = "Identifier", example = "1")
+    @Schema(description = "Identifier", example = "1000")
     Integer id;
 
     @NotNull
     @NotBlank
-    @Schema(description = "Unit name", example = "шт")
+    @Schema(description = "Unit name", example = "pcs|шт")
     String name;
 
 }

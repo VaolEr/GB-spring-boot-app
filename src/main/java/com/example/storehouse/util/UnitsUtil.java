@@ -6,7 +6,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class UnitsUtil {
+public final class UnitsUtil {
 
     public static UnitTo toUnitTo(Unit unit) {
         return UnitTo

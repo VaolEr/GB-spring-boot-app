@@ -41,7 +41,7 @@ public class ItemTo {
 
     @NotNull
     @NotBlank
-    @Schema(description = "Item unit", example = "шт")
+    @Schema(description = "Item unit", example = "pcs|шт")
     UnitTo unit;
 
     @NotNull
