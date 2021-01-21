@@ -50,4 +50,7 @@ public class ItemTo {
         example = "[{\"id\": 1000, \"quantity\": 25}, {\"id\": 1001, \"quantity\": 15}]")
     List<ItemStorehouseTo> itemsStorehouses;
 
+    @NotNull
+    @Schema(description = "Total quantity of item stored in all storehouses", example = "101")
+    Integer totalQty;
 }

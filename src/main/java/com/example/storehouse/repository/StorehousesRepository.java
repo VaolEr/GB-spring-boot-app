@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(readOnly = true)
@@ -21,7 +22,7 @@ public interface StorehousesRepository extends JpaRepository<Storehouse, Integer
     @EntityGraph(attributePaths = {"items"}, type = EntityGraphType.LOAD)
     Storehouse getOneById(Integer id);
 
-    @Query("select i_s.quantity from ItemStorehouse i_s where i_s.item.id = :itemId")
-    Integer getQuantityByItemId(Integer itemId);
+    @Query(value = "SELECT SUM(i_s.quantity) FROM ItemStorehouse i_s WHERE i_s.item.id = :itemId")
+    Integer getQuantityByItemId(@Param("itemId") Integer itemId);
 
 }
