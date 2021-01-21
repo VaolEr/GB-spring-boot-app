@@ -36,13 +36,13 @@ public class ItemsService {
         Page<Item> itemToPage = hasText(name) ? itemsRepository.findByNameContaining(name, pageable)
             : itemsRepository.findAll(pageable);
 
-        Page<ItemTo> page = itemToPage.map(ItemsUtil::toItemTo);
+        Page<ItemTo> itemToPages = itemToPage.map(ItemsUtil::toItemTo);
 
-        for (ItemTo itemTo:page) {
+        for (ItemTo itemTo:itemToPages) {
             itemTo.setTotalQty(storehousesRepository.getQuantityByItemId(itemTo.getId()));
         }
 
-        return page;
+        return itemToPages;
     }
 
     public Item getById(Integer id) {
