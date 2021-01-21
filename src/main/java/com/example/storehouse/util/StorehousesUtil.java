@@ -25,6 +25,7 @@ public final class StorehousesUtil {
 
     public static Storehouse fromStorehouseTo(StorehouseTo storehouseTo) {
         Storehouse newStorehouse = new Storehouse();
+        newStorehouse.setId(storehouseTo.getId());
         newStorehouse.setName(storehouseTo.getName());
         return newStorehouse;
     }
