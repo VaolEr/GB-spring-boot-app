@@ -35,8 +35,8 @@ public class JwtTokenProvider {
     private String authorizationHeader;
     @Value("${app.jwt.secretKey}")
     private String secretKey;
-    @Value("${app.jwt.expiration}")
-    private long validityMilliseconds;
+    @Value("${app.jwt.expiration.min}")
+    private long validityTime;
 
     @PostConstruct
     protected void init() {
@@ -47,14 +47,15 @@ public class JwtTokenProvider {
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("role", role);
 
-        Date now = new Date();
-        Instant expirationTime = Instant.now().plus(validityMilliseconds, ChronoUnit.MILLIS);
-        Date validity = Date.from(expirationTime);
+        Instant now = Instant.now();
+        Instant expirationTime = now.plus(validityTime, ChronoUnit.MINUTES);
+        Date nowDate = Date.from(now);
+        Date validityDate = Date.from(expirationTime);
 
         return Jwts.builder()
             .setClaims(claims)
-            .setIssuedAt(now)
-            .setExpiration(validity)
+            .setIssuedAt(nowDate)
+            .setExpiration(validityDate)
             .signWith(SignatureAlgorithm.HS256, secretKey)
             .compact();
     }

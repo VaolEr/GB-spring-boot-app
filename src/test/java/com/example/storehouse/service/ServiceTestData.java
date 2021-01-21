@@ -23,6 +23,9 @@ public class ServiceTestData {
     static final int TEST_ITEM_2_ID = 211;
     static final int TEST_ITEM_3_ID = 311;
 
+    static final int TEST_UNIT_ID = 81;
+    static final String TEST_UNIT_NAME = "шт";
+
     static final int TEST_USER_ID = 91;
     static final String TEST_USER_EMAIL = "testEmail.test.com";
     static final String TEST_USER_PASSWORD = "testPassword";

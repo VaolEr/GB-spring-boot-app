@@ -90,12 +90,12 @@ public class UsersServiceTests {
         when(usersRepository.findById(testUser.getId())).thenReturn(Optional.ofNullable(testUser));
 
         // When
-        User returnedUsers = service.getById(testUser.getId());
+        User returnedUsers = service.getById(TEST_USER_ID);
 
         // Then
-        assert testUser.getId() != null;
-        verify(usersRepository).findById(testUser.getId());
-        assertEquals(returnedUsers,testUser);
+        //assert testUser.getId() != null;
+        verify(usersRepository).findById(TEST_USER_ID);
+        assertEquals(returnedUsers, testUser);
     }
 
     @DisplayName("Have non-existent User id, must thrown NotFoundException")
@@ -104,8 +104,7 @@ public class UsersServiceTests {
         // Given
         Integer userId = 0;
 
-        assert testUser.getId() != null;
-        when(usersRepository.findById(testUser.getId())).thenReturn(Optional.empty());
+        when(usersRepository.findById(userId)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> service.getById(userId))
 

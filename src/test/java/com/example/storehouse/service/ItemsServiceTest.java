@@ -33,6 +33,7 @@ import com.example.storehouse.model.Item;
 import com.example.storehouse.model.ItemStorehouse;
 import com.example.storehouse.model.Storehouse;
 import com.example.storehouse.model.Supplier;
+import com.example.storehouse.model.Unit;
 import com.example.storehouse.repository.CategoriesRepository;
 import com.example.storehouse.repository.ItemsRepository;
 import com.example.storehouse.repository.StorehousesRepository;
@@ -79,6 +80,7 @@ class ItemsServiceTest {
     List<Item> testItems;
     Category testCategory;
     Supplier testSupplier;
+    Unit testUnit;
     Storehouse testStorehouseOne,
         testStorehouseTwo;
     Pageable pageableUnpaged;
@@ -92,6 +94,8 @@ class ItemsServiceTest {
         testSupplier = new Supplier();
         testSupplier.setId(TEST_SUPPLIER_ID);
         testSupplier.setName(TEST_SUPPLIER_NAME);
+
+        testUnit = new Unit();
 
         testStorehouseOne = new Storehouse();
         testStorehouseOne.setId(TEST_STOREHOUSE_1_ID);
@@ -116,6 +120,7 @@ class ItemsServiceTest {
                 item.setSku(TEST_ITEMS_SKU);
                 item.setCategory(testCategory);
                 item.setSupplier(testSupplier);
+                item.setUnit(testUnit);
             })
             .collect(Collectors.toList());
         // testItems = List.of(testItemOne, testItemTwo, testItemThree);
