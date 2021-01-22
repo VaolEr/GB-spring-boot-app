@@ -7,6 +7,7 @@ import com.example.storehouse.dto.ItemTo;
 import com.example.storehouse.dto.RestResponseTo;
 import com.example.storehouse.model.Item;
 import com.example.storehouse.service.ItemsService;
+import com.example.storehouse.web.validation.ValidationGroups.Create;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,7 +66,7 @@ public class ItemsController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Create new item")
     @PreAuthorize("hasAuthority('db:users:write')")
-    public ResponseEntity<?> create(@Valid @RequestBody ItemTo itemTo) {
+    public ResponseEntity<?> create(@Validated(Create.class) @RequestBody ItemTo itemTo) {
         Item created = itemsService.create(itemTo);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentRequest().
             path("/{id}").buildAndExpand(created.getId()).toUri();
