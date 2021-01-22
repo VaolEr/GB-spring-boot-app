@@ -15,26 +15,38 @@ Storehouse Backend App
    - [Users controller](src/test/idea-http-client/users.http)
    - [Authentication](src/test/idea-http-client/authentication.http)
 
+#### v0.0.12
+- Add `Units` to DataBase schema and update previously created data
+- GET/POST/PUT `/items`: changed items request/response body ( add `unit` as JSON sub-objects )
+- GET `/items`: changed response body ( add `"total_qty"` field )
+
 #### v0.0.11
-    JWT authorization url
+    JWT authorization uri:
 - POST `/auth/login`
   
 
-    Users available for tests:
--	User `admin@mail.com`	password	`admin`	status `ACTIVE`
--	User `user@mail.com`	password 	`user`	status `ACTIVE`
--	User `root@mail.com`	password 	`root`	status `BANNED`
+- Users available for tests:
 
-    Database communications:
-- 	`Admin` have `READ` and `WRITE` permissions;
-- 	`User` have only `READ` permissions.
+    | Login | Password | Status |
+    | :---: | :---: | :---: |
+    |`admin@mail.com`|`admin-password`| `ACTIVE`|
+    |`user@mail.com`| `user-password`| `ACTIVE`|
+    |`root@mail.com`| `root-password`| `BANNED`|
 
-    ADMIN/USER
+- Database communications:
+
+    | User | Permissions |
+    | :---: | :---: |
+    |`Admin`|  `READ / WRITE` 
+    |`User`|  `READ` |
+
+
+    ADMIN / USER  availiable  uri's:
 - GET `/users[/{id}]`   
 - GET `/users[?name=]`
   
 
-    ADMIN only
+    ADMIN only availiable  uri's
 - POST `/users`         
 - PUT `/users/{id}`     
 - DELETE `/users/{id}`  
