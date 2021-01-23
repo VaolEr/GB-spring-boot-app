@@ -1,5 +1,8 @@
 package com.example.storehouse.service;
 
+import com.example.storehouse.model.Role;
+import com.example.storehouse.model.Status;
+
 public class ServiceTestData {
 
     static final int TEST_CATEGORY_ID = 21;
@@ -22,5 +25,13 @@ public class ServiceTestData {
 
     static final int TEST_UNIT_ID = 81;
     static final String TEST_UNIT_NAME = "шт";
+
+    static final int TEST_USER_ID = 1000;
+    static final String TEST_USER_EMAIL = "admin@mail.com";
+    static final String TEST_USER_PASSWORD = "admin-password";
+    static final String TEST_USER_FIRST_NAME = "Administrator";
+    static final String TEST_USER_LAST_NAME = "ADMINISTRATOR";
+    static final Role TEST_USER_ROLE = Role.ADMIN;
+    static final Status TEST_USER_STATUS = Status.ACTIVE;
 
 }

@@ -35,6 +35,7 @@ public final class UsersUtil {
 
     public static User fromUserTo(UserTo userTo) {
         User newUser = new User();
+        newUser.setId(userTo.getId());
         newUser.setEmail(userTo.getEmail());
         newUser.setPassword(userTo.getPassword());
         newUser.setFirstName(userTo.getFirstName());
