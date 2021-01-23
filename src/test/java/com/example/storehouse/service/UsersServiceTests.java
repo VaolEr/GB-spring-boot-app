@@ -22,7 +22,6 @@ import com.example.storehouse.util.exception.IllegalRequestDataException;
 import com.example.storehouse.util.exception.NotFoundException;
 import java.util.List;
 import java.util.Optional;
-import javax.validation.constraints.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -57,7 +56,7 @@ public class UsersServiceTests {
     @Test
     void getByEmail() {
         // Given
-        when(usersRepository.findByEmail(testUser.getEmail())).thenReturn(Optional.ofNullable(testUser));
+        when(usersRepository.findByEmail(testUser.getEmail())).thenReturn(Optional.of(testUser));
 
         // When
         List<User> returnedUsers = service.get(testUser.getEmail());
@@ -87,7 +86,7 @@ public class UsersServiceTests {
     @Test
     void getById() {
         // Given
-        when(usersRepository.findById(TEST_USER_ID)).thenReturn(Optional.ofNullable(testUser));
+        when(usersRepository.findById(TEST_USER_ID)).thenReturn(Optional.of(testUser));
 
         // When
         User returnedUsers = service.getById(TEST_USER_ID);

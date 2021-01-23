@@ -13,6 +13,7 @@ import static com.example.storehouse.service.ServiceTestData.TEST_STOREHOUSE_2_I
 import static com.example.storehouse.service.ServiceTestData.TEST_STOREHOUSE_2_NAME;
 import static com.example.storehouse.service.ServiceTestData.TEST_SUPPLIER_ID;
 import static com.example.storehouse.service.ServiceTestData.TEST_SUPPLIER_NAME;
+import static com.example.storehouse.service.ServiceTestData.TEST_UNIT_ID;
 import static com.example.storehouse.util.CategoriesUtil.toCategoryTos;
 import static com.example.storehouse.util.ItemsUtil.fromItemTo;
 import static com.example.storehouse.util.ItemsUtil.toItemTo;
