@@ -12,10 +12,12 @@ import com.example.storehouse.model.Item;
 import com.example.storehouse.model.ItemStorehouse;
 import com.example.storehouse.model.Storehouse;
 import com.example.storehouse.model.Supplier;
+import com.example.storehouse.model.Unit;
 import com.example.storehouse.repository.CategoriesRepository;
 import com.example.storehouse.repository.ItemsRepository;
 import com.example.storehouse.repository.StorehousesRepository;
 import com.example.storehouse.repository.SuppliersRepository;
+import com.example.storehouse.repository.UnitsRepository;
 import com.example.storehouse.util.ItemsUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -31,11 +33,19 @@ public class ItemsService {
     private final SuppliersRepository suppliersRepository;
     private final CategoriesRepository categoriesRepository;
     private final StorehousesRepository storehousesRepository;
+    private final UnitsRepository unitsRepository;
 
     public Page<ItemTo> get(Pageable pageable, String name) {
         Page<Item> itemToPage = hasText(name) ? itemsRepository.findByNameContaining(name, pageable)
             : itemsRepository.findAll(pageable);
-        return itemToPage.map(ItemsUtil::toItemTo);
+
+        Page<ItemTo> itemToPages = itemToPage.map(ItemsUtil::toItemTo);
+
+        for (ItemTo itemTo:itemToPages) {
+            itemTo.setTotalQty(storehousesRepository.getQuantityByItemId(itemTo.getId()));
+        }
+
+        return itemToPages;
     }
 
     public Item getById(Integer id) {
@@ -78,6 +88,10 @@ public class ItemsService {
             checkNotFound(suppliersRepository.findById(itemTo.getSupplier().getId()),
                 addMessageDetails(Supplier.class.getSimpleName(), itemTo.getSupplier().getId())
             ));
+        savedItem.setUnit(
+            checkNotFound(unitsRepository.findById(itemTo.getUnit().getId()),
+                          addMessageDetails(Unit.class.getSimpleName(), itemTo.getUnit().getId())
+        ));
         itemTo.getCategories()
             .forEach(categoryTo -> savedItem.setCategory(checkNotFound(categoriesRepository.findById(categoryTo.getId()),
                 addMessageDetails(Category.class.getSimpleName(), categoryTo.getId())))

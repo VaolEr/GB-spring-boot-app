@@ -1,10 +1,14 @@
 package com.example.storehouse.dto;
 
+import com.example.storehouse.web.validation.ValidationGroups.Create;
+import com.example.storehouse.web.validation.ValidationGroups.Delete;
+import com.example.storehouse.web.validation.ValidationGroups.Update;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -40,7 +44,6 @@ public class ItemTo {
     List<CategoryTo> categories;
 
     @NotNull
-    @NotBlank
     @Schema(description = "Item unit", example = "pcs|шт")
     UnitTo unit;
 
@@ -50,4 +53,13 @@ public class ItemTo {
         example = "[{\"id\": 1000, \"quantity\": 25}, {\"id\": 1001, \"quantity\": 15}]")
     List<ItemStorehouseTo> itemsStorehouses;
 
+    //@NotNull
+    @Null(
+        groups = Create.class
+    )
+    @NotNull(
+        groups = { Update.class, Delete.class }
+    )
+    @Schema(description = "Total quantity of item stored in all storehouses", example = "101")
+    Integer totalQty;
 }
