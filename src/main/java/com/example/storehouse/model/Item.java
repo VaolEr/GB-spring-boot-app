@@ -49,6 +49,13 @@ public class Item extends AbstractNamedEntity {
     @JsonManagedReference
     private Category category;
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER) // was lazy, but for storehouse service we need to eager
+    @JoinColumn(name = "unit_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE) // тоже можно будет обсудить, пока пусть так
+    @JsonManagedReference
+    private Unit unit;
+
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnoreProperties("item")
     private Set<ItemStorehouse> itemStorehouses = new HashSet<>();

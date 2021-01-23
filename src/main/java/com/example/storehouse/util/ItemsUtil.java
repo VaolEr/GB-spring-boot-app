@@ -2,6 +2,7 @@ package com.example.storehouse.util;
 
 import static com.example.storehouse.util.CategoriesUtil.toCategoryTo;
 import static com.example.storehouse.util.SuppliersUtil.toSupplierTo;
+import static com.example.storehouse.util.UnitsUtil.toUnitTo;
 
 import com.example.storehouse.dto.ItemTo;
 import com.example.storehouse.model.Item;
@@ -25,12 +26,13 @@ public final class ItemsUtil {
                 // в данный момент каждый Item может иметь только одну Category
                 List.of(toCategoryTo(item.getCategory()))
             )
+            .unit(toUnitTo(item.getUnit()))
             .build();
     }
 
     public static ItemTo toItemToWithBalance(Item item) {
         ItemTo itemTo = toItemTo(item);
-        itemTo.setItemsStorehousesTo(
+        itemTo.setItemsStorehouses(
             item.getItemStorehouses().stream()
                 .map(ItemStorehousesUtil::toItemStorehouseTo)
                 .collect(Collectors.toList())

@@ -13,10 +13,13 @@ import static com.example.storehouse.service.ServiceTestData.TEST_STOREHOUSE_2_I
 import static com.example.storehouse.service.ServiceTestData.TEST_STOREHOUSE_2_NAME;
 import static com.example.storehouse.service.ServiceTestData.TEST_SUPPLIER_ID;
 import static com.example.storehouse.service.ServiceTestData.TEST_SUPPLIER_NAME;
+import static com.example.storehouse.service.ServiceTestData.TEST_UNIT_ID;
+import static com.example.storehouse.service.ServiceTestData.TEST_UNIT_NAME;
 import static com.example.storehouse.util.CategoriesUtil.toCategoryTos;
 import static com.example.storehouse.util.ItemsUtil.fromItemTo;
 import static com.example.storehouse.util.ItemsUtil.toItemTo;
 import static com.example.storehouse.util.SuppliersUtil.toSupplierTo;
+import static com.example.storehouse.util.UnitsUtil.toUnitTo;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,10 +36,12 @@ import com.example.storehouse.model.Item;
 import com.example.storehouse.model.ItemStorehouse;
 import com.example.storehouse.model.Storehouse;
 import com.example.storehouse.model.Supplier;
+import com.example.storehouse.model.Unit;
 import com.example.storehouse.repository.CategoriesRepository;
 import com.example.storehouse.repository.ItemsRepository;
 import com.example.storehouse.repository.StorehousesRepository;
 import com.example.storehouse.repository.SuppliersRepository;
+import com.example.storehouse.repository.UnitsRepository;
 import com.example.storehouse.util.ItemStorehousesUtil;
 import com.example.storehouse.util.ItemsUtil;
 import com.example.storehouse.util.exception.IllegalRequestDataException;
@@ -56,7 +61,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 @SpringJUnitConfig(ItemsService.class)
-//@MockBean({CategoriesRepository.class, StorehousesRepository.class})
 class ItemsServiceTest {
 
     @Autowired
@@ -74,12 +78,16 @@ class ItemsServiceTest {
     @MockBean
     private StorehousesRepository storehousesRepository;
 
+    @MockBean
+    private UnitsRepository unitsRepository;
+
     Item testItemOne,
         testItemTwo,
         testItemThree;
     List<Item> testItems;
     Category testCategory;
     Supplier testSupplier;
+    Unit testUnit;
     Storehouse testStorehouseOne,
         testStorehouseTwo;
     Pageable pageableUnpaged;
@@ -93,6 +101,10 @@ class ItemsServiceTest {
         testSupplier = new Supplier();
         testSupplier.setId(TEST_SUPPLIER_ID);
         testSupplier.setName(TEST_SUPPLIER_NAME);
+
+        testUnit = new Unit();
+        testUnit.setId(TEST_UNIT_ID);
+        testUnit.setName(TEST_UNIT_NAME);
 
         testStorehouseOne = new Storehouse();
         testStorehouseOne.setId(TEST_STOREHOUSE_1_ID);
@@ -117,6 +129,7 @@ class ItemsServiceTest {
                 item.setSku(TEST_ITEMS_SKU);
                 item.setCategory(testCategory);
                 item.setSupplier(testSupplier);
+                item.setUnit(testUnit);
             })
             .collect(Collectors.toList());
         // testItems = List.of(testItemOne, testItemTwo, testItemThree);
@@ -128,6 +141,7 @@ class ItemsServiceTest {
 
         when(suppliersRepository.findById(TEST_SUPPLIER_ID)).thenReturn(Optional.of(testSupplier));
         when(categoriesRepository.findById(TEST_CATEGORY_ID)).thenReturn(Optional.of(testCategory));
+        when(unitsRepository.findById(TEST_UNIT_ID)).thenReturn(Optional.of(testUnit));
         // TODO: refactor service Create/Update and use Iterator Mock?
         when(storehousesRepository.findById(TEST_STOREHOUSE_1_ID)).thenReturn(Optional.of(testStorehouseOne));
         when(storehousesRepository.findById(TEST_STOREHOUSE_2_ID)).thenReturn(Optional.of(testStorehouseTwo));
@@ -221,7 +235,7 @@ class ItemsServiceTest {
 
         // Then
         verify(itemsRepository).findById(1);
-        assertEquals(notFoundException.getMessage(), "Not found entity with type is 'Item' and id is '1'");
+        assertEquals(notFoundException.getMessage(), "Not found entity with type is 'Item' and identifier is '1'");
     }
 
     @DisplayName("Should create new Item from ItemTo and return it")
@@ -231,10 +245,11 @@ class ItemsServiceTest {
         ItemTo newItemTo = ItemTo.builder()
             .name("New item")
             .sku("#new-item-sku")
+            .unit(toUnitTo(testUnit))
             .categories(toCategoryTos(List.of(testCategory)))
             .supplier(toSupplierTo(testSupplier))
             .build();
-        newItemTo.setItemsStorehousesTo(createItemStorehouseTos());
+        newItemTo.setItemsStorehouses(createItemStorehouseTos());
         Item newItem = fromItemTo(newItemTo);
         when(itemsRepository.save(newItem)).thenReturn(newItem);
 
@@ -258,7 +273,7 @@ class ItemsServiceTest {
 
             // Then
             .isInstanceOfSatisfying(NotFoundException.class, e -> assertEquals(
-                String.format("Not found entity with type is '%s' and id is '%d'", testSupplier.getClass().getSimpleName(),
+                String.format("Not found entity with type is '%s' and identifier is '%d'", testSupplier.getClass().getSimpleName(),
                     testSupplier.getId()), e.getMessage())
             );
     }
@@ -273,10 +288,11 @@ class ItemsServiceTest {
             .id(itemId)
             .name("Updated item")
             .sku("#updated-item-sku")
+            .unit(toUnitTo(testUnit))
             .categories(toCategoryTos(List.of(testCategory)))
             .supplier(toSupplierTo(testSupplier))
             .build();
-        updatedItemTo.setItemsStorehousesTo(createItemStorehouseTos());
+        updatedItemTo.setItemsStorehouses(createItemStorehouseTos());
         Item updatedItem = fromItemTo(updatedItemTo);
         when(itemsRepository.save(updatedItem)).thenReturn(updatedItem);
 

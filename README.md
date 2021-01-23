@@ -12,6 +12,44 @@ Storehouse Backend App
    - [Suppliers controller](src/test/idea-http-client/suppliers.http)
    - [Categories controller](src/test/idea-http-client/categories.http)
    - [Storehouses controller](src/test/idea-http-client/storehouses.http)
+   - [Users controller](src/test/idea-http-client/users.http)
+   - [Authentication](src/test/idea-http-client/authentication.http)
+
+#### v0.0.12
+- Add `Units` to DataBase schema and update previously created data
+- GET/POST/PUT `/items`: changed items request/response body ( add `unit` as JSON sub-objects )
+- GET `/items`: changed response body ( add `"total_qty"` field )
+
+#### v0.0.11
+    JWT authorization uri:
+- POST `/auth/login`
+  
+
+- Users available for tests:
+
+    | Login | Password | Status |
+    | :---: | :---: | :---: |
+    |`admin@mail.com`|`admin-password`| `ACTIVE`|
+    |`user@mail.com`| `user-password`| `ACTIVE`|
+    |`root@mail.com`| `root-password`| `BANNED`|
+
+- Database communications:
+
+    | User | Permissions |
+    | :---: | :---: |
+    |`Admin`|  `READ / WRITE` 
+    |`User`|  `READ` |
+
+
+    ADMIN / USER  availiable  uri's:
+- GET `/users[/{id}]`   
+- GET `/users[?name=]`
+  
+
+    ADMIN only availiable  uri's
+- POST `/users`         
+- PUT `/users/{id}`     
+- DELETE `/users/{id}`  
 
 #### v0.0.10
 - GET `/items[?name=][&size=][&page=][&sort=]`

@@ -11,12 +11,14 @@
   </parent>
   <groupId>com.example</groupId>
   <artifactId>storehouse-back</artifactId>
-  <version>0.0.10-SNAPSHOT</version>
+  <version>0.0.12-SNAPSHOT</version>
   <name>Storehouse API</name>
   <description>Storehouse backend API on Spring Boot</description>
 
   <properties>
     <java.version>11</java.version>
+    <jjwt.version>0.9.1</jjwt.version>
+    <springdoc.version>1.5.2</springdoc.version>
   </properties>
 
   <dependencies>
@@ -32,6 +34,17 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <!-- Security -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt</artifactId>
+      <version>${jjwt.version}</version>
     </dependency>
 
     <!-- DB -->
@@ -60,26 +73,30 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
-      <version>2.4.1</version>
     </dependency>
 
     <!-- Swagger -->
     <dependency>
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-ui</artifactId>
-      <version>1.5.2</version>
+      <version>${springdoc.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-webmvc-core</artifactId>
-      <version>1.5.2</version>
+      <version>${springdoc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-security</artifactId>
+      <version>${springdoc.version}</version>
     </dependency>
 
     <!-- Testing -->
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
-      <scope>runtime</scope>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
