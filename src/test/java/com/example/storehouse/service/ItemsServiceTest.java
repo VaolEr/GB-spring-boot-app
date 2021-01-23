@@ -17,6 +17,7 @@ import static com.example.storehouse.util.CategoriesUtil.toCategoryTos;
 import static com.example.storehouse.util.ItemsUtil.fromItemTo;
 import static com.example.storehouse.util.ItemsUtil.toItemTo;
 import static com.example.storehouse.util.SuppliersUtil.toSupplierTo;
+import static com.example.storehouse.util.UnitsUtil.toUnitTo;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -38,6 +39,7 @@ import com.example.storehouse.repository.CategoriesRepository;
 import com.example.storehouse.repository.ItemsRepository;
 import com.example.storehouse.repository.StorehousesRepository;
 import com.example.storehouse.repository.SuppliersRepository;
+import com.example.storehouse.repository.UnitsRepository;
 import com.example.storehouse.util.ItemStorehousesUtil;
 import com.example.storehouse.util.ItemsUtil;
 import com.example.storehouse.util.exception.IllegalRequestDataException;
@@ -73,6 +75,9 @@ class ItemsServiceTest {
 
     @MockBean
     private StorehousesRepository storehousesRepository;
+
+    @MockBean
+    private UnitsRepository unitsRepository;
 
     Item testItemOne,
         testItemTwo,
@@ -132,6 +137,7 @@ class ItemsServiceTest {
 
         when(suppliersRepository.findById(TEST_SUPPLIER_ID)).thenReturn(Optional.of(testSupplier));
         when(categoriesRepository.findById(TEST_CATEGORY_ID)).thenReturn(Optional.of(testCategory));
+        when(unitsRepository.findById(TEST_UNIT_ID)).thenReturn(Optional.of(testUnit));
         // TODO: refactor service Create/Update and use Iterator Mock?
         when(storehousesRepository.findById(TEST_STOREHOUSE_1_ID)).thenReturn(Optional.of(testStorehouseOne));
         when(storehousesRepository.findById(TEST_STOREHOUSE_2_ID)).thenReturn(Optional.of(testStorehouseTwo));
@@ -235,6 +241,7 @@ class ItemsServiceTest {
         ItemTo newItemTo = ItemTo.builder()
             .name("New item")
             .sku("#new-item-sku")
+            .unit(toUnitTo(testUnit))
             .categories(toCategoryTos(List.of(testCategory)))
             .supplier(toSupplierTo(testSupplier))
             .build();
@@ -277,6 +284,7 @@ class ItemsServiceTest {
             .id(itemId)
             .name("Updated item")
             .sku("#updated-item-sku")
+            .unit(toUnitTo(testUnit))
             .categories(toCategoryTos(List.of(testCategory)))
             .supplier(toSupplierTo(testSupplier))
             .build();
