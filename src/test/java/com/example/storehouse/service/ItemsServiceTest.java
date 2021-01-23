@@ -14,6 +14,7 @@ import static com.example.storehouse.service.ServiceTestData.TEST_STOREHOUSE_2_N
 import static com.example.storehouse.service.ServiceTestData.TEST_SUPPLIER_ID;
 import static com.example.storehouse.service.ServiceTestData.TEST_SUPPLIER_NAME;
 import static com.example.storehouse.service.ServiceTestData.TEST_UNIT_ID;
+import static com.example.storehouse.service.ServiceTestData.TEST_UNIT_NAME;
 import static com.example.storehouse.util.CategoriesUtil.toCategoryTos;
 import static com.example.storehouse.util.ItemsUtil.fromItemTo;
 import static com.example.storehouse.util.ItemsUtil.toItemTo;
@@ -102,6 +103,8 @@ class ItemsServiceTest {
         testSupplier.setName(TEST_SUPPLIER_NAME);
 
         testUnit = new Unit();
+        testUnit.setId(TEST_UNIT_ID);
+        testUnit.setName(TEST_UNIT_NAME);
 
         testStorehouseOne = new Storehouse();
         testStorehouseOne.setId(TEST_STOREHOUSE_1_ID);
