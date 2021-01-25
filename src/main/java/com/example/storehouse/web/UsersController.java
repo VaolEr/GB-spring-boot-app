@@ -7,6 +7,7 @@ import com.example.storehouse.dto.RestResponseTo;
 import com.example.storehouse.dto.UserTo;
 import com.example.storehouse.model.User;
 import com.example.storehouse.service.UsersService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.net.URI;
 import java.util.List;
@@ -39,6 +40,7 @@ public class UsersController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('db:users:write')")
+    @Operation(summary = "Get all users or list of users where user's email contains [email]")
     public RestResponseTo<List<UserTo>> getAllOrByEmail(@RequestParam(required = false) String email) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toUserTos(usersService.get(email))
@@ -47,6 +49,7 @@ public class UsersController {
 
     @GetMapping(path = "/{id}")
     @PreAuthorize("hasAuthority('db:users:write')")
+    @Operation(summary = "Get a user by id")
     public RestResponseTo<UserTo> getById(@PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toUserTo(usersService.getById(id))
@@ -55,6 +58,7 @@ public class UsersController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('db:users:write')")
+    @Operation(summary = "Create new user")
     public ResponseEntity<?> create(@Valid @RequestBody UserTo userTo) {
         User created = usersService.create(userTo);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentRequest().
@@ -66,6 +70,7 @@ public class UsersController {
 
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('db:users:write')")
+    @Operation(summary = "Update a user by id")
     public RestResponseTo<UserTo> update(@RequestBody UserTo userTo, @PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toUserTo(usersService.update(userTo, id))
@@ -75,6 +80,7 @@ public class UsersController {
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('db:users:write')")
+    @Operation(summary = "Delete a user by id")
     public void delete(@PathVariable Integer id) {
         usersService.delete(id);
     }
