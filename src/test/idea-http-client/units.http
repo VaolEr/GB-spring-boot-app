@@ -1,0 +1,40 @@
+### READ all Units
+GET http://localhost:8080/api/v1/units
+Accept: application/json
+
+### READ Unit by id (id exists in table)
+GET http://localhost:8080/api/v1/units/1000
+Accept: application/json
+
+### READ Unit by id (id not exists in table)
+GET http://localhost:8080/api/v1/suppliers/1
+Accept: application/json
+
+### READ all suppliers with "b" in name
+GET http://localhost:8080/api/v1/units?name=b
+Accept: application/json
+
+### READ all Suppliers
+GET http://localhost:8080/api/v1/units?name=
+Accept: application/json
+
+### CREATE unit
+POST http://localhost:8080/api/v1/units
+Content-Type: application/json
+{
+  "name": "TestUnit"
+}
+
+### UPDATE unit with id 1007
+PUT http://localhost:8080/api/v1/suppliers/1007
+Content-Type: application/json
+{
+  "name": "UpdatedTestUnit"
+}
+
+### READ Unit by id 1007
+GET http://localhost:8080/api/v1/suppliers/1007
+Accept: application/json
+
+### DELETE Supplier with id 1007
+###DELETE http://localhost:8080/api/v1/units/1007

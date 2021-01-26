@@ -8,12 +8,20 @@ Storehouse Backend App
 - [App sources](https://github.com/VaolEr/GB-spring-boot-app)
 
 #### Requests examples (dev)
-   - [Items controller](src/test/idea-http-client/items.http)
-   - [Suppliers controller](src/test/idea-http-client/suppliers.http)
-   - [Categories controller](src/test/idea-http-client/categories.http)
-   - [Storehouses controller](src/test/idea-http-client/storehouses.http)
-   - [Users controller](src/test/idea-http-client/users.http)
    - [Authentication](src/test/idea-http-client/authentication.http)
+   - [Categories controller](src/test/idea-http-client/categories.http)
+   - [Items controller](src/test/idea-http-client/items.http)
+   - [Storehouses controller](src/test/idea-http-client/storehouses.http)
+   - [Suppliers controller](src/test/idea-http-client/suppliers.http)
+   - [Units controller](src/test/idea-http-client/units.http)
+   - [Users controller](src/test/idea-http-client/users.http)
+
+#### v0.0.13
+- Add `Units` CRUD
+    - GET `/units[/{id}]`
+    - GET `/units[?name=]`
+    - POST `/units`
+    - PUT `/units/{id}`
 
 #### v0.0.12
 - Add `Units` to DataBase schema and update previously created data
@@ -52,14 +60,16 @@ Storehouse Backend App
 - DELETE `/users/{id}`  
 
 #### v0.0.10
-- GET `/items[?name=][&size=][&page=][&sort=]`
+- Add paging for items:
+    - GET `/items[?name=][&size=][&page=][&sort=]`
 
 #### v0.0.9
-- GET `/storehouses[/{id}]`
-- GET `/storehouses[?name=]`
-- GET `/storehouses[/{id}/items]`
-- POST `/storehouses`
-- PUT `/storehouses/{id}`
+- Add `Storehouses` CRUD:
+    - GET `/storehouses[/{id}]`
+    - GET `/storehouses[?name=]`
+    - GET `/storehouses[/{id}/items]`
+    - POST `/storehouses`
+    - PUT `/storehouses/{id}`
 
 #### v0.0.8
 - Added swagger docs for API
@@ -68,28 +78,33 @@ Storehouse Backend App
 - GET/POST/PUT `/items`: changed items request/response format (`supplier`, `categories` - now are JSON sub-objects)
 
 #### v0.0.6
-- GET `/categories[/{id}]`
-- GET `/categories[?name=]`
-- GET `/categories[/{id}/items]`
-- POST `/categories`
-- PUT `/categories/{id}`
+- Add `Categories` CRUD:
+    - GET `/categories[/{id}]`
+    - GET `/categories[?name=]`
+    - GET `/categories[/{id}/items]`
+    - POST `/categories`
+    - PUT `/categories/{id}`
 
 #### v0.0.5
-- GET `/suppliers[/{id}]`
-- GET `/suppliers[?name=]`
-- GET `/suppliers[/{id}/items]`
-- POST `/suppliers`
-- PUT `/suppliers/{id}`
+- Add `Suppliers` CRUD:
+    - GET `/suppliers[/{id}]`
+    - GET `/suppliers[?name=]`
+    - GET `/suppliers[/{id}/items]`
+    - POST `/suppliers`
+    - PUT `/suppliers/{id}`
 
 #### v0.0.4
-- PUT, DELETE `/items/{id}`
+- Add `Items` CRUD methods:
+    - PUT, DELETE `/items/{id}`
 
 #### v0.0.3
-- POST `/items`
+- Add `Items` CRUD method:
+    - POST `/items`
 
 #### v0.0.2
-- GET `/items[/{id}]`
-- GET `/items[?name=]`
+- Add `Items` CRUD methods:
+    - GET `/items[/{id}]`
+    - GET `/items[?name=]`
 
 #### v0.0.1
 - Added basic dependencies, start project, add simple tests
