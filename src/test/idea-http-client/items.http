@@ -2,7 +2,7 @@ PUT http://localhost:8080/api/v1/items/1003
 Content-Type: application/json
 
 {
-  "name": "Moloko Вкусное?",
+  "name": "Moloko Burenka78",
   "sku": "#moloko555",
   "supplier": {
     "id": 1000
@@ -10,6 +10,19 @@ Content-Type: application/json
   "categories": [
     {
       "id": 1000
+    }
+  ],
+  "unit": {
+    "id": 1003
+  },
+  "storehouses_balance": [
+    {
+      "id": 1001,
+      "quantity": 25
+    },
+    {
+      "id": 1000,
+      "quantity": 17
     }
   ]
 }
