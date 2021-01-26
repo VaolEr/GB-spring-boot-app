@@ -1,5 +1,6 @@
 package com.example.storehouse.service;
 
+import static com.example.storehouse.util.ItemsUtil.toItemTos;
 import static com.example.storehouse.util.StorehousesUtil.fromStorehouseTo;
 
 import static com.example.storehouse.util.ValidationUtil.addMessageDetails;
@@ -7,6 +8,7 @@ import static com.example.storehouse.util.ValidationUtil.assureIdConsistent;
 import static com.example.storehouse.util.ValidationUtil.checkNotFound;
 import static org.springframework.util.StringUtils.hasText;
 
+import com.example.storehouse.dto.ItemTo;
 import com.example.storehouse.dto.StorehouseTo;
 
 import com.example.storehouse.model.Item;
@@ -37,10 +39,13 @@ public class StorehousesService {
     }
 
     @Transactional(readOnly = true)
-    public List<Item> getStorehouseItems(Integer id) {
+    public List<ItemTo> getStorehouseItems(Integer storehouseId) {
         //TODO Add check not found storehouse with id
-
-        return itemsRepository.getByItemStorehousesStorehouseId(id); // work correct
+        List<ItemTo> itemTos = toItemTos(itemsRepository.getByItemStorehousesStorehouseId(storehouseId));
+        for (ItemTo itemTo:itemTos) {
+            itemTo.setTotalQty(storehousesRepository.getStorehouseQuantityByItemAndStorehouseIds(itemTo.getId(), storehouseId));
+        }
+        return itemTos; // work correct
 //        return itemsRepository.getStorehouseItemsByStorehouseId(id);
 
     }

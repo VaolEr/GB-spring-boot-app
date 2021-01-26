@@ -61,7 +61,7 @@ public class StorehousesController {
     @Operation(summary = "Get a list of storehouse items by storehouse id")
     public RestResponseTo<List<ItemTo>> getStorehousesItems(@PathVariable Integer id) {
         return new RestResponseTo<>(
-            HttpStatus.OK.toString(), null, toItemTos(storehousesService.getStorehouseItems(id))
+            HttpStatus.OK.toString(), null, storehousesService.getStorehouseItems(id)
         );
     }
 

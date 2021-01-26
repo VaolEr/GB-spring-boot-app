@@ -1,6 +1,7 @@
 package com.example.storehouse.dto;
 
 import com.example.storehouse.web.validation.ValidationGroups.Create;
+import com.example.storehouse.web.validation.ValidationGroups.Replace;
 import com.example.storehouse.web.validation.ValidationGroups.Delete;
 import com.example.storehouse.web.validation.ValidationGroups.Update;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -58,7 +59,7 @@ public class ItemTo {
         groups = Create.class
     )
     @NotNull(
-        groups = { Update.class, Delete.class }
+        groups = { Update.class, Delete.class, Replace.class }
     )
     @Schema(description = "Total quantity of item stored in all storehouses", example = "101")
     Integer totalQty;
