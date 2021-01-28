@@ -6,6 +6,7 @@ import static com.example.storehouse.util.ValidationUtil.assureIdConsistent;
 import static com.example.storehouse.util.ValidationUtil.checkNotFound;
 import static org.springframework.util.StringUtils.hasText;
 
+import com.example.storehouse.dto.ItemStorehouseTo;
 import com.example.storehouse.dto.ItemTo;
 import com.example.storehouse.model.Category;
 import com.example.storehouse.model.Item;
@@ -22,8 +23,12 @@ import com.example.storehouse.util.ItemsUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -74,6 +79,14 @@ public class ItemsService {
         Item updatedItem = prepareToSave(itemTo);
         // TODO переделать проверку через HasId, проверять до обработки itemTo
         assureIdConsistent(updatedItem, id);
+
+        itemTo.getItemsStorehouses().forEach(iSt -> {
+        Storehouse storehouse = checkNotFound(storehousesRepository.findById(iSt.getStorehouseId()),
+                    addMessageDetails(Storehouse.class.getSimpleName(), iSt.getStorehouseId())
+        );
+            Integer itemStorehouseId = storehousesRepository.getItemStorehousesById(updatedItem.getId(), storehouse.getId());
+            storehousesRepository.updateItemQtyByItemStorehouseIdAndStorehouseIdAndItemId(updatedItem.getId(), storehouse.getId(), itemStorehouseId, iSt.getQuantity());
+        });
         return itemsRepository.save(updatedItem);
     }
 
