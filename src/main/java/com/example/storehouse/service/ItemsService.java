@@ -6,6 +6,7 @@ import static com.example.storehouse.util.ValidationUtil.assureIdConsistent;
 import static com.example.storehouse.util.ValidationUtil.checkNotFound;
 import static org.springframework.util.StringUtils.hasText;
 
+import com.example.storehouse.dto.ItemStorehouseTo;
 import com.example.storehouse.dto.ItemTo;
 import com.example.storehouse.model.Category;
 import com.example.storehouse.model.Item;
@@ -62,10 +63,7 @@ public class ItemsService {
             Storehouse storehouse = checkNotFound(storehousesRepository.findById(iSt.getStorehouseId()),
                     addMessageDetails(Storehouse.class.getSimpleName(), iSt.getStorehouseId())
             );
-            ItemStorehouse itemStorehouse = new ItemStorehouse();
-            itemStorehouse.setStorehouse(storehouse);
-            itemStorehouse.setQuantity(iSt.getQuantity());
-            newItem.addItemStorehouse(itemStorehouse);
+            createNewItemStorehouse(newItem, iSt, storehouse);
         });
         return itemsRepository.save(newItem);
     }
@@ -89,21 +87,21 @@ public class ItemsService {
                         Integer itemStorehouseId = storehousesRepository.getItemStorehousesById(updatedItem.getId(), storehouse.getId());
                         storehousesRepository.updateItemQtyByItemStorehouseIdAndStorehouseIdAndItemId(updatedItem.getId(), storehouse.getId(), itemStorehouseId, iSt.getQuantity());
                     } else {
-                        //Можно вынести в отдельный метод
-                        ItemStorehouse itemStorehouse = new ItemStorehouse();
-                        itemStorehouse.setStorehouse(storehouse);
-                        itemStorehouse.setQuantity(iSt.getQuantity());
-                        updatedItem.addItemStorehouse(itemStorehouse);
+                        createNewItemStorehouse(updatedItem, iSt, storehouse);
                     }
                 }
             } else {
-                ItemStorehouse itemStorehouse = new ItemStorehouse();
-                itemStorehouse.setStorehouse(storehouse);
-                itemStorehouse.setQuantity(iSt.getQuantity());
-                updatedItem.addItemStorehouse(itemStorehouse);
+                createNewItemStorehouse(updatedItem, iSt, storehouse);
             }
         });
         return itemsRepository.save(updatedItem);
+    }
+
+    private void createNewItemStorehouse(Item item, ItemStorehouseTo itemStorehouseTo, Storehouse storehouse) {
+        ItemStorehouse itemStorehouse = new ItemStorehouse();
+        itemStorehouse.setStorehouse(storehouse);
+        itemStorehouse.setQuantity(itemStorehouseTo.getQuantity());
+        item.addItemStorehouse(itemStorehouse);
     }
 
     @Transactional
