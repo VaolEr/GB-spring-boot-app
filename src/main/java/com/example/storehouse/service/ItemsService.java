@@ -6,7 +6,6 @@ import static com.example.storehouse.util.ValidationUtil.assureIdConsistent;
 import static com.example.storehouse.util.ValidationUtil.checkNotFound;
 import static org.springframework.util.StringUtils.hasText;
 
-import com.example.storehouse.dto.ItemStorehouseTo;
 import com.example.storehouse.dto.ItemTo;
 import com.example.storehouse.model.Category;
 import com.example.storehouse.model.Item;
@@ -23,12 +22,10 @@ import com.example.storehouse.util.ItemsUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -80,7 +77,7 @@ public class ItemsService {
         // TODO переделать проверку через HasId, проверять до обработки itemTo
         assureIdConsistent(updatedItem, id);
 
-        List<Integer> presentStorehouses = storehousesRepository.getCountOfStorehousesWhereItemPresent(updatedItem.getId());
+        List<Integer> presentStorehouses = storehousesRepository.getStorehousesIdsWhereItemPresent(updatedItem.getId());
 
         itemTo.getItemsStorehouses().forEach(iSt -> {
             Storehouse storehouse = checkNotFound(storehousesRepository.findById(iSt.getStorehouseId()),
