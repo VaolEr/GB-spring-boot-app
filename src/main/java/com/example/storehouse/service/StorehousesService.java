@@ -16,7 +16,9 @@ import com.example.storehouse.model.Storehouse;
 
 import com.example.storehouse.repository.ItemsRepository;
 import com.example.storehouse.repository.StorehousesRepository;
+
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,19 +32,19 @@ public class StorehousesService {
 
     public List<Storehouse> get(String name) {
         return hasText(name) ? storehousesRepository.findByNameContaining(name)
-            : storehousesRepository.findAll();
+                : storehousesRepository.findAll();
     }
 
     public Storehouse getById(Integer id) {
         return checkNotFound(storehousesRepository.findById(id),
-                             addMessageDetails(Storehouse.class.getSimpleName(), id));
+                addMessageDetails(Storehouse.class.getSimpleName(), id));
     }
 
     @Transactional(readOnly = true)
     public List<ItemTo> getStorehouseItems(Integer storehouseId) {
         //TODO Add check not found storehouse with id
         List<ItemTo> itemTos = toItemTos(itemsRepository.getByItemStorehousesStorehouseId(storehouseId));
-        for (ItemTo itemTo:itemTos) {
+        for (ItemTo itemTo : itemTos) {
             itemTo.setTotalQty(storehousesRepository.getItemQuantityOnStorehouseByItemIdAndStorehouseId(itemTo.getId(), storehouseId));
         }
         return itemTos; // work correct
@@ -52,7 +54,7 @@ public class StorehousesService {
 
     @Transactional(readOnly = true)
     public Item getStorehouseItem(Integer storehouseId, Integer itemId) {
-        return checkNotFound(itemsRepository.getStorehouseItemByStorehouseIdAndItemId(storehouseId, itemId),addMessageDetails(Item.class.getSimpleName(), itemId));
+        return checkNotFound(itemsRepository.getStorehouseItemByStorehouseIdAndItemId(storehouseId, itemId), addMessageDetails(Item.class.getSimpleName(), itemId));
     }
 
 // Prototype func. Realise if need it
