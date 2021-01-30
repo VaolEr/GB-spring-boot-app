@@ -31,7 +31,7 @@ public interface StorehousesRepository extends JpaRepository<Storehouse, Integer
     List<Integer> getStorehousesIdsWhereItemPresent(@Param("itemId") Integer itemId);
 
     @Query(value = "SELECT i_s.quantity FROM ItemStorehouse i_s WHERE i_s.item.id = :itemId AND i_s.storehouse.id = :storehouseId")
-    Integer getStorehouseQuantityByItemAndStorehouseIds(@Param("itemId") Integer itemId, @Param("storehouseId") Integer storehouseId);
+    Integer getItemQuantityOnStorehouseByItemIdAndStorehouseId(@Param("itemId") Integer itemId, @Param("storehouseId") Integer storehouseId);
 
     @Query(value = "SELECT i_s.id FROM ItemStorehouse i_s WHERE i_s.item.id = :itemId AND i_s.storehouse.id = :storehouseId")
     Integer getItemStorehousesById(@Param("itemId") Integer itemId, @Param("storehouseId") Integer storehouseId);

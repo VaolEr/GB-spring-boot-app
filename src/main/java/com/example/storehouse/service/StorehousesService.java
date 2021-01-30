@@ -43,7 +43,7 @@ public class StorehousesService {
         //TODO Add check not found storehouse with id
         List<ItemTo> itemTos = toItemTos(itemsRepository.getByItemStorehousesStorehouseId(storehouseId));
         for (ItemTo itemTo:itemTos) {
-            itemTo.setTotalQty(storehousesRepository.getStorehouseQuantityByItemAndStorehouseIds(itemTo.getId(), storehouseId));
+            itemTo.setTotalQty(storehousesRepository.getItemQuantityOnStorehouseByItemIdAndStorehouseId(itemTo.getId(), storehouseId));
         }
         return itemTos; // work correct
 //        return itemsRepository.getStorehouseItemsByStorehouseId(id);
