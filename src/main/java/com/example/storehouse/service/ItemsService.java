@@ -83,7 +83,7 @@ public class ItemsService {
             Storehouse storehouse = checkNotFound(storehousesRepository.findById(iSt.getStorehouseId()),
                     addMessageDetails(Storehouse.class.getSimpleName(), iSt.getStorehouseId())
             );
-            if (presentStorehouses.size() != 0) {
+            if (!presentStorehouses.isEmpty()) {
                 for (Integer storehouseId : presentStorehouses) {
                     if (storehouseId.equals(storehouse.getId())) {
                         Integer itemStorehouseId = storehousesRepository.getItemStorehousesById(updatedItem.getId(), storehouse.getId());
