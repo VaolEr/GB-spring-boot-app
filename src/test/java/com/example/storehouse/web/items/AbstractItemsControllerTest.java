@@ -51,7 +51,6 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -64,12 +63,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 //@WebMvcTest(ItemsControllerTest.class)
 // Я тут с ходу не разобрался, как замокать всю кучу security-зависимостей
 // для загрузки только требуемого контекста, поэтому поставил пока загрузку всего
 @SpringBootTest
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 public abstract class AbstractItemsControllerTest {
 
