@@ -1,12 +1,12 @@
 package com.example.storehouse.service;
 
-import static com.example.storehouse.service.ServiceTestData.TEST_USER_EMAIL;
-import static com.example.storehouse.service.ServiceTestData.TEST_USER_FIRST_NAME;
-import static com.example.storehouse.service.ServiceTestData.TEST_USER_ID;
-import static com.example.storehouse.service.ServiceTestData.TEST_USER_LAST_NAME;
-import static com.example.storehouse.service.ServiceTestData.TEST_USER_PASSWORD;
-import static com.example.storehouse.service.ServiceTestData.TEST_USER_ROLE;
-import static com.example.storehouse.service.ServiceTestData.TEST_USER_STATUS;
+import static com.example.storehouse.TestData.TEST_ADMIN_FIRST_NAME;
+import static com.example.storehouse.TestData.TEST_ADMIN_ID;
+import static com.example.storehouse.TestData.TEST_ADMIN_LAST_NAME;
+import static com.example.storehouse.TestData.TEST_ADMIN_PASSWORD;
+import static com.example.storehouse.TestData.TEST_ADMIN_ROLE;
+import static com.example.storehouse.TestData.TEST_ADMIN_STATUS;
+import static com.example.storehouse.TestData.TEST_USER_EMAIL;
 import static com.example.storehouse.util.UsersUtil.fromUserTo;
 import static com.example.storehouse.util.UsersUtil.toUserTo;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,13 +43,13 @@ public class UsersServiceTests {
     @BeforeEach
     void setUp() {
         testUser = new User();
-        testUser.setId(TEST_USER_ID);
+        testUser.setId(TEST_ADMIN_ID);
         testUser.setEmail(TEST_USER_EMAIL);
-        testUser.setPassword(TEST_USER_PASSWORD);
-        testUser.setFirstName(TEST_USER_FIRST_NAME);
-        testUser.setLastName(TEST_USER_LAST_NAME);
-        testUser.setRole(TEST_USER_ROLE);
-        testUser.setStatus(TEST_USER_STATUS);
+        testUser.setPassword(TEST_ADMIN_PASSWORD);
+        testUser.setFirstName(TEST_ADMIN_FIRST_NAME);
+        testUser.setLastName(TEST_ADMIN_LAST_NAME);
+        testUser.setRole(TEST_ADMIN_ROLE);
+        testUser.setStatus(TEST_ADMIN_STATUS);
     }
 
     @DisplayName("Should return user where email equals TEST_USER_EMAIL")
@@ -86,14 +86,14 @@ public class UsersServiceTests {
     @Test
     void getById() {
         // Given
-        when(usersRepository.findById(TEST_USER_ID)).thenReturn(Optional.of(testUser));
+        when(usersRepository.findById(TEST_ADMIN_ID)).thenReturn(Optional.of(testUser));
 
         // When
-        User returnedUsers = service.getById(TEST_USER_ID);
+        User returnedUsers = service.getById(TEST_ADMIN_ID);
 
         // Then
         //assert testUser.getId() != null;
-        verify(usersRepository).findById(TEST_USER_ID);
+        verify(usersRepository).findById(TEST_ADMIN_ID);
         assertEquals(returnedUsers, testUser);
     }
 
@@ -180,10 +180,10 @@ public class UsersServiceTests {
         // Given
 
         // When
-        service.delete(TEST_USER_ID);
+        service.delete(TEST_ADMIN_ID);
 
         // Then
-        verify(usersRepository).deleteById(TEST_USER_ID);
+        verify(usersRepository).deleteById(TEST_ADMIN_ID);
     }
 
 }

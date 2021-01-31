@@ -1,20 +1,20 @@
 package com.example.storehouse.service;
 
-import static com.example.storehouse.service.ServiceTestData.TEST_CATEGORY_ID;
-import static com.example.storehouse.service.ServiceTestData.TEST_CATEGORY_NAME;
-import static com.example.storehouse.service.ServiceTestData.TEST_ITEMS_NAME;
-import static com.example.storehouse.service.ServiceTestData.TEST_ITEMS_SKU;
-import static com.example.storehouse.service.ServiceTestData.TEST_ITEM_1_ID;
-import static com.example.storehouse.service.ServiceTestData.TEST_ITEM_2_ID;
-import static com.example.storehouse.service.ServiceTestData.TEST_ITEM_3_ID;
-import static com.example.storehouse.service.ServiceTestData.TEST_STOREHOUSE_1_ID;
-import static com.example.storehouse.service.ServiceTestData.TEST_STOREHOUSE_1_NAME;
-import static com.example.storehouse.service.ServiceTestData.TEST_STOREHOUSE_2_ID;
-import static com.example.storehouse.service.ServiceTestData.TEST_STOREHOUSE_2_NAME;
-import static com.example.storehouse.service.ServiceTestData.TEST_SUPPLIER_ID;
-import static com.example.storehouse.service.ServiceTestData.TEST_SUPPLIER_NAME;
-import static com.example.storehouse.service.ServiceTestData.TEST_UNIT_ID;
-import static com.example.storehouse.service.ServiceTestData.TEST_UNIT_NAME;
+import static com.example.storehouse.TestData.TEST_CATEGORY_ID;
+import static com.example.storehouse.TestData.TEST_CATEGORY_NAME;
+import static com.example.storehouse.TestData.TEST_ITEMS_NAME;
+import static com.example.storehouse.TestData.TEST_ITEMS_SKU;
+import static com.example.storehouse.TestData.TEST_ITEM_1_ID;
+import static com.example.storehouse.TestData.TEST_ITEM_2_ID;
+import static com.example.storehouse.TestData.TEST_ITEM_3_ID;
+import static com.example.storehouse.TestData.TEST_STOREHOUSE_1_ID;
+import static com.example.storehouse.TestData.TEST_STOREHOUSE_1_NAME;
+import static com.example.storehouse.TestData.TEST_STOREHOUSE_2_ID;
+import static com.example.storehouse.TestData.TEST_STOREHOUSE_2_NAME;
+import static com.example.storehouse.TestData.TEST_SUPPLIER_ID;
+import static com.example.storehouse.TestData.TEST_SUPPLIER_NAME;
+import static com.example.storehouse.TestData.TEST_UNIT_ID;
+import static com.example.storehouse.TestData.TEST_UNIT_NAME;
 import static com.example.storehouse.util.CategoriesUtil.toCategoryTos;
 import static com.example.storehouse.util.ItemsUtil.fromItemTo;
 import static com.example.storehouse.util.ItemsUtil.toItemTo;
@@ -132,10 +132,6 @@ class ItemsServiceTest {
                 item.setUnit(testUnit);
             })
             .collect(Collectors.toList());
-        // testItems = List.of(testItemOne, testItemTwo, testItemThree);
-        // testItems.forEach(item -> {
-        // item processing (set id, name, etc)
-        // });
 
         pageableUnpaged = Pageable.unpaged();
 

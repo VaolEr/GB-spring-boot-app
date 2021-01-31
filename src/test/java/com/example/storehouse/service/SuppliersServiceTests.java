@@ -1,14 +1,14 @@
 package com.example.storehouse.service;
 
-import static com.example.storehouse.service.ServiceTestData.TEST_CATEGORY_ID;
-import static com.example.storehouse.service.ServiceTestData.TEST_CATEGORY_NAME;
-import static com.example.storehouse.service.ServiceTestData.TEST_ITEMS_NAME;
-import static com.example.storehouse.service.ServiceTestData.TEST_ITEMS_SKU;
-import static com.example.storehouse.service.ServiceTestData.TEST_ITEM_1_ID;
-import static com.example.storehouse.service.ServiceTestData.TEST_ITEM_2_ID;
-import static com.example.storehouse.service.ServiceTestData.TEST_ITEM_3_ID;
-import static com.example.storehouse.service.ServiceTestData.TEST_SUPPLIER_ID;
-import static com.example.storehouse.service.ServiceTestData.TEST_SUPPLIER_NAME;
+import static com.example.storehouse.TestData.TEST_CATEGORY_ID;
+import static com.example.storehouse.TestData.TEST_CATEGORY_NAME;
+import static com.example.storehouse.TestData.TEST_ITEMS_NAME;
+import static com.example.storehouse.TestData.TEST_ITEMS_SKU;
+import static com.example.storehouse.TestData.TEST_ITEM_1_ID;
+import static com.example.storehouse.TestData.TEST_ITEM_2_ID;
+import static com.example.storehouse.TestData.TEST_ITEM_3_ID;
+import static com.example.storehouse.TestData.TEST_SUPPLIER_ID;
+import static com.example.storehouse.TestData.TEST_SUPPLIER_NAME;
 import static com.example.storehouse.util.SuppliersUtil.fromSupplierTo;
 import static com.example.storehouse.util.SuppliersUtil.toSupplierTo;
 import static org.assertj.core.api.Assertions.assertThat;
