@@ -1,5 +1,6 @@
 package com.example.storehouse.service;
 
+import static com.example.storehouse.TestData.TEST_ADMIN_EMAIL;
 import static com.example.storehouse.TestData.TEST_ADMIN_FIRST_NAME;
 import static com.example.storehouse.TestData.TEST_ADMIN_ID;
 import static com.example.storehouse.TestData.TEST_ADMIN_LAST_NAME;
@@ -44,7 +45,7 @@ public class UsersServiceTests {
     void setUp() {
         testUser = new User();
         testUser.setId(TEST_ADMIN_ID);
-        testUser.setEmail(TEST_USER_EMAIL);
+        testUser.setEmail(TEST_ADMIN_EMAIL);
         testUser.setPassword(TEST_ADMIN_PASSWORD);
         testUser.setFirstName(TEST_ADMIN_FIRST_NAME);
         testUser.setLastName(TEST_ADMIN_LAST_NAME);
