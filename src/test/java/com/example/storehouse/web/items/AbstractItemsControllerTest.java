@@ -216,21 +216,6 @@ public abstract class AbstractItemsControllerTest {
         verify(itemsService).get(isA(Pageable.class), isNull());
     }
 
-    @Disabled
-    @Test
-    void getAllPaged() {
-    }
-
-    @Disabled
-    @Test
-    void getByNameUnpaged() {
-    }
-
-    @Disabled
-    @Test
-    void getByNamePaged() {
-    }
-
     @Test
     @SneakyThrows
     void getById() {

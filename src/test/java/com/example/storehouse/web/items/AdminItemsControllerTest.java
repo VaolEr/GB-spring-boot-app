@@ -15,6 +15,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -29,9 +30,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.example.storehouse.dto.ItemTo;
 import com.example.storehouse.model.ItemStorehouse;
 import com.example.storehouse.model.User;
+import java.util.List;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
@@ -72,10 +73,28 @@ class AdminItemsControllerTest extends AbstractItemsControllerTest {
         verify(itemsService).create(createdItem);
     }
 
-    @Disabled
     @Test
+    @SneakyThrows
     void createInvalid() {
-        // with invalid ItemTo
+        // Given
+        testItemOne.setItemStorehouses(super.createItemStorehouses().toArray(new ItemStorehouse[2]));
+        ItemTo createdItem = toItemToWithBalance(testItemOne);
+        createdItem.setItemsStorehouses(List.of());
+        createdItem.setUnit(null);
+
+        // When
+        mvc
+            .perform(post(itemsPath)
+                .headers(headers)
+                .content(objectMapper.writeValueAsString(createdItem))
+            )
+            .andDo(print())
+
+            // Then
+            .andExpect(status().isBadRequest())
+        ;
+        verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
+        verifyNoInteractions(itemsService);
     }
 
     @Test
@@ -85,14 +104,14 @@ class AdminItemsControllerTest extends AbstractItemsControllerTest {
         testItemOne.setItemStorehouses(super.createItemStorehouses().toArray(new ItemStorehouse[2]));
         testItemOne.setId(999);
         testItemOne.setName("updated item");
-        ItemTo createdItem = toItemToWithBalance(testItemOne);
+        ItemTo updatedItem = toItemToWithBalance(testItemOne);
         when(itemsService.update(isA(ItemTo.class), eq(TEST_ITEM_1_ID))).thenReturn(testItemOne);
 
         // When
         mvc
             .perform(put(itemsPath + "/{id}", TEST_ITEM_1_ID)
                 .headers(headers)
-                .content(objectMapper.writeValueAsString(createdItem))
+                .content(objectMapper.writeValueAsString(updatedItem))
             )
             .andDo(print())
 
@@ -103,19 +122,7 @@ class AdminItemsControllerTest extends AbstractItemsControllerTest {
             .andExpect(jsonPath("$.data").isNotEmpty())
         ;
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
-        verify(itemsService).update(createdItem, TEST_ITEM_1_ID);
-    }
-
-    @Disabled
-    @Test
-    void updateInvalid() {
-        // with invalid ItemTo
-    }
-
-    @Disabled
-    @Test
-    void updateIdNotConsistent() {
-        // with path/{id} != ItemTo.id
+        verify(itemsService).update(updatedItem, TEST_ITEM_1_ID);
     }
 
     @Test
