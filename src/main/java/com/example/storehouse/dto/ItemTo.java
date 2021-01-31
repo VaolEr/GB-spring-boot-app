@@ -58,7 +58,7 @@ public class ItemTo {
         groups = Create.class
     )
     @NotNull(
-        groups = { Update.class, Delete.class }
+        groups = { Update.class, Delete.class}
     )
     @Schema(description = "Total quantity of item stored in all storehouses", example = "101")
     Integer totalQty;
