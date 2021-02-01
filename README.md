@@ -2,6 +2,7 @@ Storehouse Backend App
 ---
 
 - [App home page](https://gb-storehouse.herokuapp.com)
+- [PyDjango front client](https://pydjango-geek-stockcontrol.herokuapp.com/)
 - [Swagger docs](https://gb-storehouse.herokuapp.com/swagger-ui.html)
 - [App API base path](https://gb-storehouse.herokuapp.com/api/v1)
 - [App info](https://gb-storehouse.herokuapp.com/check/info)
