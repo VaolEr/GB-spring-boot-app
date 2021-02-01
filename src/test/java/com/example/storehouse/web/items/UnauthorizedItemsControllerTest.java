@@ -1,18 +1,12 @@
 package com.example.storehouse.web.items;
 
 import static com.example.storehouse.TestData.TEST_ITEM_1_ID;
-import static com.example.storehouse.TestData.TEST_USER_EMAIL;
-import static com.example.storehouse.TestData.TEST_USER_FIRST_NAME;
-import static com.example.storehouse.TestData.TEST_USER_ID;
-import static com.example.storehouse.TestData.TEST_USER_LAST_NAME;
-import static com.example.storehouse.TestData.TEST_USER_PASSWORD;
-import static com.example.storehouse.TestData.TEST_USER_ROLE;
-import static com.example.storehouse.TestData.TEST_USER_STATUS;
 import static com.example.storehouse.util.ItemsUtil.toItemToWithBalance;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -20,23 +14,91 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.example.storehouse.dto.ItemTo;
 import com.example.storehouse.model.ItemStorehouse;
-import com.example.storehouse.model.User;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-public class UserItemsControllerTest extends AbstractItemsControllerTest {
+public class UnauthorizedItemsControllerTest extends AbstractItemsControllerTest {
 
     @BeforeEach
-    void setUpUser() {
-        when(jwtTokenProvider.getAuthentication(AUTH_TOKEN)).thenReturn(mockAuthorize(createTestUserUser()));
+    void setUpUnauthorized() {
+        when(jwtTokenProvider.validateToken(AUTH_TOKEN)).thenReturn(false);
     }
 
     @Test
     @Override
-    @DisplayName("create not permitted")
+    @SneakyThrows
+    void getByName() {
+        // Given
+
+        // When
+        mvc
+            .perform(get(itemsPath)
+                .headers(headers)
+                .param("name", testItemOne.getName())
+            )
+            .andDo(print())
+
+            // Then
+            .andExpect(status().isForbidden())
+        ;
+        verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
+        verifyNoInteractions(itemsService);
+    }
+
+    @Test
+    @Override
+    @SneakyThrows
+    void getAllUnpaged() {
+        // Given
+
+        // When
+        mvc
+            .perform(get(itemsPath)
+                .headers(headers)
+            )
+            .andDo(print())
+
+            // Then
+            .andExpect(status().isForbidden())
+        ;
+        verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
+        verifyNoInteractions(itemsService);
+    }
+
+    @Override
+    void getAllPaged() {
+        // do nothing
+    }
+
+    @Test
+    @Override
+    @SneakyThrows
+    void getById() {
+        // Given
+
+        // When
+        mvc
+            .perform(get(itemsPath + "/{id}", TEST_ITEM_1_ID)
+                .headers(headers)
+            )
+            .andDo(print())
+
+            // Then
+            .andExpect(status().isForbidden())
+        ;
+        verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
+        verifyNoInteractions(itemsService);
+    }
+
+    @Override
+    void getByIdNotFound() {
+        // do nothing
+    }
+
+    @Test
+    @Override
     @SneakyThrows
     void create() {
         // Given
@@ -60,18 +122,17 @@ public class UserItemsControllerTest extends AbstractItemsControllerTest {
 
     @Test
     @Override
-    @DisplayName("update not permitted")
     @SneakyThrows
     void update() {
         // Given
         testItemOne.setItemStorehouses(super.createItemStorehouses().toArray(new ItemStorehouse[2]));
-        ItemTo createdItem = toItemToWithBalance(testItemOne);
+        ItemTo updatedItem = toItemToWithBalance(testItemOne);
 
         // When
         mvc
             .perform(put(itemsPath + "/{id}", TEST_ITEM_1_ID)
                 .headers(headers)
-                .content(objectMapper.writeValueAsString(createdItem))
+                .content(objectMapper.writeValueAsString(updatedItem))
             )
             .andDo(print())
 
@@ -84,7 +145,6 @@ public class UserItemsControllerTest extends AbstractItemsControllerTest {
 
     @Test
     @Override
-    @DisplayName("delete not permitted")
     @SneakyThrows
     void delete() {
         // Given
@@ -101,18 +161,6 @@ public class UserItemsControllerTest extends AbstractItemsControllerTest {
         ;
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
         verifyNoInteractions(itemsService);
-    }
-
-    private User createTestUserUser() {
-        User user = new User();
-        user.setId(TEST_USER_ID);
-        user.setEmail(TEST_USER_EMAIL);
-        user.setPassword(TEST_USER_PASSWORD);
-        user.setFirstName(TEST_USER_FIRST_NAME);
-        user.setLastName(TEST_USER_LAST_NAME);
-        user.setRole(TEST_USER_ROLE);
-        user.setStatus(TEST_USER_STATUS);
-        return user;
     }
 
 }

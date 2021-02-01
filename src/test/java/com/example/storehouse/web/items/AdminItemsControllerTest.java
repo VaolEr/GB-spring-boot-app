@@ -18,7 +18,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -33,18 +32,21 @@ import com.example.storehouse.model.User;
 import java.util.List;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 class AdminItemsControllerTest extends AbstractItemsControllerTest {
 
     @BeforeEach
     void setUpAdmin() {
-        when(jwtTokenProvider.getAuthentication(AUTH_TOKEN)).thenReturn(super.mockAuthorize(createTestUserAdmin()));
+        when(jwtTokenProvider.getAuthentication(AUTH_TOKEN)).thenReturn(mockAuthorize(createTestUserAdmin()));
     }
 
     @Test
+    @Override
     @SneakyThrows
     void create() {
         // Given
@@ -98,6 +100,7 @@ class AdminItemsControllerTest extends AbstractItemsControllerTest {
     }
 
     @Test
+    @Override
     @SneakyThrows
     void update() {
         // Given
@@ -125,15 +128,23 @@ class AdminItemsControllerTest extends AbstractItemsControllerTest {
         verify(itemsService).update(updatedItem, TEST_ITEM_1_ID);
     }
 
+    @Disabled
     @Test
     @SneakyThrows
-    void deleteExisted() {
+    void updateInvalid() {
+        // Invalid ItemTo -> BadRequest(400)
+    }
+
+    @Test
+    @Override
+    @SneakyThrows
+    void delete() {
         // Given
         doNothing().when(itemsService).delete(TEST_ITEM_1_ID);
 
         // When
         mvc
-            .perform(delete(itemsPath + "/{id}", TEST_ITEM_1_ID)
+            .perform(MockMvcRequestBuilders.delete(itemsPath + "/{id}", TEST_ITEM_1_ID)
                 .headers(headers)
             )
             .andDo(print())
@@ -154,7 +165,7 @@ class AdminItemsControllerTest extends AbstractItemsControllerTest {
 
         // When
         mvc
-            .perform(delete(itemsPath + "/{id}", absentedItemId)
+            .perform(MockMvcRequestBuilders.delete(itemsPath + "/{id}", absentedItemId)
                 .headers(headers)
             )
             .andDo(print())
