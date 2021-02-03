@@ -22,9 +22,7 @@ import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -39,61 +37,30 @@ import com.example.storehouse.model.ItemStorehouse;
 import com.example.storehouse.model.Storehouse;
 import com.example.storehouse.model.Supplier;
 import com.example.storehouse.model.Unit;
-import com.example.storehouse.model.User;
-import com.example.storehouse.security.JwtTokenProvider;
 import com.example.storehouse.service.ItemsService;
 import com.example.storehouse.util.exception.NotFoundException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Collections;
+import com.example.storehouse.web.AbstractControllerTest;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
 
-//@WebMvcTest(ItemsControllerTest.class)
-// Я тут с ходу не разобрался, как замокать всю кучу security-зависимостей
-// для загрузки только требуемого контекста, поэтому поставил пока загрузку всего
-@SpringBootTest
-@ActiveProfiles("test")
-@AutoConfigureMockMvc
-public abstract class AbstractItemsControllerTest {
+public abstract class AbstractItemsControllerTest extends AbstractControllerTest {
 
     @Value("${app.endpoints.base_path}" + "${app.endpoints.items.base_url}/")
     String itemsPath;
 
-    @Value("${app.jwt.header}")
-    String authHeader;
-
-    @Autowired
-    MockMvc mvc;
-
     @MockBean
     ItemsService itemsService;
 
-    @MockBean
-    JwtTokenProvider jwtTokenProvider;
-
-    static final String AUTH_TOKEN = "jwt-auth-token";
-
-    HttpHeaders headers;
     Pageable unpaged;
-    ObjectMapper objectMapper;
     Item testItemOne,
         testItemTwo,
         testItemThree;
@@ -104,94 +71,20 @@ public abstract class AbstractItemsControllerTest {
     Storehouse testStorehouseOne,
         testStorehouseTwo;
 
-    @PostConstruct
-    void prepare() {
-        objectMapper = new ObjectMapper();
-    }
-
+    @Override
     @BeforeEach
-    void setUp() {
-        headers = new HttpHeaders();
-        headers.setAccept(Collections.singletonList(APPLICATION_JSON));
-        headers.setContentType(APPLICATION_JSON);
-        headers.setBearerAuth(AUTH_TOKEN);
-
-        when(jwtTokenProvider.resolveToken(any(HttpServletRequest.class))).thenReturn(headers.getFirst(authHeader));
-        when(jwtTokenProvider.validateToken(AUTH_TOKEN)).thenReturn(true);
-
+    protected void setUp() {
+        super.setUp();
         createTestEntities();
-
         // Results be returned with default Pageable settings
         unpaged = Pageable.unpaged();
     }
 
+    @Override
     @Test
-    void contextLoads() {
-        assertNotNull(mvc);
+    protected void contextLoads() {
+        super.contextLoads();
         assertNotNull(itemsService);
-        assertNotNull(jwtTokenProvider);
-    }
-
-    @Test
-    @SneakyThrows
-    void getUnauthorizedAll() {
-        // Given
-        when(jwtTokenProvider.validateToken(AUTH_TOKEN)).thenReturn(false);
-
-        // When
-        mvc
-            .perform(get(itemsPath)
-                .headers(headers)
-            )
-            .andDo(print())
-
-            // Then
-            .andExpect(status().isForbidden())
-        ;
-        // посмотреть, почему 2 вызова и можно ли сделать 1
-        verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
-        verifyNoInteractions(itemsService);
-    }
-
-    @Test
-    @SneakyThrows
-    void getUnauthorizedByName() {
-        // Given
-        when(jwtTokenProvider.validateToken(AUTH_TOKEN)).thenReturn(false);
-
-        // When
-        mvc
-            .perform(get(itemsPath)
-                .headers(headers)
-                .param("name", testItemOne.getName())
-            )
-            .andDo(print())
-
-            // Then
-            .andExpect(status().isForbidden())
-        ;
-        verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
-        verifyNoInteractions(itemsService);
-    }
-
-    @Test
-    @SneakyThrows
-    void getUnauthorizedById() {
-        // Given
-        when(jwtTokenProvider.validateToken(AUTH_TOKEN)).thenReturn(false);
-
-        // When
-        mvc
-            .perform(get(itemsPath + "/{id}", TEST_ITEM_1_ID)
-                .headers(headers)
-            )
-            .andDo(print())
-
-            // Then
-            .andExpect(status().isForbidden())
-        ;
-        verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
-        verifyNoInteractions(itemsService);
     }
 
     @Test
@@ -215,6 +108,13 @@ public abstract class AbstractItemsControllerTest {
         ;
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
         verify(itemsService).get(isA(Pageable.class), isNull());
+    }
+
+    @Disabled
+    @Test
+    @SneakyThrows
+    void getAllPaged() {
+
     }
 
     @Test
@@ -265,6 +165,19 @@ public abstract class AbstractItemsControllerTest {
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
         verify(itemsService).getById(absentedItemId);
     }
+
+    @Disabled
+    @Test
+    @SneakyThrows
+    void getByName() {
+        // unpaged
+    }
+
+    abstract void create();
+
+    abstract void update();
+
+    abstract void delete();
 
     void createTestEntities() {
         testCategory = new Category();
@@ -317,21 +230,6 @@ public abstract class AbstractItemsControllerTest {
         testItemStorehouseTwo.setQuantity(18);
 
         return List.of(testItemStorehouseOne, testItemStorehouseTwo);
-    }
-
-    Authentication mockAuthorize(User authorizeAs) {
-        return new UsernamePasswordAuthenticationToken(
-            new org.springframework.security.core.userdetails.User(
-                authorizeAs.getEmail(),
-                authorizeAs.getPassword(),
-                true,
-                true,
-                true,
-                true,
-                authorizeAs.getRole().getAuthorities()
-            ),
-            null, authorizeAs.getRole().getAuthorities()
-        );
     }
 
 }
