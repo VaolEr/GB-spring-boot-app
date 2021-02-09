@@ -58,7 +58,7 @@ class UserCategoriesControllerTests extends AbstractCategoriesControllerTest {
 
         // When
         mvc
-                .perform(put(categoriesPath + "/{id}", TEST_ITEM_1_ID)
+                .perform(put(categoriesPath + "/{id}", TEST_CATEGORY_1_ID)
                         .headers(headers)
                         .content(objectMapper.writeValueAsString(updatedCategory))
                 )
