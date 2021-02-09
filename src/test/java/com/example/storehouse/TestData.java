@@ -11,6 +11,11 @@ public class TestData {
     public static final int TEST_SUPPLIER_ID = 31;
     public static final String TEST_SUPPLIER_NAME = "TestSupplier";
 
+    public static final int TEST_SUPPLIER_1_ID = 131;
+    public static final int TEST_SUPPLIER_2_ID = 231;
+    public static final int TEST_SUPPLIER_3_ID = 331;
+    public static final String TEST_SUPPLIERS_NAME = "Test supplier #";
+
     public static final int TEST_STOREHOUSE_1_ID = 41;
     public static final String TEST_STOREHOUSE_1_NAME = "TestStorehouse 1";
     public static final int TEST_STOREHOUSE_2_ID = 51;
