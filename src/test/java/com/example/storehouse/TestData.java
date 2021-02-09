@@ -8,6 +8,11 @@ public class TestData {
     public static final int TEST_CATEGORY_ID = 21;
     public static final String TEST_CATEGORY_NAME = "TestCategory";
 
+    public static final int TEST_CATEGORY_1_ID = 101;
+    public static final int TEST_CATEGORY_2_ID = 201;
+    public static final int TEST_CATEGORY_3_ID = 301;
+    public static final String TEST_CATEGORIES_NAME = "Test category #";
+
     public static final int TEST_SUPPLIER_ID = 31;
     public static final String TEST_SUPPLIER_NAME = "TestSupplier";
 
