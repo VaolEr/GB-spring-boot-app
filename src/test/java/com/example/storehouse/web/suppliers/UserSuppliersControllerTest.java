@@ -1,7 +1,6 @@
 package com.example.storehouse.web.suppliers;
 
 import com.example.storehouse.dto.SupplierTo;
-import com.example.storehouse.model.User;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -73,7 +72,7 @@ class UserSuppliersControllerTest extends AbstractSuppliersControllerTest {
     }
 
     //TODO решить как будет реализовано удаление данных при связанных талицах.
-    // А пока не решили - Disabled.
+    // У нас в принципе не реализован метод delete для Categories, поэтому Disabled временно.
     @Disabled
     @Test
     @Override
@@ -94,19 +93,5 @@ class UserSuppliersControllerTest extends AbstractSuppliersControllerTest {
         ;
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
         verifyNoInteractions(suppliersService);
-    }
-
-    //TODO вынести в файл TestData?
-    // Так как используется в нескольких тестовых классах.
-    private User createTestUserUser() {
-        User user = new User();
-        user.setId(TEST_USER_ID);
-        user.setEmail(TEST_USER_EMAIL);
-        user.setPassword(TEST_USER_PASSWORD);
-        user.setFirstName(TEST_USER_FIRST_NAME);
-        user.setLastName(TEST_USER_LAST_NAME);
-        user.setRole(TEST_USER_ROLE);
-        user.setStatus(TEST_USER_STATUS);
-        return user;
     }
 }

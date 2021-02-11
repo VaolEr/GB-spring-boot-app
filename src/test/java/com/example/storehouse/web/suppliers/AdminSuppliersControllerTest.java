@@ -115,7 +115,7 @@ class AdminSuppliersControllerTest extends AbstractSuppliersControllerTest {
     }
 
     //TODO решить как будет реализовано удаление данных при связанных талицах.
-    // А пока не решили - Disabled.
+    // У нас в принципе не реализован метод delete для Categories, поэтому Disabled временно.
     @Disabled
     @Test
     @Override
@@ -160,19 +160,5 @@ class AdminSuppliersControllerTest extends AbstractSuppliersControllerTest {
         ;
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
         verify(suppliersService).delete(absentedCategoryId);
-    }
-
-    //TODO вынести в файл TestData?
-    // Так как используется в нескольких тестовых классах.
-    private User createTestUserAdmin() {
-        User user = new User();
-        user.setId(TEST_ADMIN_ID);
-        user.setEmail(TEST_ADMIN_EMAIL);
-        user.setPassword(TEST_ADMIN_PASSWORD);
-        user.setFirstName(TEST_ADMIN_FIRST_NAME);
-        user.setLastName(TEST_ADMIN_LAST_NAME);
-        user.setRole(TEST_ADMIN_ROLE);
-        user.setStatus(TEST_ADMIN_STATUS);
-        return user;
     }
 }
