@@ -1,5 +1,6 @@
 package com.example.storehouse.web;
 
+import static com.example.storehouse.TestData.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -83,4 +84,27 @@ public abstract class AbstractControllerTest {
         );
     }
 
+    public static User createTestUserAdmin() {
+        User user = new User();
+        user.setId(TEST_ADMIN_ID);
+        user.setEmail(TEST_ADMIN_EMAIL);
+        user.setPassword(TEST_ADMIN_PASSWORD);
+        user.setFirstName(TEST_ADMIN_FIRST_NAME);
+        user.setLastName(TEST_ADMIN_LAST_NAME);
+        user.setRole(TEST_ADMIN_ROLE);
+        user.setStatus(TEST_ADMIN_STATUS);
+        return user;
+    }
+
+    public static User createTestUserUser() {
+        User user = new User();
+        user.setId(TEST_USER_ID);
+        user.setEmail(TEST_USER_EMAIL);
+        user.setPassword(TEST_USER_PASSWORD);
+        user.setFirstName(TEST_USER_FIRST_NAME);
+        user.setLastName(TEST_USER_LAST_NAME);
+        user.setRole(TEST_USER_ROLE);
+        user.setStatus(TEST_USER_STATUS);
+        return user;
+    }
 }
