@@ -1,12 +1,5 @@
 package com.example.storehouse.web.items;
 
-import static com.example.storehouse.TestData.TEST_ADMIN_EMAIL;
-import static com.example.storehouse.TestData.TEST_ADMIN_FIRST_NAME;
-import static com.example.storehouse.TestData.TEST_ADMIN_ID;
-import static com.example.storehouse.TestData.TEST_ADMIN_LAST_NAME;
-import static com.example.storehouse.TestData.TEST_ADMIN_PASSWORD;
-import static com.example.storehouse.TestData.TEST_ADMIN_ROLE;
-import static com.example.storehouse.TestData.TEST_ADMIN_STATUS;
 import static com.example.storehouse.TestData.TEST_ITEM_1_ID;
 import static com.example.storehouse.util.ItemsUtil.toItemToWithBalance;
 import static org.mockito.ArgumentMatchers.eq;
@@ -28,7 +21,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.example.storehouse.dto.ItemTo;
 import com.example.storehouse.model.ItemStorehouse;
-import com.example.storehouse.model.User;
 import java.util.List;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
@@ -177,18 +169,6 @@ class AdminItemsControllerTest extends AbstractItemsControllerTest {
         ;
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
         verify(itemsService).delete(absentedItemId);
-    }
-
-    private User createTestUserAdmin() {
-        User user = new User();
-        user.setId(TEST_ADMIN_ID);
-        user.setEmail(TEST_ADMIN_EMAIL);
-        user.setPassword(TEST_ADMIN_PASSWORD);
-        user.setFirstName(TEST_ADMIN_FIRST_NAME);
-        user.setLastName(TEST_ADMIN_LAST_NAME);
-        user.setRole(TEST_ADMIN_ROLE);
-        user.setStatus(TEST_ADMIN_STATUS);
-        return user;
     }
 
 }
