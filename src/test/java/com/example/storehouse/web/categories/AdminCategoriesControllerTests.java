@@ -1,7 +1,6 @@
 package com.example.storehouse.web.categories;
 
 import com.example.storehouse.dto.CategoryTo;
-import com.example.storehouse.model.User;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -162,17 +161,4 @@ class AdminCategoriesControllerTests extends AbstractCategoriesControllerTest {
         verify(categoriesService).delete(absentedCategoryId);
     }
 
-    //TODO вынести в файл TestData?
-    // Так как используется в нескольких тестовых классах.
-    private User createTestUserAdmin() {
-        User user = new User();
-        user.setId(TEST_ADMIN_ID);
-        user.setEmail(TEST_ADMIN_EMAIL);
-        user.setPassword(TEST_ADMIN_PASSWORD);
-        user.setFirstName(TEST_ADMIN_FIRST_NAME);
-        user.setLastName(TEST_ADMIN_LAST_NAME);
-        user.setRole(TEST_ADMIN_ROLE);
-        user.setStatus(TEST_ADMIN_STATUS);
-        return user;
-    }
 }

@@ -1,7 +1,6 @@
 package com.example.storehouse.web.categories;
 
 import com.example.storehouse.dto.CategoryTo;
-import com.example.storehouse.model.User;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -95,17 +94,4 @@ class UserCategoriesControllerTests extends AbstractCategoriesControllerTest {
         verifyNoInteractions(categoriesService);
     }
 
-    //TODO вынести в файл TestData?
-    // Так как используется в нескольких тестовых классах.
-    private User createTestUserUser() {
-        User user = new User();
-        user.setId(TEST_USER_ID);
-        user.setEmail(TEST_USER_EMAIL);
-        user.setPassword(TEST_USER_PASSWORD);
-        user.setFirstName(TEST_USER_FIRST_NAME);
-        user.setLastName(TEST_USER_LAST_NAME);
-        user.setRole(TEST_USER_ROLE);
-        user.setStatus(TEST_USER_STATUS);
-        return user;
-    }
 }

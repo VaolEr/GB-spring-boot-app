@@ -1,13 +1,6 @@
 package com.example.storehouse.web.items;
 
 import static com.example.storehouse.TestData.TEST_ITEM_1_ID;
-import static com.example.storehouse.TestData.TEST_USER_EMAIL;
-import static com.example.storehouse.TestData.TEST_USER_FIRST_NAME;
-import static com.example.storehouse.TestData.TEST_USER_ID;
-import static com.example.storehouse.TestData.TEST_USER_LAST_NAME;
-import static com.example.storehouse.TestData.TEST_USER_PASSWORD;
-import static com.example.storehouse.TestData.TEST_USER_ROLE;
-import static com.example.storehouse.TestData.TEST_USER_STATUS;
 import static com.example.storehouse.util.ItemsUtil.toItemToWithBalance;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -102,17 +95,4 @@ public class UserItemsControllerTest extends AbstractItemsControllerTest {
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
         verifyNoInteractions(itemsService);
     }
-
-    private User createTestUserUser() {
-        User user = new User();
-        user.setId(TEST_USER_ID);
-        user.setEmail(TEST_USER_EMAIL);
-        user.setPassword(TEST_USER_PASSWORD);
-        user.setFirstName(TEST_USER_FIRST_NAME);
-        user.setLastName(TEST_USER_LAST_NAME);
-        user.setRole(TEST_USER_ROLE);
-        user.setStatus(TEST_USER_STATUS);
-        return user;
-    }
-
 }
