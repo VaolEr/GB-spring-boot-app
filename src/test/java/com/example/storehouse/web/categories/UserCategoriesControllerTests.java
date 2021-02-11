@@ -71,7 +71,7 @@ class UserCategoriesControllerTests extends AbstractCategoriesControllerTest {
     }
 
     //TODO решить как будет реализовано удаление данных при связанных талицах.
-    // А пока не решили - Disabled.
+    // У нас в принципе не реализован метод delete для Categories, поэтому Disabled временно.
     @Disabled
     @Test
     @Override

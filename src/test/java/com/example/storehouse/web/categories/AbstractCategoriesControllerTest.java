@@ -6,6 +6,7 @@ import com.example.storehouse.util.exception.NotFoundException;
 import com.example.storehouse.web.AbstractControllerTest;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -57,6 +58,7 @@ public abstract class AbstractCategoriesControllerTest extends AbstractControlle
 
     @Test
     @SneakyThrows
+    @DisplayName("Get all categories")
     void getAll() {
         // Given
         List<Category> categories = testCategories;
@@ -80,6 +82,7 @@ public abstract class AbstractCategoriesControllerTest extends AbstractControlle
 
     @Test
     @SneakyThrows
+    @DisplayName("Get category by existing id")
     void getById() {
         // Given
         when(categoriesService.getById(TEST_CATEGORY_1_ID)).thenReturn(testCategoryOne);
@@ -104,6 +107,7 @@ public abstract class AbstractCategoriesControllerTest extends AbstractControlle
 
     @Test
     @SneakyThrows
+    @DisplayName("Get category by not existing id")
     void getByIdNotFound() {
         // Given
         int absentedCategoryId = 0;
