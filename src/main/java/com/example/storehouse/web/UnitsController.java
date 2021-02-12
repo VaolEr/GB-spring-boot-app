@@ -1,7 +1,9 @@
 package com.example.storehouse.web;
 
+import com.example.storehouse.dto.CategoryTo;
 import com.example.storehouse.dto.RestResponseTo;
 import com.example.storehouse.dto.UnitTo;
+import com.example.storehouse.model.Category;
 import com.example.storehouse.model.Unit;
 import com.example.storehouse.service.UnitsService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,6 +20,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
+import static com.example.storehouse.util.CategoriesUtil.toCategoryTo;
 import static com.example.storehouse.util.UnitsUtil.toUnitTo;
 import static com.example.storehouse.util.UnitsUtil.toUnitTos;
 
@@ -58,8 +61,8 @@ public class UnitsController {
 //    }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('db:users:write')")
     @Operation(summary = "Create new unit")
+    @PreAuthorize("hasAuthority('db:users:write')")
     public ResponseEntity<?> create(@Valid @RequestBody UnitTo unitTo) {
         Unit created = unitsService.create(unitTo);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentRequest().
