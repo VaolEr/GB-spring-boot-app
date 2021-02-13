@@ -25,6 +25,8 @@ public class TestData {
     public static final String TEST_STOREHOUSE_1_NAME = "TestStorehouse 1";
     public static final int TEST_STOREHOUSE_2_ID = 51;
     public static final String TEST_STOREHOUSE_2_NAME = "TestStorehouse 2";
+    public static final int TEST_STOREHOUSE_3_ID = 61;
+    public static final String TEST_STOREHOUSE_3_NAME = "TestStorehouse 3";
 
 
     public static final String TEST_ITEMS_SKU = "#test-sku";
