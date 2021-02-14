@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 @Schema(description = "Entity: User")
 public class UserTo {
 
+    @Schema(description = "Identifier", example = "1")
     Integer id;
 
     @NotNull
@@ -36,7 +37,7 @@ public class UserTo {
     @Schema(description = "User password", example = "userP@ssw0rd")
     @Min(value = 7, message = "Password should not be less than 7 symbols")
     @Max(value = 100, message = "Password should not be more than 100 symbols")
-    @JsonProperty(access = Access.WRITE_ONLY)
+    //@JsonProperty(access = Access.WRITE_ONLY)
     String password;
 
     @NotNull
@@ -50,12 +51,12 @@ public class UserTo {
     String lastName;
 
     @NotNull
-    @NotBlank
+    //@NotBlank
     @Schema(description = "User role on the server", example = "Admin")
     Role role;
 
     @NotNull
-    @NotBlank
+    //@NotBlank
     @Schema(description = "User status on server", example = "BANNED")
     Status status;
 

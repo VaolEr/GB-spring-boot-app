@@ -71,7 +71,7 @@ public class UsersController {
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('db:users:write')")
     @Operation(summary = "Update a user by id")
-    public RestResponseTo<UserTo> update(@RequestBody UserTo userTo, @PathVariable Integer id) {
+    public RestResponseTo<UserTo> update(@Valid @RequestBody UserTo userTo, @PathVariable Integer id) {
         return new RestResponseTo<>(
             HttpStatus.OK.toString(), null, toUserTo(usersService.update(userTo, id))
         );

@@ -4,7 +4,6 @@ import com.example.storehouse.dto.UnitTo;
 import com.example.storehouse.model.Unit;
 import com.example.storehouse.repository.UnitsRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

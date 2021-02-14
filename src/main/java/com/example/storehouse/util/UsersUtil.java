@@ -47,8 +47,12 @@ public final class UsersUtil {
 
     public static User prepareToSave(User user) {
         String password = user.getPassword();
-        user.setPassword(hasText(password) ? PASSWORD_ENCODER.encode(password) : password);
         user.setEmail(user.getEmail().toLowerCase());
+        user.setPassword(hasText(password) ? PASSWORD_ENCODER.encode(password) : password);
+        user.setFirstName(user.getFirstName());
+        user.setLastName(user.getLastName());
+        user.setRole(user.getRole());
+        user.setStatus(user.getStatus());
         return user;
     }
 
