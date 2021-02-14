@@ -38,6 +38,11 @@ public class TestData {
     public static final int TEST_UNIT_ID = 81;
     public static final String TEST_UNIT_NAME = "шт";
 
+    public static final int TEST_UNIT_1_ID = 181;
+    public static final int TEST_UNIT_2_ID = 281;
+    public static final int TEST_UNIT_3_ID = 381;
+    public static final String TEST_UNITS_NAME = "Test unit #";
+
 
     public static final int TEST_ADMIN_ID = 1000;
     public static final String TEST_ADMIN_EMAIL = "admin@mail.com";
