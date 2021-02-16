@@ -18,7 +18,6 @@ public class SupplierTo {
     @Schema(description = "Identifier", example = "1001")
     Integer id;
 
-    @NotNull
     @NotBlank
     @Schema(description = "Supplier name", example = "TheBestSupplier")
     String name;

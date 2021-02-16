@@ -24,12 +24,10 @@ public class ItemTo {
     @Schema(description = "Identifier", example = "1")
     Integer id;
 
-    @NotNull
     @NotBlank
     @Schema(description = "Item name", example = "TheBestItem")
     String name;
 
-    @NotNull
     @NotBlank
     @Schema(description = "Item SKU", example = "#Supplier_name_code_sku")
     String sku;

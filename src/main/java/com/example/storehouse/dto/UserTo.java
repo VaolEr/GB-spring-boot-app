@@ -22,38 +22,32 @@ public class UserTo {
     @Schema(description = "Identifier", example = "1")
     Integer id;
 
-    @NotNull
     @NotBlank
     @Schema(description = "User email", example = "userlogin@mail.com")
     @Email(message = "Email should be valid!")
     String email;
 
-    @NotNull
     @NotBlank
     @Schema(description = "User password", example = "userP@ssw0rd")
     @Size(min = 7, max = 100, message = "Password length must be between 7 and 100 chars")
     //@JsonProperty(access = Access.WRITE_ONLY)
     String password;
 
-    @NotNull
     @NotBlank
     @Schema(description = "User first name", example = "John")
     @JsonProperty("first_name")
     String firstName;
 
-    @NotNull
     @NotBlank
     @Schema(description = "User last name", example = "Doe")
     @JsonProperty("last_name")
     String lastName;
 
     @NotNull
-    //@NotBlank
     @Schema(description = "User role on the server", example = "Admin")
     Role role;
 
     @NotNull
-    //@NotBlank
     @Schema(description = "User status on server", example = "BANNED")
     Status status;
 
