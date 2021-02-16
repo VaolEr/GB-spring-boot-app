@@ -3,14 +3,10 @@ package com.example.storehouse.dto;
 import com.example.storehouse.model.Role;
 import com.example.storehouse.model.Status;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import io.swagger.v3.oas.annotations.media.Schema;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+
+import javax.validation.constraints.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,19 +31,20 @@ public class UserTo {
     @NotNull
     @NotBlank
     @Schema(description = "User password", example = "userP@ssw0rd")
-    @Min(value = 7, message = "Password should not be less than 7 symbols")
-    @Max(value = 100, message = "Password should not be more than 100 symbols")
+    @Size(min = 7, max = 100, message = "Password length must be between 7 and 100 chars")
     //@JsonProperty(access = Access.WRITE_ONLY)
     String password;
 
     @NotNull
     @NotBlank
     @Schema(description = "User first name", example = "John")
+    @JsonProperty("first_name")
     String firstName;
 
     @NotNull
     @NotBlank
     @Schema(description = "User last name", example = "Doe")
+    @JsonProperty("last_name")
     String lastName;
 
     @NotNull

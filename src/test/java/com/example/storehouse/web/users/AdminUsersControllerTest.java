@@ -28,9 +28,7 @@ public class AdminUsersControllerTest extends AbstractUsersControllerTest {
         when(jwtTokenProvider.getAuthentication(AUTH_TOKEN)).thenReturn(mockAuthorize(createTestUserAdmin()));
     }
 
-    //TODO Не понимаю почему падает ошибка MethodArgumentNotValidException.
-    // Если убрать аннотацию Valid в ResponseEntity<?> create(@Valid @RequestBody UserTo userTo),
-    // то ошибки будут в том, что якобы firstName и lastName null, хотя они у меня везде задаются.
+    @Test
     @Override
     @SneakyThrows
     void create() {
