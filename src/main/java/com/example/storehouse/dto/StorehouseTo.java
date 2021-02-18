@@ -18,7 +18,6 @@ public class StorehouseTo {
     @Schema(description = "Identifier")
     Integer id;
 
-    @NotNull
     @NotBlank
     @Schema(description = "Storehouse name", example = "TheBestStorehouse")
     String name;

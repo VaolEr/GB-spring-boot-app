@@ -18,7 +18,6 @@ public class CategoryTo {
     @Schema(description = "Identifier", example = "1")
     Integer id;
 
-    @NotNull
     @NotBlank
     @Schema(description = "Category name", example = "TheBestCategory")
     String name;

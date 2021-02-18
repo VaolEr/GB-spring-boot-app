@@ -18,7 +18,6 @@ public class UnitTo {
     @Schema(description = "Identifier", example = "1000")
     Integer id;
 
-    @NotNull
     @NotBlank
     @Schema(description = "Unit name", example = "pcs|шт")
     String name;
