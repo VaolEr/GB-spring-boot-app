@@ -6,23 +6,30 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static com.example.storehouse.TestData.TEST_USER_ID;
 import static com.example.storehouse.util.UsersUtil.toUserTo;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
+import static org.springframework.http.HttpHeaders.LOCATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class AdminUsersControllerTest extends AbstractUsersControllerTest {
+
     @BeforeEach
     void setUpAdmin() {
         when(jwtTokenProvider.getAuthentication(AUTH_TOKEN)).thenReturn(mockAuthorize(createTestUserAdmin()));
@@ -38,19 +45,17 @@ public class AdminUsersControllerTest extends AbstractUsersControllerTest {
 
         // When
         mvc
-                .perform(post(usersPath)
-                        .headers(headers)
-                        .content(objectMapper.writeValueAsString(createdUser))
-                )
-                .andDo(print())
+            .perform(post(usersPath)
+                .headers(headers)
+                .content(objectMapper.writeValueAsString(createdUser))
+            )
+            .andDo(print())
 
-                // Then
-                .andExpect(status().isCreated())
-                .andExpect(header().exists(HttpHeaders.LOCATION))
-                // TODO как бы тут достать URL? Это будет работать в таком виде?
-                .andExpect(header().string(HttpHeaders.LOCATION, "http://localhost" + usersPath + TEST_USER_ID))
+            // Then
+            .andExpect(status().isCreated())
+            .andExpect(header().exists(LOCATION))
+            .andExpect(header().string(LOCATION, "http://localhost" + usersPath + TEST_USER_ID))
                 .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
-                // TODO поправить проверку содержимого
                 .andExpect(jsonPath("$.data").isNotEmpty())
         ;
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
@@ -83,7 +88,6 @@ public class AdminUsersControllerTest extends AbstractUsersControllerTest {
     @SneakyThrows
     void update() {
         // Given
-        //testUserOne.setId(999);
         testUserOne.setFirstName("updated_FirstName");
         testUserOne.setLastName("updated_LastName");
         UserTo updatedUser = toUserTo(testUserOne);
@@ -100,7 +104,6 @@ public class AdminUsersControllerTest extends AbstractUsersControllerTest {
                 // Then
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
-                // TODO поправить проверку содержимого
                 .andExpect(jsonPath("$.data").isNotEmpty())
         ;
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
