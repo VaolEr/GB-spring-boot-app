@@ -1,5 +1,29 @@
 package com.example.storehouse.web.items;
 
+import com.example.storehouse.dto.ItemTo;
+import com.example.storehouse.model.Category;
+import com.example.storehouse.model.Item;
+import com.example.storehouse.model.ItemStorehouse;
+import com.example.storehouse.model.Storehouse;
+import com.example.storehouse.model.Supplier;
+import com.example.storehouse.model.Unit;
+import com.example.storehouse.service.ItemsService;
+import com.example.storehouse.util.exception.NotFoundException;
+import com.example.storehouse.web.AbstractControllerTest;
+import com.example.storehouse.web.ItemsController;
+import java.util.List;
+import java.util.stream.Collectors;
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+
 import static com.example.storehouse.TestData.TEST_CATEGORY_ID;
 import static com.example.storehouse.TestData.TEST_CATEGORY_NAME;
 import static com.example.storehouse.TestData.TEST_ITEMS_NAME;
@@ -30,28 +54,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.example.storehouse.dto.ItemTo;
-import com.example.storehouse.model.Category;
-import com.example.storehouse.model.Item;
-import com.example.storehouse.model.ItemStorehouse;
-import com.example.storehouse.model.Storehouse;
-import com.example.storehouse.model.Supplier;
-import com.example.storehouse.model.Unit;
-import com.example.storehouse.service.ItemsService;
-import com.example.storehouse.util.exception.NotFoundException;
-import com.example.storehouse.web.AbstractControllerTest;
-import java.util.List;
-import java.util.stream.Collectors;
-import lombok.SneakyThrows;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-
+@SpringJUnitConfig(ItemsController.class)
 public abstract class AbstractItemsControllerTest extends AbstractControllerTest {
 
     @Value("${app.endpoints.base_path}" + "${app.endpoints.items.base_url}/")
@@ -122,7 +125,6 @@ public abstract class AbstractItemsControllerTest extends AbstractControllerTest
     void getById() {
         // Given
         testItemOne.setItemStorehouses(createItemStorehouses().toArray(new ItemStorehouse[2]));
-        //ItemTo returnedItem = toItemToWithBalance(testItemOne);
         when(itemsService.getById(TEST_ITEM_1_ID)).thenReturn(testItemOne);
 
         // When
@@ -136,8 +138,6 @@ public abstract class AbstractItemsControllerTest extends AbstractControllerTest
             .andExpect(status().isOk())
             .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.data").isNotEmpty())
-        // TODO поправить проверку содержимого
-        //.andExpect(jsonPath("$.data").value(objectMapper.writeValueAsString(returnedItem)))
         ;
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
         verify(itemsService).getById(TEST_ITEM_1_ID);

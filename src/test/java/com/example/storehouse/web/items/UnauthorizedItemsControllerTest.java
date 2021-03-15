@@ -1,5 +1,13 @@
 package com.example.storehouse.web.items;
 
+import com.example.storehouse.dto.ItemTo;
+import com.example.storehouse.model.ItemStorehouse;
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
 import static com.example.storehouse.TestData.TEST_ITEM_1_ID;
 import static com.example.storehouse.util.ItemsUtil.toItemToWithBalance;
 import static org.mockito.Mockito.times;
@@ -11,13 +19,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import com.example.storehouse.dto.ItemTo;
-import com.example.storehouse.model.ItemStorehouse;
-import lombok.SneakyThrows;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 public class UnauthorizedItemsControllerTest extends AbstractItemsControllerTest {
 
@@ -92,6 +93,7 @@ public class UnauthorizedItemsControllerTest extends AbstractItemsControllerTest
         verifyNoInteractions(itemsService);
     }
 
+    @Disabled
     @Override
     void getByIdNotFound() {
         // do nothing

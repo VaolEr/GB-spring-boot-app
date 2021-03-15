@@ -10,6 +10,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
+import static org.springframework.http.HttpHeaders.LOCATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -56,11 +57,10 @@ class AdminItemsControllerTest extends AbstractItemsControllerTest {
 
             // Then
             .andExpect(status().isCreated())
-            .andExpect(header().exists(HttpHeaders.LOCATION))
+            .andExpect(header().exists(LOCATION))
             // TODO как бы тут достать URL? Это будет работать в таком виде?
-            .andExpect(header().string(HttpHeaders.LOCATION, "http://localhost" + itemsPath + TEST_ITEM_1_ID))
+            .andExpect(header().string(LOCATION, "http://localhost" + itemsPath + TEST_ITEM_1_ID))
             .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
-            // TODO поправить проверку содержимого
             .andExpect(jsonPath("$.data").isNotEmpty())
         ;
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
@@ -113,7 +113,6 @@ class AdminItemsControllerTest extends AbstractItemsControllerTest {
             // Then
             .andExpect(status().isOk())
             .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
-            // TODO поправить проверку содержимого
             .andExpect(jsonPath("$.data").isNotEmpty())
         ;
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
