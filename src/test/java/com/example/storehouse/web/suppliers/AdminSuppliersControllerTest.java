@@ -1,29 +1,35 @@
 package com.example.storehouse.web.suppliers;
 
 import com.example.storehouse.dto.SupplierTo;
-import com.example.storehouse.model.User;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-
-import static com.example.storehouse.TestData.*;
+import static com.example.storehouse.TestData.TEST_SUPPLIER_1_ID;
 import static com.example.storehouse.util.SuppliersUtil.toSupplierTo;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
+import static org.springframework.http.HttpHeaders.LOCATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class AdminSuppliersControllerTest extends AbstractSuppliersControllerTest {
+
     @BeforeEach
     void setUpAdmin() {
         when(jwtTokenProvider.getAuthentication(AUTH_TOKEN)).thenReturn(mockAuthorize(createTestUserAdmin()));
@@ -39,19 +45,17 @@ class AdminSuppliersControllerTest extends AbstractSuppliersControllerTest {
 
         // When
         mvc
-                .perform(post(suppliersPath)
-                        .headers(headers)
-                        .content(objectMapper.writeValueAsString(createdSupplier))
-                )
-                .andDo(print())
+            .perform(post(suppliersPath)
+                .headers(headers)
+                .content(objectMapper.writeValueAsString(createdSupplier))
+            )
+            .andDo(print())
 
-                // Then
-                .andExpect(status().isCreated())
-                .andExpect(header().exists(HttpHeaders.LOCATION))
-                // TODO как бы тут достать URL? Это будет работать в таком виде?
-                .andExpect(header().string(HttpHeaders.LOCATION, "http://localhost" + suppliersPath + TEST_SUPPLIER_1_ID))
+            // Then
+            .andExpect(status().isCreated())
+            .andExpect(header().exists(LOCATION))
+            .andExpect(header().string(LOCATION, "http://localhost" + suppliersPath + TEST_SUPPLIER_1_ID))
                 .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
-                // TODO поправить проверку содержимого
                 .andExpect(jsonPath("$.data").isNotEmpty())
         ;
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
@@ -100,7 +104,6 @@ class AdminSuppliersControllerTest extends AbstractSuppliersControllerTest {
                 // Then
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
-                // TODO поправить проверку содержимого
                 .andExpect(jsonPath("$.data").isNotEmpty())
         ;
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);

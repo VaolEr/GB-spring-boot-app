@@ -8,15 +8,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-
-import static com.example.storehouse.TestData.*;
+import static com.example.storehouse.TestData.TEST_SUPPLIER_1_ID;
 import static com.example.storehouse.util.SuppliersUtil.toSupplierTo;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class UserSuppliersControllerTest extends AbstractSuppliersControllerTest {
 
@@ -94,4 +95,5 @@ class UserSuppliersControllerTest extends AbstractSuppliersControllerTest {
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
         verifyNoInteractions(suppliersService);
     }
+
 }
