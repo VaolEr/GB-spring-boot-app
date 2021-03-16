@@ -1,13 +1,5 @@
 package com.example.storehouse;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +9,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(classes = StorehouseApplication.class)
 @ActiveProfiles("test")
@@ -46,7 +44,7 @@ class StorehouseApplicationTests {
         mvc.perform(get(actuatorsPath + "/health"))
             .andDo(print())
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.status", is("UP")))
+            .andExpect(jsonPath("$.status").value("UP"))
         ;
     }
 
@@ -56,8 +54,8 @@ class StorehouseApplicationTests {
         mvc.perform(get(actuatorsPath + "/info"))
             .andDo(print())
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.app.version", is(appVersion)))
-            .andExpect(jsonPath("$.api.*.version", notNullValue()))
+            .andExpect(jsonPath("$.app.version").value(appVersion))
+            .andExpect(jsonPath("$.api.*.version").isNotEmpty())
         ;
     }
 
