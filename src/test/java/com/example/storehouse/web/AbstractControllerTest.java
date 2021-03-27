@@ -1,37 +1,61 @@
 package com.example.storehouse.web;
 
-import static com.example.storehouse.TestData.*;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
-
+import com.example.storehouse.config.JwtConfig;
+import com.example.storehouse.config.SecurityConfig;
 import com.example.storehouse.model.User;
+import com.example.storehouse.repository.UsersRepository;
+import com.example.storehouse.security.JwtTokenFilter;
 import com.example.storehouse.security.JwtTokenProvider;
+import com.example.storehouse.security.UserDetailsServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Collections;
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 
-//@WebMvcTest(ItemsControllerTest.class)
-// Я тут с ходу не разобрался, как замокать всю кучу security-зависимостей
-// для загрузки только требуемого контекста, поэтому поставил пока загрузку всего
-@SpringBootTest
-@ActiveProfiles("test")
-@AutoConfigureMockMvc
+import static com.example.storehouse.TestData.TEST_ADMIN_EMAIL;
+import static com.example.storehouse.TestData.TEST_ADMIN_FIRST_NAME;
+import static com.example.storehouse.TestData.TEST_ADMIN_ID;
+import static com.example.storehouse.TestData.TEST_ADMIN_LAST_NAME;
+import static com.example.storehouse.TestData.TEST_ADMIN_PASSWORD;
+import static com.example.storehouse.TestData.TEST_ADMIN_ROLE;
+import static com.example.storehouse.TestData.TEST_ADMIN_STATUS;
+import static com.example.storehouse.TestData.TEST_USER_EMAIL;
+import static com.example.storehouse.TestData.TEST_USER_FIRST_NAME;
+import static com.example.storehouse.TestData.TEST_USER_ID;
+import static com.example.storehouse.TestData.TEST_USER_LAST_NAME;
+import static com.example.storehouse.TestData.TEST_USER_PASSWORD;
+import static com.example.storehouse.TestData.TEST_USER_ROLE;
+import static com.example.storehouse.TestData.TEST_USER_STATUS;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+
+@WebMvcTest
+@SpringJUnitConfig({
+    SecurityConfig.class,
+    UserDetailsServiceImpl.class,
+    JwtConfig.class,
+    JwtTokenFilter.class,
+    ControllerExceptionHandler.class,
+})
+@MockBean({
+    UsersRepository.class
+})
 public abstract class AbstractControllerTest {
+
+    protected static final String AUTH_TOKEN = "jwt-auth-token";
 
     @Value("${app.jwt.header}")
     String authHeader;
@@ -42,18 +66,13 @@ public abstract class AbstractControllerTest {
     @MockBean
     protected JwtTokenProvider jwtTokenProvider;
 
-    protected static final String AUTH_TOKEN = "jwt-auth-token";
-
     protected HttpHeaders headers;
     protected ObjectMapper objectMapper;
 
-    @PostConstruct
-    void prepare() {
-        objectMapper = new ObjectMapper();
-    }
-
     @BeforeEach
     protected void setUp() {
+        objectMapper = new ObjectMapper();
+
         headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(APPLICATION_JSON));
         headers.setContentType(APPLICATION_JSON);

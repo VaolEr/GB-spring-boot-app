@@ -5,13 +5,25 @@ import com.example.storehouse.model.Supplier;
 import com.example.storehouse.service.SuppliersService;
 import com.example.storehouse.util.exception.NotFoundException;
 import com.example.storehouse.web.AbstractControllerTest;
+import com.example.storehouse.web.SuppliersController;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import static com.example.storehouse.TestData.*;
+import static com.example.storehouse.TestData.TEST_ITEMS_NAME;
+import static com.example.storehouse.TestData.TEST_ITEMS_SKU;
+import static com.example.storehouse.TestData.TEST_ITEM_1_ID;
+import static com.example.storehouse.TestData.TEST_ITEM_2_ID;
+import static com.example.storehouse.TestData.TEST_ITEM_3_ID;
+import static com.example.storehouse.TestData.TEST_SUPPLIERS_NAME;
+import static com.example.storehouse.TestData.TEST_SUPPLIER_1_ID;
+import static com.example.storehouse.TestData.TEST_SUPPLIER_2_ID;
+import static com.example.storehouse.TestData.TEST_SUPPLIER_3_ID;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isNull;
@@ -25,9 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+@SpringJUnitConfig(SuppliersController.class)
 abstract class AbstractSuppliersControllerTest extends AbstractControllerTest {
 
     @Value("${app.endpoints.base_path}" + "${app.endpoints.suppliers.base_url}/")
@@ -100,8 +110,6 @@ abstract class AbstractSuppliersControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.data").isNotEmpty())
-        // TODO поправить проверку содержимого
-        //.andExpect(jsonPath("$.data").value(objectMapper.writeValueAsString(returnedItem)))
         ;
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
         verify(suppliersService).getById(TEST_SUPPLIER_1_ID);
@@ -155,7 +163,6 @@ abstract class AbstractSuppliersControllerTest extends AbstractControllerTest {
                     supplier.setItems(testItems);
                 })
                 .collect(Collectors.toList());
-
     }
 
     void createItems() {
@@ -174,7 +181,6 @@ abstract class AbstractSuppliersControllerTest extends AbstractControllerTest {
                     item.setSku(TEST_ITEMS_SKU);
                 })
                 .collect(Collectors.toList());
-
     }
 
 }

@@ -1,34 +1,46 @@
 package com.example.storehouse.web.units;
 
-import com.example.storehouse.model.Category;
 import com.example.storehouse.model.Item;
 import com.example.storehouse.model.Unit;
-import com.example.storehouse.service.CategoriesService;
 import com.example.storehouse.service.UnitsService;
 import com.example.storehouse.util.exception.NotFoundException;
 import com.example.storehouse.web.AbstractControllerTest;
+import com.example.storehouse.web.UnitsController;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static com.example.storehouse.TestData.*;
+import static com.example.storehouse.TestData.TEST_ITEMS_NAME;
+import static com.example.storehouse.TestData.TEST_ITEMS_SKU;
+import static com.example.storehouse.TestData.TEST_ITEM_1_ID;
+import static com.example.storehouse.TestData.TEST_ITEM_2_ID;
+import static com.example.storehouse.TestData.TEST_ITEM_3_ID;
+import static com.example.storehouse.TestData.TEST_UNITS_NAME;
+import static com.example.storehouse.TestData.TEST_UNIT_1_ID;
+import static com.example.storehouse.TestData.TEST_UNIT_2_ID;
+import static com.example.storehouse.TestData.TEST_UNIT_3_ID;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@SpringJUnitConfig(UnitsController.class)
 public abstract class AbstractUnitsControllerTest extends AbstractControllerTest {
+
     @Value("${app.endpoints.base_path}" + "${app.endpoints.units.base_url}/")
     String unitsPath;
 
@@ -36,18 +48,13 @@ public abstract class AbstractUnitsControllerTest extends AbstractControllerTest
     UnitsService unitsService;
 
     Unit testUnitOne,
-            testUnitTwo,
-            testUnitThree;
+        testUnitTwo,
+        testUnitThree;
     List<Unit> testUnits;
 
-//    Category testCategoryOne,
-//            testCategoryTwo,
-//            testCategoryThree;
-//    List<Category> testCategories;
-
     Item testItemOne,
-            testItemTwo,
-            testItemThree;
+        testItemTwo,
+        testItemThree;
     List<Item> testItems;
 
     @Override
@@ -74,15 +81,15 @@ public abstract class AbstractUnitsControllerTest extends AbstractControllerTest
 
         // When
         mvc
-                .perform(get(unitsPath)
-                        .headers(headers)
-                )
-                .andDo(print())
+            .perform(get(unitsPath)
+                .headers(headers)
+            )
+            .andDo(print())
 
-                // Then
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.data").isNotEmpty())
+            // Then
+            .andExpect(status().isOk())
+            .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.data").isNotEmpty())
         ;
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
         verify(unitsService).get(isNull());
@@ -97,17 +104,15 @@ public abstract class AbstractUnitsControllerTest extends AbstractControllerTest
 
         // When
         mvc
-                .perform(get(unitsPath + "/{id}", TEST_UNIT_1_ID)
-                        .headers(headers)
-                )
-                .andDo(print())
+            .perform(get(unitsPath + "/{id}", TEST_UNIT_1_ID)
+                .headers(headers)
+            )
+            .andDo(print())
 
-                // Then
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.data").isNotEmpty())
-        // TODO поправить проверку содержимого
-        //.andExpect(jsonPath("$.data").value(objectMapper.writeValueAsString(returnedItem)))
+            // Then
+            .andExpect(status().isOk())
+            .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.data").isNotEmpty())
         ;
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
         verify(unitsService).getById(TEST_UNIT_1_ID);
@@ -123,15 +128,15 @@ public abstract class AbstractUnitsControllerTest extends AbstractControllerTest
 
         // When
         mvc
-                .perform(get(unitsPath + "/{id}", absentedUnitId)
-                        .headers(headers)
-                )
-                .andDo(print())
+            .perform(get(unitsPath + "/{id}", absentedUnitId)
+                .headers(headers)
+            )
+            .andDo(print())
 
-                // Then
-                .andExpect(status().isNotFound())
-                .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.data").isEmpty())
+            // Then
+            .andExpect(status().isNotFound())
+            .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.data").isEmpty())
         ;
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
         verify(unitsService).getById(absentedUnitId);
@@ -157,11 +162,11 @@ public abstract class AbstractUnitsControllerTest extends AbstractControllerTest
         testUnitThree.setId(TEST_UNIT_3_ID);
 
         testUnits = List.of(testUnitOne, testUnitTwo, testUnitThree).stream()
-                .peek(unit -> {
-                    unit.setName(TEST_UNITS_NAME + unit.getId());
-                    unit.setItems(testItems);
-                })
-                .collect(Collectors.toList());
+            .peek(unit -> {
+                unit.setName(TEST_UNITS_NAME + unit.getId());
+                unit.setItems(testItems);
+            })
+            .collect(Collectors.toList());
 
     }
 
@@ -176,11 +181,12 @@ public abstract class AbstractUnitsControllerTest extends AbstractControllerTest
         testItemThree.setId(TEST_ITEM_3_ID);
 
         testItems = List.of(testItemOne, testItemTwo, testItemThree).stream()
-                .peek(item -> {
-                    item.setName(TEST_ITEMS_NAME + item.getId());
-                    item.setSku(TEST_ITEMS_SKU);
-                })
-                .collect(Collectors.toList());
+            .peek(item -> {
+                item.setName(TEST_ITEMS_NAME + item.getId());
+                item.setSku(TEST_ITEMS_SKU);
+            })
+            .collect(Collectors.toList());
 
     }
+
 }

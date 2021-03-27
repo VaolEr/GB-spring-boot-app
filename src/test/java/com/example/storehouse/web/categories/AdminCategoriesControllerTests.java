@@ -6,23 +6,30 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-
-import static com.example.storehouse.TestData.*;
+import static com.example.storehouse.TestData.TEST_CATEGORY_1_ID;
 import static com.example.storehouse.util.CategoriesUtil.toCategoryTo;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
+import static org.springframework.http.HttpHeaders.LOCATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class AdminCategoriesControllerTests extends AbstractCategoriesControllerTest {
+
     @BeforeEach
     void setUpAdmin() {
         when(jwtTokenProvider.getAuthentication(AUTH_TOKEN)).thenReturn(mockAuthorize(createTestUserAdmin()));
@@ -38,19 +45,17 @@ class AdminCategoriesControllerTests extends AbstractCategoriesControllerTest {
 
         // When
         mvc
-                .perform(post(categoriesPath)
-                        .headers(headers)
-                        .content(objectMapper.writeValueAsString(createdCategory))
-                )
-                .andDo(print())
+            .perform(post(categoriesPath)
+                .headers(headers)
+                .content(objectMapper.writeValueAsString(createdCategory))
+            )
+            .andDo(print())
 
-                // Then
-                .andExpect(status().isCreated())
-                .andExpect(header().exists(HttpHeaders.LOCATION))
-                // TODO как бы тут достать URL? Это будет работать в таком виде?
-                .andExpect(header().string(HttpHeaders.LOCATION, "http://localhost" + categoriesPath + TEST_CATEGORY_1_ID))
+            // Then
+            .andExpect(status().isCreated())
+            .andExpect(header().exists(LOCATION))
+            .andExpect(header().string(LOCATION, "http://localhost" + categoriesPath + TEST_CATEGORY_1_ID))
                 .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
-                // TODO поправить проверку содержимого
                 .andExpect(jsonPath("$.data").isNotEmpty())
         ;
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
@@ -99,7 +104,6 @@ class AdminCategoriesControllerTests extends AbstractCategoriesControllerTest {
                 // Then
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
-                // TODO поправить проверку содержимого
                 .andExpect(jsonPath("$.data").isNotEmpty())
         ;
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);

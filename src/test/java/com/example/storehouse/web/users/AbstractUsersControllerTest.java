@@ -4,27 +4,39 @@ import com.example.storehouse.model.User;
 import com.example.storehouse.service.UsersService;
 import com.example.storehouse.util.exception.NotFoundException;
 import com.example.storehouse.web.AbstractControllerTest;
+import com.example.storehouse.web.UsersController;
+import java.util.List;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import java.util.List;
-
-import static com.example.storehouse.TestData.*;
+import static com.example.storehouse.TestData.TEST_USER_EMAIL;
+import static com.example.storehouse.TestData.TEST_USER_FIRST_NAME;
+import static com.example.storehouse.TestData.TEST_USER_ID;
+import static com.example.storehouse.TestData.TEST_USER_LAST_NAME;
+import static com.example.storehouse.TestData.TEST_USER_PASSWORD;
+import static com.example.storehouse.TestData.TEST_USER_ROLE;
+import static com.example.storehouse.TestData.TEST_USER_STATUS;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@SpringJUnitConfig(UsersController.class)
 public abstract class AbstractUsersControllerTest extends AbstractControllerTest {
+
     @Value("${app.endpoints.base_path}" + "${app.endpoints.users.base_url}/")
     String usersPath;
 
@@ -32,7 +44,7 @@ public abstract class AbstractUsersControllerTest extends AbstractControllerTest
     UsersService usersService;
 
     User testUserOne,
-            testUserTwo;
+        testUserTwo;
     List<User> testUsers;
 
     @Override
@@ -59,15 +71,15 @@ public abstract class AbstractUsersControllerTest extends AbstractControllerTest
 
         // When
         mvc
-                .perform(get(usersPath)
-                        .headers(headers)
-                )
-                .andDo(print())
+            .perform(get(usersPath)
+                .headers(headers)
+            )
+            .andDo(print())
 
-                // Then
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.data").isNotEmpty())
+            // Then
+            .andExpect(status().isOk())
+            .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.data").isNotEmpty())
         ;
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
         verify(usersService).get(isNull());
@@ -82,17 +94,15 @@ public abstract class AbstractUsersControllerTest extends AbstractControllerTest
 
         // When
         mvc
-                .perform(get(usersPath + "/{id}", TEST_USER_ID)
-                        .headers(headers)
-                )
-                .andDo(print())
+            .perform(get(usersPath + "/{id}", TEST_USER_ID)
+                .headers(headers)
+            )
+            .andDo(print())
 
-                // Then
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.data").isNotEmpty())
-        // TODO поправить проверку содержимого
-        //.andExpect(jsonPath("$.data").value(objectMapper.writeValueAsString(returnedItem)))
+            // Then
+            .andExpect(status().isOk())
+            .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.data").isNotEmpty())
         ;
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
         verify(usersService).getById(TEST_USER_ID);
@@ -108,15 +118,15 @@ public abstract class AbstractUsersControllerTest extends AbstractControllerTest
 
         // When
         mvc
-                .perform(get(usersPath + "/{id}", absentedUserId)
-                        .headers(headers)
-                )
-                .andDo(print())
+            .perform(get(usersPath + "/{id}", absentedUserId)
+                .headers(headers)
+            )
+            .andDo(print())
 
-                // Then
-                .andExpect(status().isNotFound())
-                .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.data").isEmpty())
+            // Then
+            .andExpect(status().isNotFound())
+            .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.data").isEmpty())
         ;
         verify(jwtTokenProvider, times(2)).validateToken(AUTH_TOKEN);
         verify(usersService).getById(absentedUserId);
